@@ -76,9 +76,7 @@ namespace Parkeringshuset.Views
             bool noValidRegNr = true;
 
             if(Pg.CalculateAvailibleSpace() > 0)
-            {     
-                while (noValidRegNr)
-                {                
+            {                    
                     Console.WriteLine("Please type in you registration number");
                     string registrationsNr = Console.ReadLine();
 
@@ -89,18 +87,18 @@ namespace Parkeringshuset.Views
                         if (!Pg.IsCarParkedInGarageAlready(vehicle))
                         {                          
                             Console.WriteLine(Pg.ParkingMeters[0].CreateTicket(vehicle));
-                            noValidRegNr = false;
                             Console.ReadKey();
                         }
                         else
                         {
                             Console.WriteLine("Man (or woman), you must be stupid. You have already a ticket.");
+                            Console.ReadKey();
                         }
                     }
                     else
                     {
                         Console.WriteLine("Please type in a valid Registration Number");
-                    }
+                        Console.ReadKey();
                 }
             }
             else
