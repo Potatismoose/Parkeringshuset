@@ -17,15 +17,18 @@ namespace Parkeringshuset.Models
             PricePerStartedHour = hourlyCost;
         }
 
-        public void Checkout()
+        public ParkingTicket Checkout()
         {
             CheckoutTime = DateTime.Now;
             CalculateCost();
+            return this;
         }
 
-        public void CalculateCost()
+        public int CalculateCost()
         {
-            var time = CheckoutTime - ArrivalTime;
+            TimeSpan time = new(1, 0, 0);
+            time += Convert.ToDateTime(CheckoutTime) - ArrivalTime;
+            return time.Hours * PricePerStartedHour;
         }
 
         public bool TicketIsStillActive()
@@ -35,11 +38,35 @@ namespace Parkeringshuset.Models
 
         public bool IsSameVehicle(Vehicle vehicle)
         {
-
             return string.Equals(
-                AssociatedVehicle.ToString().ToLower(),
-                vehicle.ToString().ToLower()
-                );
+                AssociatedVehicle.ToString(),
+                vehicle.ToString(),
+                StringComparison.OrdinalIgnoreCase);
+        }
+
+        public bool IsPayed()
+        {
+            return CheckoutTime.HasValue;
+        }
+
+        public DateTime ReturnArrivalTime()
+        {
+            return ArrivalTime;
+        }
+
+        public DateTime? ReturnCheckoutTime()
+        {
+            return CheckoutTime;
+        }
+
+        public override string ToString()
+        {
+            var cost = 0;
+            return $"Biljett. " +
+                $"Regnr: {AssociatedVehicle}, " +
+                $"{(cost = CalculateCost()) / PricePerStartedHour}tim " +
+                $"á {PricePerStartedHour}kr. " +
+                $"\tTot {cost}kr";
         }
     }
 }

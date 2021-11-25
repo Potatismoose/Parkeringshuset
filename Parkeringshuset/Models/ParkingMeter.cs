@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Parkeringshuset.Models
@@ -17,9 +18,10 @@ namespace Parkeringshuset.Models
             HourlyCost = hourlyCost;
         }
 
-        public void CreateTicket(Vehicle vechicle)
+        public ParkingTicket CreateTicket(Vehicle vechicle)
         {
             ParkingTickets.Add(new ParkingTicket(vechicle, HourlyCost));
+            return ParkingTickets[^1];
         }
 
         public List<ParkingTicket> GetActiveTickets()
@@ -34,22 +36,27 @@ namespace Parkeringshuset.Models
             return null;
         }
 
-        public void GetAllSoldTickets(Vehicle vechicle)
+        public IEnumerable<ParkingTicket> GetAllSoldTickets(DateTime startDate, DateTime endDate)
         {
-            ParkingTickets.Add(new ParkingTicket(vechicle, HourlyCost));
+            return ParkingTickets.ToList()
+                .Where(x =>
+                x.IsPayed() == true
+                && x.ReturnArrivalTime() >= startDate
+                && x.ReturnCheckoutTime() < endDate.AddDays(1));
         }
 
-        public bool CheckoutVehicle(Vehicle vehicle)
+        public (bool checkOutSuccessful, ParkingTicket ticket) CheckoutVehicle(Vehicle vehicle)
         {
+            ParkingTicket checkedOutVechicle = null;
             var ticket = ParkingTickets.FirstOrDefault(x =>
                 x.TicketIsStillActive()
                 && x.IsSameVehicle(vehicle));
             if (ticket is not null)
             {
-                ticket.Checkout();
-                return true;
+                checkedOutVechicle = ticket.Checkout();
+                return (true, checkedOutVechicle);
             }
-            return false;
+            return (false, checkedOutVechicle);
         }
 
         public override string ToString()
