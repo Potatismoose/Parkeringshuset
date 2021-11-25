@@ -62,11 +62,18 @@ namespace Parkeringshuset.Models
         public override string ToString()
         {
             var cost = 0;
-            return $"Biljett. " +
-                $"Regnr: {AssociatedVehicle}, " +
-                $"{(cost = CalculateCost()) / PricePerStartedHour}tim " +
-                $"á {PricePerStartedHour}kr. " +
-                $"\tTot {cost}kr";
+            if (CheckoutTime.HasValue)
+            {
+                return $"Biljett. " +
+                    $"Regnr: {AssociatedVehicle}, " +
+                    $"{(cost = CalculateCost()) / PricePerStartedHour}tim " +
+                    $"á {PricePerStartedHour}kr. " +
+                    $"\tTot {cost}kr";
+            }
+            else 
+            {
+                return $"Regnr: {AssociatedVehicle}, Hourly cost: {PricePerStartedHour}kr. Parking started: {ArrivalTime} ";
+            }
         }
     }
 }

@@ -90,10 +90,11 @@ namespace Parkeringshuset.Views
                         {                          
                             Console.WriteLine(Pg.ParkingMeters[0].CreateTicket(vehicle));
                             noValidRegNr = false;
+                            Console.ReadKey();
                         }
                         else
                         {
-                            Console.WriteLine("Man (or women), you must be stupid. You have already a ticket.");
+                            Console.WriteLine("Man (or woman), you must be stupid. You have already a ticket.");
                         }
                     }
                     else
@@ -121,6 +122,9 @@ namespace Parkeringshuset.Views
                 {
                     Console.WriteLine("Your ticket is now cancelled");
                     Console.WriteLine($"your final cost is {ticket.ticket.CalculateCost()} kr");
+                    carIsNotCheckedOut = false;
+                    Console.WriteLine("Press enter to continue");
+                    Console.ReadKey();
                 }
 
                 else
