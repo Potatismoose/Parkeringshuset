@@ -6,7 +6,7 @@ on:
 
 jobs:
   buildUbuntu:
-    if: contains(github.ref,'development')
+    #if: contains(github.ref,'development')
     runs-on: ubuntu-latest
     environment: 
       name: Development
