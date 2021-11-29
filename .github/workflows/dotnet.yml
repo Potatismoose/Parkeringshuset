@@ -8,17 +8,17 @@ jobs:
   buildUbuntu:
   
     runs-on: ubuntu-latest
-    
+    if: ${{ env.GIT_BRANCH_NAME == 'Potatismoose-patch-1' }}
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
-    env: 
-      GITHUB_REF: refs/heads/Potatismoose-patch-1
     steps:
     - name: printOutEnv
-      run: echo ${GITHUB_REF##*/}
-    - name: Extract Branch Name
-      run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
+      run: echo ${github.head_ref} 
+    - name: printOutSomething
+      run: echo ${github.base_ref} 
+    - name: printOutMore
+      run: echo ${github.ref} 
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
