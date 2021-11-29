@@ -1,0 +1,70 @@
+name: .NET
+
+on:
+  pull_request:
+    branches: [ main, development, staging ]
+
+jobs:
+  buildUbuntu:
+    if: ${{ github.ref == 'refs/heads/development' }}
+    runs-on: ubuntu-latest
+    environment: 
+      name: Development
+      url: https://github.com/Potatismoose/Parkeringshuset/tree/development
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    
+  
+  buildMatrix:
+    if: ${{ github.ref == 'refs/heads/staging' }}
+    runs-on: ${{ matrix.os }}
+    strategy: 
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    environment: 
+      name: Staging
+      url: https://github.com/Potatismoose/Parkeringshuset/tree/staging
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+        
+  production:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    environment: 
+      name: Production
+      url: https://github.com/Potatismoose/Parkeringshuset/tree/main
+    steps:
+    - name: Production
+      run: echo "Production started"
+      
+  test:
+    needs: ${{buildUbuntu || buildMatrix}}
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Test
+      run: dotnet test --verbosity normal
+
+
