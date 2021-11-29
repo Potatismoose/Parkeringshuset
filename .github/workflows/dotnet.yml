@@ -6,7 +6,7 @@ on:
 
 jobs:
   buildUbuntu:
-    if: contains(github.ref,'Potatismoose')
+    if: contains(github.ref,'development')
     runs-on: ubuntu-latest
     environment: 
       name: Development
@@ -26,6 +26,7 @@ jobs:
     
   
   buildMatrix:
+    if: contains(github.ref,'staging')
     runs-on: ${{ matrix.os }}
     strategy: 
       matrix:
