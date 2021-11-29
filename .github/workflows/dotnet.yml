@@ -15,7 +15,7 @@ jobs:
     - name: echoMF
       run: echo "Detta funkar på potatismose branch"
     - name: printOutBracsnh
-      run: echo {{ github.ref }}
+      run: echo ${{ github.ref }}
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
