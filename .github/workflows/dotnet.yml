@@ -13,9 +13,11 @@ jobs:
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
     steps:
     - name: echoMF
-      run: echo ${{ github.ref_name }}
+      run: echo ${{ github.refs/head/Potatismoose-patch-1}}
     - name: printOutBracsnh
-      run: echo ${{ github.ref}}
+      run: echo ${{ github.refs == /head/Potatismoose-patch-1 }}
+    - name: Extract Branch Name
+      run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
