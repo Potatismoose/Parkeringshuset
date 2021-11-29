@@ -10,23 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     if: github.base_ref == 'development'
     steps:
-      - name: Echo the branch name
-        run: echo "Branch name ${github.base_ref}"
       - name: EchoSS
         run: echo "Mitt namn är jerry"
 
   buildUbuntu: 
     runs-on: ubuntu-latest
+    if: github.base_ref == 'development'
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
     steps:
-    - name: printOutEnv
-      run: echo ${github.head_ref} 
-    - name: printOutSomething
-      run: echo ${github.base_ref} 
-    - name: printOutMore
-      run: echo ${github.ref} 
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
