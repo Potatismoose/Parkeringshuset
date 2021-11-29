@@ -13,7 +13,7 @@ jobs:
         run: echo "Branch name ${GITHUB_HEAD_REF}"
 
   buildUbuntu:
-    if: ${{GITHUB_HEAD_REF == 'Potatismoose-patch-1'}}
+    if: GITHUB_HEAD_REF == 'Potatismoose-patch-1'
     runs-on: ubuntu-latest
     environment: 
       name: Development
