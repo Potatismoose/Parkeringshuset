@@ -1,0 +1,81 @@
+name: .NET
+
+on:
+  pull_request:
+    branches: [ main, development, staging ]
+
+jobs:
+
+  buildUbuntuDev: 
+    runs-on: ubuntu-latest
+    if: github.base_ref == 'development'
+    environment: 
+      name: Development
+      url: https://github.com/Potatismoose/Parkeringshuset/tree/development
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+      
+  buildMatrixStaging:
+    runs-on: ${{ matrix.os }}
+    if: github.base_ref == 'staging'
+    strategy: 
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    environment: 
+      name: Staging
+      url: https://github.com/Potatismoose/Parkeringshuset/tree/staging
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore      
+      
+  testDev:
+      needs: buildUbuntuDev
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Test
+        run: dotnet test --verbosity normal
+        
+  testStaging:
+      needs: buildMatrixStaging
+      runs-on: ${{matrix.os}}
+      strategy:
+        matrix:
+          os: [windows-latest, macos-latest, ubuntu-latest]
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Test
+        run: dotnet test --verbosity normal
+        
+  production:  
+    runs-on: ubuntu-latest
+    if: github.base_ref == 'main'
+    environment: 
+      name: Production
+      url: https://github.com/Potatismoose/Parkeringshuset/tree/main
+    steps:
+    - name: Production
+      run: echo "Production started"
