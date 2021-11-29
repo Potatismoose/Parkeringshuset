@@ -17,7 +17,6 @@ jobs:
   buildUbuntu:
   
     runs-on: ubuntu-latest
-    if: ${{ env.GIT_BRANCH_NAME == 'Potatismoose-patch-1' }}
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
