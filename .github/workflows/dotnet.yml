@@ -11,7 +11,7 @@ jobs:
     if: github.base_ref == 'development'
     steps:
       - name: Echo the branch name
-        run: echo "Branch name ${GITHUB_HEAD_REF}"
+        run: echo "Branch name ${github.base_ref}"
       - name: EchoSS
         run: echo "Mitt namn är jerry"
 
