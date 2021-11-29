@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       Rauf: GITHUB_HEAD_REF
-    if: env.Rauf == 'Potatismoose-patch-1'
+    if: true
     steps:
       - name: Echo the branch name
         run: echo "Branch name ${GITHUB_HEAD_REF}"
