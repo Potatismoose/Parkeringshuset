@@ -12,8 +12,6 @@ jobs:
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
     steps:
-    - name: echoMF
-      run: echo ${{ github.refs/head/Potatismoose-patch-1}}
     - name: printOutBracsnh
       run: echo ${{ github.refs == /head/Potatismoose-patch-1 }}
     - name: Extract Branch Name
