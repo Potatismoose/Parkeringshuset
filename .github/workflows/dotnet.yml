@@ -8,7 +8,7 @@ jobs:
   buildUbuntu:
     runs-on: ubuntu-latest
     env: 
-      PUSH_PACKAGES: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/Potatismoose-patch-1' }}
+      PUSH_PACKAGES: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/Potatismoose*' }}
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
