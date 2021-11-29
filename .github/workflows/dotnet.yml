@@ -7,21 +7,26 @@ on:
 jobs:
   buildUbuntu:
     runs-on: ubuntu-latest
-    if: ${{ true }}
+    env: 
+      PUSH_PACKAGES: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/Potatismoose-patch-1' }}
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
+      if: ${{ env.PUSH_PACKAGES }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
+      if: ${{ env.PUSH_PACKAGES }}
       run: dotnet restore
     - name: Build
+      if: ${{ env.PUSH_PACKAGES }}
       run: dotnet build --no-restore
     - name: Test
+      if: ${{ env.PUSH_PACKAGES }}
       run: dotnet test --no-build --verbosity normal
     
   
