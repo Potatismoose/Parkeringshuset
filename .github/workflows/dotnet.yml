@@ -45,10 +45,7 @@ jobs:
       
   testDev:
       needs: buildUbuntuDev
-      runs-on: ${{matrix.os}}
-      strategy:
-        matrix:
-          os: [windows-latest, macos-latest, ubuntu-latest]
+      runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
