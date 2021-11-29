@@ -8,9 +8,7 @@ jobs:
 
   main_job: 
     runs-on: ubuntu-latest
-    env:
-      Rauf: GITHUB_HEAD_REF
-    if: true
+    if: github.event_branch = 'Potatismoose-patch-1'
     steps:
       - name: Echo the branch name
         run: echo "Branch name ${GITHUB_HEAD_REF}"
