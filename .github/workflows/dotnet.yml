@@ -6,7 +6,7 @@ on:
 
 jobs:
   buildUbuntu:
-    if: ${{ github.ref == 'refs/heads/Potatismoose*' }}
+    if: ${{ github.ref == 'refs/heads/Potatismoose-patch-1' }}
     runs-on: ubuntu-latest
     environment: 
       name: Development
