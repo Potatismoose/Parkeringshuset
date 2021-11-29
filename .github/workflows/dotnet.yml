@@ -8,7 +8,7 @@ jobs:
 
   main_job: 
     runs-on: ubuntu-latest
-    if: github.base_ref == 'bajs'
+    if: github.base_ref == 'Potatismoose-patch-1'
     steps:
       - name: EchoSS
         run: echo "Mitt namn är jerry"
