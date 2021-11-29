@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  buildAndTestUbuntu: 
+  buildUbuntuDev: 
     runs-on: ubuntu-latest
     if: github.base_ref == 'development'
     environment: 
@@ -22,11 +22,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    
-  
-  buildAndTestMatrix:
+      
+  buildMatrixStaging:
     runs-on: ${{ matrix.os }}
     if: github.base_ref == 'staging'
     strategy: 
@@ -35,7 +32,6 @@ jobs:
     environment: 
       name: Staging
       url: https://github.com/Potatismoose/Parkeringshuset/tree/staging
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -45,9 +41,37 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --no-restore      
+      
+  testDev:
+      needs: buildUbuntuDev
+      runs-on: ${{matrix.os}}
+      strategy:
+        matrix:
+          os: [windows-latest, macos-latest, ubuntu-latest]
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Test
+        run: dotnet test --verbosity normal
+        
+  testStaging:
+      needs: buildMatrixStaging
+      runs-on: ${{matrix.os}}
+      strategy:
+        matrix:
+          os: [windows-latest, macos-latest, ubuntu-latest]
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Test
+        run: dotnet test --verbosity normal
         
   production:  
     runs-on: ubuntu-latest
@@ -58,7 +82,3 @@ jobs:
     steps:
     - name: Production
       run: echo "Production started"
-      
-  
-
-
