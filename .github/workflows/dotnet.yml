@@ -8,15 +8,14 @@ jobs:
   main_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Git branch name
-        id: git-branch-name
-        uses: EthanSK/git-branch-name-action@v1
+
       - name: Echo the branch name
         run: echo "Branch name ${GIT_BRANCH_NAME}"
 
   buildUbuntu:
-  
+    
     runs-on: ubuntu-latest
+    if: ${{ GIT_BRANCH_NAME == 'Potatismoose-patch-1' }}
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
