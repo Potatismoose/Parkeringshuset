@@ -6,14 +6,18 @@ on:
 
 jobs:
 
-  main_job:
+  main_job: 
     runs-on: ubuntu-latest
+    env:
+      Rauf: ${GITHUB_HEAD_REF}
+    if: ${{ env.Rauf == 'Potatismoose-patch-1' }}
     steps:
       - name: Echo the branch name
         run: echo "Branch name ${GITHUB_HEAD_REF}"
+      - name: EchoSS
+        run: echo "Mitt namn är jerry"
 
-  buildUbuntu:
-    if: "${GITHUB_HEAD_REF} == Potatismoose-patch-1"
+  buildUbuntu: 
     runs-on: ubuntu-latest
     environment: 
       name: Development
