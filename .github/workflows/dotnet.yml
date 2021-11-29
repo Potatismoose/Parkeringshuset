@@ -7,7 +7,10 @@ on:
 jobs:
   buildUbuntu:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/development'
+    if:
+      contains('
+        refs/heads/development
+      ', github.ref)
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
@@ -30,7 +33,10 @@ jobs:
     strategy: 
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-    if: github.ref == 'refs/heads/staging'
+    if:
+      contains('
+        refs/heads/development
+      ', github.ref)
     environment: 
       name: Staging
       url: https://github.com/Potatismoose/Parkeringshuset/tree/staging
@@ -50,7 +56,10 @@ jobs:
         
   production:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if:
+      contains('
+        refs/heads/development
+      ', github.ref)
     environment: 
       name: Production
       url: https://github.com/Potatismoose/Parkeringshuset/tree/main
