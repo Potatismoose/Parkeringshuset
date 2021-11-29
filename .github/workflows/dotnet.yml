@@ -8,12 +8,15 @@ jobs:
   buildUbuntu:
   
     runs-on: ubuntu-latest
+    
     environment: 
       name: Development
       url: https://github.com/Potatismoose/Parkeringshuset/tree/development
+    env: 
+      GITHUB_REF: refs/heads/Potatismoose-patch-1
     steps:
-    - name: printOutBracsnh
-      run: echo ${{ github.refs == /head/Potatismoose-patch-1 }}
+    - name: printOutEnv
+      run: echo ${GITHUB_REF##*/}
     - name: Extract Branch Name
       run: echo "::set-env name=BRANCH::$(echo ${GITHUB_REF##*/})"
     - uses: actions/checkout@v2
