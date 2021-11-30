@@ -7,11 +7,11 @@ namespace Parkeringshuset
     { 
         static void Main(string[] args)
         {
-            ParkingGarage pg = new(12);
-            Menu menu = new(pg);
-            menu.PrintMainMenu();
-            Login.PrintLoginPage();
-            MainMenu.RunMainMenu();
+            //ParkingGarage pg = new(12);
+            //Menu menu = new(pg);
+            //menu.PrintMainMenu();
+            //Login.PrintLoginPage();
+            //MainMenu.RunMainMenu();
         }
     }
 }

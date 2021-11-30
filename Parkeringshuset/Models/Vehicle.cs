@@ -2,17 +2,8 @@
 {
     public class Vehicle
     {
-        private string RegistrationNumber = null;
+        public int Id { get; set; }
+        private string RegistrationNumber { get; set; }
 
-        public Vehicle(string registrationNumber)
-        {
-            RegistrationNumber = registrationNumber;
-
-        }
-
-        public override string ToString()
-        {
-            return RegistrationNumber;
-        }
     }
 }

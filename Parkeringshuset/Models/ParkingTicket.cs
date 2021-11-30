@@ -8,7 +8,7 @@ namespace Parkeringshuset.Models
         private DateTime ArrivalTime;
         private DateTime? CheckoutTime = null;
         private int PricePerStartedHour;
-        private int CostOfParking;
+     
 
         public ParkingTicket(Vehicle associatedVehicle, int hourlyCost)
         {
