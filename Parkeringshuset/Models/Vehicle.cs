@@ -3,7 +3,7 @@
     public class Vehicle
     {
         public int Id { get; set; }
-        private string RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; }
 
     }
 }

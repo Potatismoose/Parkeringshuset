@@ -9,7 +9,7 @@ using Parkeringshuset.Data;
 namespace Parkeringshuset.Migrations
 {
     [DbContext(typeof(ParkeringGarageContext))]
-    [Migration("20211130085446_InitialCreate")]
+    [Migration("20211130093402_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,9 @@ namespace Parkeringshuset.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("RegistrationNumber")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
