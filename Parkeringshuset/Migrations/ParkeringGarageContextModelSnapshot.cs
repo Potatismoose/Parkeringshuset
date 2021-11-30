@@ -16,6 +16,52 @@ namespace Parkeringshuset.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.12");
 
+            modelBuilder.Entity("Parkeringshuset.Models.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+                });
+
+            modelBuilder.Entity("Parkeringshuset.Models.PSpot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Electric")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Handicap")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Monthly")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Motorbice")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Regular")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("pSpots");
+                });
+
             modelBuilder.Entity("Parkeringshuset.Models.PTicket", b =>
                 {
                     b.Property<int>("Id")

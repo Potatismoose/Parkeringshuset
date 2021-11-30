@@ -8,6 +8,38 @@ namespace Parkeringshuset.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Username = table.Column<string>(type: "TEXT", nullable: true),
+                    Password = table.Column<string>(type: "TEXT", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "pSpots",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Motorbice = table.Column<int>(type: "INTEGER", nullable: false),
+                    Electric = table.Column<int>(type: "INTEGER", nullable: false),
+                    Handicap = table.Column<int>(type: "INTEGER", nullable: false),
+                    Regular = table.Column<int>(type: "INTEGER", nullable: false),
+                    Monthly = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_pSpots", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ptypes",
                 columns: table => new
                 {
@@ -77,6 +109,12 @@ namespace Parkeringshuset.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "pSpots");
+
             migrationBuilder.DropTable(
                 name: "Ptickets");
 

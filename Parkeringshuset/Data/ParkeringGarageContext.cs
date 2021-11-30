@@ -18,6 +18,10 @@
 
         public DbSet<Vehicle> Vehicles { get; set; }
 
+        public DbSet<Admin> Admins { get; set; }
+
+        public DbSet<PSpot> pSpots { get; set; }
+
         
 
 
