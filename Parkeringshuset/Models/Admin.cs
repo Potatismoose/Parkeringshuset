@@ -1,5 +1,6 @@
 ﻿namespace Parkeringshuset.Models
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -7,13 +8,16 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class Admin
+    [Index(nameof(Username), nameof(Email), IsUnique = true)]
+    public class Admin
     {
         [Key]
         public int Id { get; set; }
 
+       
         public string Username { get; set; }
 
+        
         public string Password { get; set; }
 
         public string Email { get; set; }

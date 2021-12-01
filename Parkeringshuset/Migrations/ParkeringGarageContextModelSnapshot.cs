@@ -33,33 +33,10 @@ namespace Parkeringshuset.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Username", "Email")
+                        .IsUnique();
+
                     b.ToTable("Admins");
-                });
-
-            modelBuilder.Entity("Parkeringshuset.Models.PSpot", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Electric")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Handicap")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Monthly")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Motorbice")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Regular")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("pSpots");
                 });
 
             modelBuilder.Entity("Parkeringshuset.Models.PTicket", b =>
@@ -101,16 +78,19 @@ namespace Parkeringshuset.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Handicap")
+                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Motorbike")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("TotalSpots")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Regular")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Used")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Ptypes");
                 });
@@ -125,6 +105,9 @@ namespace Parkeringshuset.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RegistrationNumber")
+                        .IsUnique();
 
                     b.ToTable("Vehicles");
                 });

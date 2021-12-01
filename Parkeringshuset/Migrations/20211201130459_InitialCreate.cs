@@ -23,31 +23,14 @@ namespace Parkeringshuset.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "pSpots",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Motorbice = table.Column<int>(type: "INTEGER", nullable: false),
-                    Electric = table.Column<int>(type: "INTEGER", nullable: false),
-                    Handicap = table.Column<int>(type: "INTEGER", nullable: false),
-                    Regular = table.Column<int>(type: "INTEGER", nullable: false),
-                    Monthly = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_pSpots", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ptypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Handicap = table.Column<string>(type: "TEXT", nullable: true),
-                    Regular = table.Column<string>(type: "TEXT", nullable: true),
-                    Motorbike = table.Column<string>(type: "TEXT", nullable: true)
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Used = table.Column<int>(type: "INTEGER", nullable: false),
+                    TotalSpots = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,6 +81,12 @@ namespace Parkeringshuset.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Admins_Username_Email",
+                table: "Admins",
+                columns: new[] { "Username", "Email" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ptickets_TypeId",
                 table: "Ptickets",
                 column: "TypeId");
@@ -106,15 +95,24 @@ namespace Parkeringshuset.Migrations
                 name: "IX_Ptickets_VehicleId",
                 table: "Ptickets",
                 column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ptypes_Name",
+                table: "Ptypes",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_RegistrationNumber",
+                table: "Vehicles",
+                column: "RegistrationNumber",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Admins");
-
-            migrationBuilder.DropTable(
-                name: "pSpots");
 
             migrationBuilder.DropTable(
                 name: "Ptickets");

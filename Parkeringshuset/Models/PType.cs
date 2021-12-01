@@ -1,5 +1,6 @@
 ﻿namespace Parkeringshuset.Models
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -7,15 +8,16 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class PType
+    [Index(nameof(Name), IsUnique = true)]
+    public class PType
     {
         [Key]
         public int Id { get; set; }
 
-        public string Handicap { get; set; }
+        public string Name { get; set; }
 
-        public string Regular { get; set; }
+        public int Used { get; set; }
 
-        public string Motorbike { get; set; }
+        public int TotalSpots { get; set; }
     }
 }

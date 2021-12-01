@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class PTicket
+    public class PTicket
     {
         [Key]
         public int Id { get; set; }

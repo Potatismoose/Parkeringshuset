@@ -1,4 +1,5 @@
-﻿using Parkeringshuset.Models;
+﻿using Parkeringshuset.Helpers;
+using Parkeringshuset.Models;
 using Parkeringshuset.Views;
 
 namespace Parkeringshuset
@@ -7,6 +8,9 @@ namespace Parkeringshuset
     { 
         static void Main(string[] args)
         {
+            SeedData.RunMock();
+           
+
             //ParkingGarage pg = new(12);
             //Menu menu = new(pg);
             //menu.PrintMainMenu();

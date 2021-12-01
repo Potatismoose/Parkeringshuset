@@ -1,25 +1,28 @@
 ﻿namespace Parkeringshuset.Models
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class PSpot
+    [Index(nameof(Motorbike),nameof(Electric),nameof(Handicap),nameof(Regular), 
+           nameof(Monthly), IsUnique = true)]
+    public class PSpot
     {
 
         public int Id { get; set; }
 
-        public int Motorbice { get; set; } = 10;
+        public int Motorbike { get; set; }
 
-        public int Electric { get; set; } = 30;
+        public int Electric { get; set; }
 
-        public int Handicap { get; set; } = 10;
+        public int Handicap { get; set; }
 
-        public int Regular { get; set; } = 120;
+        public int Regular { get; set; } 
 
-        public int Monthly { get; set; } = 30;
+        public int Monthly { get; set; }
 
     }
 }

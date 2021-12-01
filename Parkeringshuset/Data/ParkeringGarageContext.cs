@@ -9,9 +9,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class ParkeringGarageContext : DbContext
+    public class ParkeringGarageContext : DbContext
     {
-        public string DatabaseName = "ParkinGarage.db";
+        public string DatabaseName = "ParkingGarage.db";
         public DbSet<PTicket> Ptickets { get;set; }
 
         public DbSet<PType> Ptypes { get; set; }
@@ -20,7 +20,6 @@
 
         public DbSet<Admin> Admins { get; set; }
 
-        public DbSet<PSpot> pSpots { get; set; }
 
         
 
