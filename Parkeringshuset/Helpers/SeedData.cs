@@ -13,8 +13,6 @@
     {
 
         public static ParkeringGarageContext Db = new();
-        public static void Mock()
-        {
 
         public static void RunMock()
         {
@@ -25,9 +23,9 @@
             {
                 Db.Ptypes.Add(new PType { Name = "Handicap", TotalSpots = 10 });
                 Db.Ptypes.Add(new PType { Name = "Regular", TotalSpots = 120 });
-                Db.Ptypes.Add(new PType { Name = "Electric", TotalSpots= 30 });
-                Db.Ptypes.Add(new PType { Name = "Monthly", TotalSpots= 30 });
-                Db.Ptypes.Add(new PType { Name = "Motorbike", TotalSpots=10 });
+                Db.Ptypes.Add(new PType { Name = "Electric", TotalSpots = 30 });
+                Db.Ptypes.Add(new PType { Name = "Monthly", TotalSpots = 30 });
+                Db.Ptypes.Add(new PType { Name = "Motorbike", TotalSpots = 10 });
 
                 Db.SaveChanges();
             }
@@ -36,8 +34,6 @@
                 Console.WriteLine(ex.Message);
             }
 
-
-           
         }
     }
 }
