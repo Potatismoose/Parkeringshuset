@@ -1,6 +1,7 @@
 ﻿using Parkeringshuset.Data;
 using Parkeringshuset.Helper;
 using System;
+using System.Linq;
 
 namespace Parkeringshuset.Models
 {
@@ -9,6 +10,12 @@ namespace Parkeringshuset.Models
         public ParkeringGarageContext db = new();
 
         #region Create
+        /// <summary>
+        /// Creates a new ticket in database and set the checkedInTime to now. 
+        /// </summary>
+        /// <param name="regNr">Of the checked in car.</param>
+        /// <param name="type">Type of Vehicle. Make user choose between garages type options.</param>
+        /// <returns></returns>
         public bool CreateTicket(string regNr,string type)
         {
             try
@@ -20,10 +27,12 @@ namespace Parkeringshuset.Models
                 ticket.Vehicle = vehicle;
                
                 ticket.IsPaid = false;
+
                 ticket.CheckedInTime = DateTime.Now;
 
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
+
                 return true;
             }
             catch 
