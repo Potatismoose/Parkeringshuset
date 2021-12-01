@@ -3,18 +3,18 @@ using System.Linq;
 
 namespace Parkeringshuset.Models
 {
-    class ParkingGarage
+    class ParkingGarageController
     {
         private int MaxNoOfVehicles { get; set; } = 175;
 
-        public List<ParkingMeter> ParkingMeters = new();
+        public List<ParkingMeterController> ParkingMeters = new();
         public int HourlyCost { get; set; }
 
-        public ParkingGarage(int hourlyCost)
+        public ParkingGarageController(int hourlyCost)
         {
             HourlyCost = hourlyCost;
             ParkingMeters.Add(
-                new ParkingMeter("Main Floor", HourlyCost)
+                new ParkingMeterController("Main Floor", HourlyCost)
                 );
         }
 
@@ -39,7 +39,7 @@ namespace Parkeringshuset.Models
 
             foreach (var parkingmeter in ParkingMeters)
             {
-                List<ParkingTicket> activeTicket = new();
+                List<ParkingTicketController> activeTicket = new();
                 if (parkingmeter.GetActiveTickets() != null)
                 {
                     foreach (var ticket in parkingmeter.GetActiveTickets())

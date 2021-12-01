@@ -2,7 +2,7 @@
 
 namespace Parkeringshuset.Models
 {
-    public class ParkingTicket
+    public class ParkingTicketController
     {
         private Vehicle AssociatedVehicle;
         private DateTime ArrivalTime;
@@ -10,14 +10,14 @@ namespace Parkeringshuset.Models
         private int PricePerStartedHour;
      
 
-        public ParkingTicket(Vehicle associatedVehicle, int hourlyCost)
+        public ParkingTicketController(Vehicle associatedVehicle, int hourlyCost)
         {
             ArrivalTime = DateTime.Now;
             AssociatedVehicle = associatedVehicle;
             PricePerStartedHour = hourlyCost;
         }
 
-        public ParkingTicket Checkout()
+        public ParkingTicketController Checkout()
         {
             CheckoutTime = DateTime.Now;
             CalculateCost();

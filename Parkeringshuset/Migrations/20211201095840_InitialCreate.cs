@@ -76,6 +76,7 @@ namespace Parkeringshuset.Migrations
                     CheckedInTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CheckedOutTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Cost = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsPaid = table.Column<bool>(type: "INTEGER", nullable: false),
                     VehicleId = table.Column<int>(type: "INTEGER", nullable: true),
                     TypeId = table.Column<int>(type: "INTEGER", nullable: true)
                 },

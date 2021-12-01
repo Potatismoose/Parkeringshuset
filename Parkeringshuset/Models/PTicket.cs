@@ -18,9 +18,13 @@
 
         public int Cost { get; set; }
 
+        public bool IsPaid { get; set; }
+
         public Vehicle Vehicle  { get; set; }
 
         public PType Type  { get; set; }
+
+        
 
 
     }

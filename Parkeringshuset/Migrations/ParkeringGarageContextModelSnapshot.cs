@@ -77,6 +77,9 @@ namespace Parkeringshuset.Migrations
                     b.Property<int>("Cost")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("TypeId")
                         .HasColumnType("INTEGER");
 

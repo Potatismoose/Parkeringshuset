@@ -9,7 +9,7 @@ using Parkeringshuset.Data;
 namespace Parkeringshuset.Migrations
 {
     [DbContext(typeof(ParkeringGarageContext))]
-    [Migration("20211130104131_InitialCreate")]
+    [Migration("20211201095840_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,9 @@ namespace Parkeringshuset.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Cost")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPaid")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("TypeId")
