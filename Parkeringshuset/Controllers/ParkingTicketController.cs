@@ -1,6 +1,7 @@
 ﻿using Parkeringshuset.Data;
 using Parkeringshuset.Helper;
 using System;
+using System.Linq;
 
 namespace Parkeringshuset.Models
 {
@@ -20,10 +21,12 @@ namespace Parkeringshuset.Models
                 ticket.Vehicle = vehicle;
                
                 ticket.IsPaid = false;
+
                 ticket.CheckedInTime = DateTime.Now;
 
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
+
                 return true;
             }
             catch 
