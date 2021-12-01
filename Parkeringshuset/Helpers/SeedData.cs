@@ -13,35 +13,8 @@
     {
 
         public static ParkeringGarageContext Db = new();
-        public static void Mock()
-        {
-
-        //    if (Db.pSpots.Any())
-        //    {
-               
-        //    }
-        //    else
-        //    {
-        //        // Initial seed to create how many parking spots that exsits in the garage. 
-        //        PSpot pSpot = new();
-        //        pSpot.Monthly = 30;
-        //        pSpot.Handicap = 10;
-        //        pSpot.Regular = 120;
-        //        pSpot.Motorbike = 10;
-        //        pSpot.Electric = 30;
-
-
-        //        Db.pSpots.Add(pSpot);
-        //        Db.SaveChanges();
-        //    }
-
-        //    var firstID = Db.pSpots.FirstOrDefault(p => p.Id == 1);
-        //    Console.WriteLine(firstID.Monthly); 
-
-
-        }
-
-        public static void TestPType()
+    
+        public static void RunMock()
         {
             var hcp = Db.Ptypes.FirstOrDefault(p => p.Name == "Handicap");
             DisplayHelper.DisplayGreen(hcp.TotalSpots.ToString());
