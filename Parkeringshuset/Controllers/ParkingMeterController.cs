@@ -4,27 +4,27 @@ using System.Linq;
 
 namespace Parkeringshuset.Models
 {
-    class ParkingMeter
+    class ParkingMeterController
     {
 
         private string Name { get; set; }
-        List<ParkingTicket> ParkingTickets;
+        List<ParkingTicketController> ParkingTickets;
         public int HourlyCost { get; }
 
-        public ParkingMeter(string name, int hourlyCost)
+        public ParkingMeterController(string name, int hourlyCost)
         {
             Name = name;
             ParkingTickets = new();
             HourlyCost = hourlyCost;
         }
 
-        public ParkingTicket CreateTicket(Vehicle vechicle)
+        public ParkingTicketController CreateTicket(Vehicle vechicle)
         {
-            ParkingTickets.Add(new ParkingTicket(vechicle, HourlyCost));
+            ParkingTickets.Add(new ParkingTicketController(vechicle, HourlyCost));
             return ParkingTickets[^1];
         }
 
-        public List<ParkingTicket> GetActiveTickets()
+        public List<ParkingTicketController> GetActiveTickets()
         {
             if (ParkingTickets.Count > 0)
             {
@@ -36,7 +36,7 @@ namespace Parkeringshuset.Models
             return null;
         }
 
-        public IEnumerable<ParkingTicket> GetAllSoldTickets(DateTime startDate, DateTime endDate)
+        public IEnumerable<ParkingTicketController> GetAllSoldTickets(DateTime startDate, DateTime endDate)
         {
             return ParkingTickets.ToList()
                 .Where(x =>
@@ -45,9 +45,9 @@ namespace Parkeringshuset.Models
                 && x.ReturnCheckoutTime() < endDate.AddDays(1));
         }
 
-        public (bool checkOutSuccessful, ParkingTicket ticket) CheckoutVehicle(Vehicle vehicle)
+        public (bool checkOutSuccessful, ParkingTicketController ticket) CheckoutVehicle(Vehicle vehicle)
         {
-            ParkingTicket checkedOutVechicle = null;
+            ParkingTicketController checkedOutVechicle = null;
             var ticket = ParkingTickets.FirstOrDefault(x =>
                 x.TicketIsStillActive()
                 && x.IsSameVehicle(vehicle));
