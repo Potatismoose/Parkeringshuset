@@ -13,7 +13,9 @@
     {
 
         public static ParkeringGarageContext Db = new();
-    
+        public static void Mock()
+        {
+
         public static void RunMock()
         {
             var hcp = Db.Ptypes.FirstOrDefault(p => p.Name == "Handicap");
