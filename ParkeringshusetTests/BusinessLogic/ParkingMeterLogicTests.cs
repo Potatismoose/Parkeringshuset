@@ -7,9 +7,12 @@ namespace Parkeringshuset.BusinessLogic.Tests
     public class ParkingMeterLogicTests
     {
         [Test()]
-        public void CheckInTest()
+        public void CalculateCost()
         {
-            Assert.Fail();
+            ParkingMeterLogic pmLogic = new();
+            var result = pmLogic.CalculateCost();
+           
+            Assert.AreEqual(result, 110);
         }
     }
 }
