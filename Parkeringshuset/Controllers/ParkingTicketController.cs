@@ -1,6 +1,7 @@
 ﻿using Parkeringshuset.Data;
 using Parkeringshuset.Helper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Parkeringshuset.Models
@@ -9,55 +10,68 @@ namespace Parkeringshuset.Models
     {
         public ParkeringGarageContext db = new();
 
+        public int CostOfParking { get; private set; }
+
         #region Create
         /// <summary>
         /// Creates a new ticket in database and set the checkedInTime to now. 
         /// </summary>
         /// <param name="regNr">Of the checked in car.</param>
-        /// <param name="type">Type of Vehicle. Make user choose between garages type options.</param>
+        /// <param name="type">Type of Vehicle. Make user choose between garages type options.
+        /// </param>
         /// <returns></returns>
-        public bool CreateTicket(string regNr,string type)
+        public bool CreateTicket(string regNr, PType type)
         {
             try
             {
-                PTicket ticket = new PTicket();
-                
-                Vehicle vehicle = new Vehicle() { RegistrationNumber = regNr };
-
+                PTicket ticket = new();
+                Vehicle vehicle = new() { RegistrationNumber = regNr };
                 ticket.Vehicle = vehicle;
-               
                 ticket.IsPaid = false;
-
+                ticket.Type = type;
                 ticket.CheckedInTime = DateTime.Now;
-
+                ticket.CheckedOutTime = DateTime.MinValue;
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
 
                 return true;
             }
-            catch 
-            {   
-                return false;   
+            catch
+            {
+                return false;
             }
-
         }
-#endregion 
+        #endregion
 
+        /// <summary>
+        /// Checks out the vehicle and sets the CheckedOutTime.
+        /// </summary>
+        /// <param name="regNr">The reqNr of the vehicle.</param>
+        /// <returns>True if checking out is successfull and false if the vehicle is not checked in
+        /// or the regNr is wrong.</returns>
+        public bool CheckOut(string regNr)
+        {
+            var vehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
 
+            if (vehicle == null)
+            {
+                return false;
+            }
+            var ticket = db.Ptickets.FirstOrDefault(
+                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue);
 
-        
+            ticket.CheckedOutTime = DateTime.Now;
+            db.Ptickets.Update(ticket);
+            db.SaveChanges();
 
+            return true;
+        }
     }
 }
-
-
-
-
 //private Vehicle AssociatedVehicle;
 //private DateTime ArrivalTime;
 //private DateTime? CheckoutTime = null;
 //private int PricePerStartedHour;
-
 
 //public ParkingTicketController(Vehicle associatedVehicle, int hourlyCost)
 //{
