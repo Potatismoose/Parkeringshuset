@@ -66,6 +66,26 @@ namespace Parkeringshuset.Models
 
             return true;
         }
+
+        /// <summary>
+        /// Gets the active ticket for the regNr.
+        /// </summary>
+        /// <param name="regNr">The reqNr of the vehicle.</param>
+        /// <returns>A ticket if the vehicle is not checked out and null if the regNr is wrong or
+        /// does not exist.</returns>
+        public PTicket GetActiveTicket(string regNr)
+        {
+            var vehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
+
+            if (vehicle == null){
+                return null;
+            }
+
+            var ticket = db.Ptickets.FirstOrDefault(
+                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue);
+
+            return ticket;
+        }
     }
 }
 //private Vehicle AssociatedVehicle;
