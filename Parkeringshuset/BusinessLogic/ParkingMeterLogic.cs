@@ -106,23 +106,20 @@
                     totalTime = checkOut - incheck;
                     lunchMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, lunchTime);
                     incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, lunchTime));
-
                 }
 
                 if (incheck.TimeOfDay >= lunchTime.TimeOfDay && incheck.TimeOfDay < evningTime.TimeOfDay) //13-17.59
                 {
                     totalTime = checkOut - incheck;
                     evningMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, evningTime);
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, evningTime));
-                 
+                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, evningTime));            
                 }
 
                 if (incheck.TimeOfDay >= evningTime.TimeOfDay)   //18-23.59
                 {
-                    totalTime = checkOut - incheck;
-                    nightMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, nightTime);
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, nightTime) + 1);
-                     
+                    totalTime = checkOut - incheck;                                                                 // DateTime dosent accept 24:00. there for i set nightime to 23.59.
+                    nightMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, nightTime);                      // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over         
+                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, nightTime) + 1);         // the night.             
                 }
             }
 
@@ -131,8 +128,6 @@
                 (lunchMinutes * 0.166666666) +
                 (evningMinutes * 0.3333333333) +
                 (nightMinutes * 0.166666666));
-
-
         }
 
         private static double MinutesInThisTimeSlot(DateTime incheck, TimeSpan totalTime, DateTime CategoryTime)
