@@ -1,4 +1,4 @@
-﻿using Parkeringshuset.Data;
+using Parkeringshuset.Data;
 using Parkeringshuset.Helper;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Parkeringshuset.Models
         /// <param name="type">Type of Vehicle. Make user choose between garages type options.
         /// </param>
         /// <returns></returns>
-        public bool CreateTicket(string regNr, PType type)
+        public bool CreateTicket(string regNr, string type)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Parkeringshuset.Models
                 Vehicle vehicle = new() { RegistrationNumber = regNr };
                 ticket.Vehicle = vehicle;
                 ticket.IsPaid = false;
-                ticket.Type = type;
+                ticket.Type = ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == pType);
                 ticket.CheckedInTime = DateTime.Now;
                 if (type.Name == "Monthly")
                 {
