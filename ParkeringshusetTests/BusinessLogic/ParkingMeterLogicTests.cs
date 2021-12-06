@@ -28,7 +28,7 @@ namespace Parkeringshuset.BusinessLogic.Tests
         public void CalculateCostTest_()
         {
             DateTime checkIn = new DateTime(2021, 12, 01, 12, 00, 00);
-            DateTime checkOut = new DateTime(2021, 12, 02, 12, 00, 00);
+            DateTime checkOut = new DateTime(2021, 12, 02, 15, 00, 00);
             var result = CalculateCostLogic.Cost(checkIn, checkOut);
 
             Assert.AreEqual(270, result);
