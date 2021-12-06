@@ -30,7 +30,14 @@ namespace Parkeringshuset.Models
                 ticket.IsPaid = false;
                 ticket.Type = type;
                 ticket.CheckedInTime = DateTime.Now;
-                ticket.CheckedOutTime = DateTime.MinValue;
+                if (type.Name == "Monthly")
+                {
+                    ticket.CheckedOutTime = DateTime.Now.AddDays(30);
+                }
+                else
+                {
+                    ticket.CheckedOutTime = DateTime.Now;
+                }
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
 
@@ -69,12 +76,13 @@ namespace Parkeringshuset.Models
         {
             var vehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
 
-            if (vehicle == null){
+            if (vehicle == null)
+            {
                 return null;
             }
 
             var ticket = db.Ptickets.FirstOrDefault(
-                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue || 
+                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue ||
                 x.Type.Name == "Monthly");
 
             return ticket;
@@ -85,10 +93,12 @@ namespace Parkeringshuset.Models
         /// </summary>
         /// <param name="ticket">The ticket to check.</param>
         /// <returns>True if the ticket is active, otherwise false.</returns>
-        public bool IsTicketActive(PTicket ticket){
+        public bool IsTicketActive(PTicket ticket)
+        {
             var t = db.Ptickets.FirstOrDefault(x => x.CheckedOutTime == DateTime.MinValue);
 
-            if (t == null){
+            if (t == null)
+            {
                 return false;
             }
 
@@ -100,7 +110,8 @@ namespace Parkeringshuset.Models
         /// </summary>
         /// <param name="ticket">The ticket to check.</param>
         /// <returns>True if the ticket is payed, otherwise false.</returns>
-        public bool IsPayed(PTicket ticket){
+        public bool IsPayed(PTicket ticket)
+        {
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
             if (IsTicketActive(ticket) || !t.IsPaid)
             {
@@ -114,10 +125,12 @@ namespace Parkeringshuset.Models
         /// </summary>
         /// <param name="ticket">The ticket to check.</param>
         /// <returns>True if the ticket is monthly otherwise false.</returns>
-        public bool IsMonthly(PTicket ticket){
+        public bool IsMonthly(PTicket ticket)
+        {
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
-            if (t == null){
+            if (t == null)
+            {
                 return false;
             }
 
