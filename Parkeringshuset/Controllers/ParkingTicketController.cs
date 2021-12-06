@@ -74,7 +74,8 @@ namespace Parkeringshuset.Models
             }
 
             var ticket = db.Ptickets.FirstOrDefault(
-                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue);
+                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue || 
+                x.Type.Name == "Monthly");
 
             return ticket;
         }
@@ -86,6 +87,11 @@ namespace Parkeringshuset.Models
         /// <returns>True if the ticket is active, otherwise false.</returns>
         public bool IsTicketActive(PTicket ticket){
             var t = db.Ptickets.FirstOrDefault(x => x.CheckedOutTime == DateTime.MinValue);
+
+            if (t == null){
+                return false;
+            }
+
             return ticket.CheckedOutTime == t.CheckedOutTime;
         }
 
@@ -110,6 +116,10 @@ namespace Parkeringshuset.Models
         /// <returns>True if the ticket is monthly otherwise false.</returns>
         public bool IsMonthly(PTicket ticket){
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
+
+            if (t == null){
+                return false;
+            }
 
             return t.Type.Name == "Monthly";
         }
