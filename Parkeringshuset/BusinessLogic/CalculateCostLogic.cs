@@ -20,7 +20,7 @@
         private static DateTime CheckIn;
         private static DateTime CheckOut;
 
-        public static double Cost(DateTime checkIn, DateTime checkOut)
+        public static int Cost(DateTime checkIn, DateTime checkOut)
         {
             CheckIn = checkIn;
             CheckOut = checkOut;
@@ -52,7 +52,7 @@
                     CheckIn = CheckIn.AddMinutes(1);                                         // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
                 }                                                                            // the night.
             }
-            return Math.Round(
+            return (int)Math.Round(
                  (MorningMinsCounter * 0.0833333333) +
                 (LunchMinsCounter * 0.166666666) +
                 (EveningMinsCounter * 0.3333333333) +
