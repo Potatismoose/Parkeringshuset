@@ -12,7 +12,9 @@
 
         public bool CheckIn(string regNr, string pType)
         {
-            if (Pm.IsMonthly(regNr))
+            var ticket = Pm.GetActiveTicket(regNr);
+
+            if (Pm.IsMonthly(ticket))
             {
                 // The customer has an active Monthleyticket
                 return true;
@@ -22,7 +24,7 @@
             {
                 //  Om vi kopplar på API mot Transportstyrelsen, kör den checken här!
 
-                if (Pm?.CreateTicket(regNr))
+                if (Pm.CreateTicket(regNr, pType))
                 {
                     DisplayHelper.DisplayGreen("Ticket is activated. Welcome!");
                     return true;
@@ -46,7 +48,7 @@
             if (ticket is not null)
             {
                 DateTime timeOfCheckOut = DateTime.Now;
-                ticket.Cost = CalculateCostLogic.Cost(ticket.CheckedIn, timeOfCheckOut);
+                ticket.Cost = CalculateCostLogic.Cost(ticket.CheckedInTime, timeOfCheckOut);
 
                 if (IsCardCredentialsValid(cardInfo, CSV))
                 {
