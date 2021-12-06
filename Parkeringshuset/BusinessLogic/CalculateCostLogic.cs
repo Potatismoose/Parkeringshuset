@@ -8,83 +8,74 @@
 
     public static class CalculateCostLogic
     {
+
+        private static TimeSpan TotalTime;
+        private static DateTime MorningTime = new DateTime(2021, 01, 01, 06, 00, 00);
+        private static DateTime LunchTime = new DateTime(2021, 01, 01, 12, 00, 00);
+        private static DateTime EvningTime = new DateTime(2021, 01, 01, 18, 00, 00);
+        private static DateTime NightTime = new DateTime(2021, 01, 01, 23, 59, 00);
+        private static int MorningMinsCounter = 0;
+        private static int LunchMinsCounter = 0;
+        private static int EvningMinsCounter = 0;
+        private static int NightMinsCounter = 0;
+        private static DateTime CheckIn;
+        private static DateTime CheckOut;
+
         public static double CalculateCost()
         {
-            DateTime checkOut = new DateTime(2021, 12, 03, 09, 00, 00);   // checkout.
-            DateTime incheck = new DateTime(2021, 12, 02, 19, 00, 00);  // checkin
+            CheckOut = new DateTime(2021, 12, 02, 12, 00, 00);   // checkout.
+            CheckIn = new DateTime(2021, 12, 01, 12, 00, 00);  // checkin
 
-            var totalTime = checkOut - incheck;             // get the parkingtime in hours and minutes.
-            var NumberOfDays = (int)totalTime.TotalDays;    // if the parking is less then 24 hours but over the night we need to add a day to make the for loop run correctly
-
-            if (NumberOfDays < 1 && incheck.Date != checkOut.Date)
-            {
-                NumberOfDays = 1;
-            }
-
-            int morningMinutes = 0, lunchMinutes = 0, evningMinutes = 0, nightMinutes = 0;   // declaring variabels I need down below.
-
-            DateTime morningTime, lunchTime, evningTime, nightTime;
-            GetTimeSlotsInDateTime(out morningTime, out lunchTime, out evningTime, out nightTime);
+            var tempDayCheck = CheckOut.Date - CheckIn.Date;
+            var NumberOfDays = tempDayCheck.TotalDays;
 
             for (int i = 0; i <= NumberOfDays; i++)
             {
-                if (incheck.TimeOfDay < morningTime.TimeOfDay)  // 00-05.59
+                if (CheckIn.TimeOfDay < MorningTime.TimeOfDay)  // 00-05.59
                 {
-                    totalTime = checkOut - incheck;
-                    morningMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, morningTime);
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, morningTime));
+                    MinutesInThisTimeSlot(MorningTime, ref MorningMinsCounter);
                 }
 
-                if (incheck.TimeOfDay >= morningTime.TimeOfDay && incheck.TimeOfDay < lunchTime.TimeOfDay) // 06-12.59
-                {
-                    totalTime = checkOut - incheck;
-                    lunchMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, lunchTime);
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, lunchTime));
+                if (CheckIn.TimeOfDay >= MorningTime.TimeOfDay && CheckIn.TimeOfDay < LunchTime.TimeOfDay) // 06-12.59
+                {              
+                    MinutesInThisTimeSlot(LunchTime, ref  LunchMinsCounter);
                 }
 
-                if (incheck.TimeOfDay >= lunchTime.TimeOfDay && incheck.TimeOfDay < evningTime.TimeOfDay) //13-17.59
+                if (CheckIn.TimeOfDay >= LunchTime.TimeOfDay && CheckIn.TimeOfDay < EvningTime.TimeOfDay) //13-17.59
                 {
-                    totalTime = checkOut - incheck;
-                    evningMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, evningTime);
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, evningTime));
+                    MinutesInThisTimeSlot(EvningTime, ref EvningMinsCounter);
                 }
 
-                if (incheck.TimeOfDay >= evningTime.TimeOfDay)   //18-23.59
+                if (CheckIn.TimeOfDay >= EvningTime.TimeOfDay)   //18-23.59                              
                 {
-                    totalTime = checkOut - incheck;                                                                 // DateTime dosent accept 24:00. there for i set nightime to 23.59.
-                    nightMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, nightTime);                      // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, nightTime) + 1);         // the night.
-                }
+                    MinutesInThisTimeSlot(NightTime, ref NightMinsCounter);                    // DateTime dosent accept 24:00. there for i set nightime to 23.59.   
+                    CheckIn = CheckIn.AddMinutes(1);                                         // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
+                }                                                                            // the night.
             }
-
             return Math.Round(
-                 (morningMinutes * 0.0833333333) +
-                (lunchMinutes * 0.166666666) +
-                (evningMinutes * 0.3333333333) +
-                (nightMinutes * 0.166666666));
+                 (MorningMinsCounter * 0.0833333333) +
+                (LunchMinsCounter * 0.166666666) +
+                (EvningMinsCounter * 0.3333333333) +
+                (NightMinsCounter * 0.166666666));
         }
 
-        private static double MinutesInThisTimeSlot(DateTime incheck, TimeSpan totalTime, DateTime CategoryTime)
+        private static void MinutesInThisTimeSlot(DateTime CategoryTime, ref int counter)
         {
             TimeSpan totalHoursInThisCategory;
-            if (totalTime.TotalMinutes <= 360)
+            TotalTime = CheckOut - CheckIn;
+            if (TotalTime.TotalMinutes <= 360)
             {
-                totalHoursInThisCategory = totalTime;
+                totalHoursInThisCategory = TotalTime;
             }
             else
             {
-                totalHoursInThisCategory = CategoryTime.TimeOfDay - incheck.TimeOfDay;
+                totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
             }
 
-            return totalHoursInThisCategory.TotalMinutes;
+            counter = (int)totalHoursInThisCategory.TotalMinutes;
+
+            CheckIn = CheckIn.AddMinutes(totalHoursInThisCategory.TotalMinutes);
         }
 
-        private static void GetTimeSlotsInDateTime(out DateTime morningTime, out DateTime lunchTime, out DateTime EvningTime, out DateTime NightTime)
-        {
-            morningTime = new DateTime(2021, 01, 01, 06, 00, 00);
-            lunchTime = new DateTime(2021, 01, 01, 12, 00, 00);
-            EvningTime = new DateTime(2021, 01, 01, 18, 00, 00);
-            NightTime = new DateTime(2021, 01, 01, 23, 59, 00);
-        }
     }
 }

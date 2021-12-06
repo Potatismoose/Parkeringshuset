@@ -9,10 +9,9 @@ namespace Parkeringshuset.BusinessLogic.Tests
         [Test()]
         public void CalculateCost()
         {
-            ParkingMeterLogic pmLogic = new();
-            var result = pmLogic.CalculateCost();
+            var result = CalculateCostLogic.CalculateCost();
            
-            Assert.AreEqual(result, 110);
+            Assert.AreEqual(270,result);
         }
     }
 }
