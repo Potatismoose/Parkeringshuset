@@ -1,35 +1,52 @@
 ﻿using Parkeringshuset.Models;
 using Spire.Pdf;
 using System;
-using System.Collections.Generic;
 using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
     internal class PrintingHelper
     {
+        /// <summary>
+        /// Adapter method (calls other methods).
+        /// Creates a html boilerplate code. Then injects the ticket information
+        /// to that boilerplate code.
+        /// Then converts that html boilerplate code into pdf format before sending it to
+        /// the method PrintPdfParkingTicket to print the ticket.
+        /// </summary>
+        /// <param name="ticket"></param>
+        /// <returns>true if the ticket is created and printed.</returns>
         public static bool PhysicalTicketCreationAndPrintout(PTicket ticket)
         {
-            HtmlCreator.CreateHtmlBoilerPlateCode();
-            HtmlCreator.InsertTicketInformationInHtmlFile(ticket);
-            PdfCreator.CreatePdfFromHtmlFile();
-            PrintPdfParkingTicket();
-            return true;
+            if (HtmlCreator.CreateHtmlBoilerPlateCode()
+                && HtmlCreator.InsertTicketInformationInHtmlFile(ticket)
+                && PdfCreator.CreatePdfFromHtmlFile()
+                && PrintPdfParkingTicket())
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        private static void PrintPdfParkingTicket()
+        private static bool PrintPdfParkingTicket()
         {
-            Console.WriteLine("Printing PDF file");
-            PdfDocument pdf = new PdfDocument();
-            pdf.LoadFromFile("parkingTicket.pdf");
-            //Set the printer 
-            pdf.PrintSettings.PrinterName = GetDefaultPrinter();
-            //Print the first page
-            pdf.PrintSettings.SelectPageRange(1, 1);
-            pdf.Print();
+            try
+            {
+                Console.WriteLine("Printing PDF file");
+                PdfDocument pdf = new PdfDocument();
+                pdf.LoadFromFile("parkingTicket.pdf");
+                //Set the printer
+                pdf.PrintSettings.PrinterName = GetDefaultPrinter();
+                //Print the first page
+                pdf.PrintSettings.SelectPageRange(1, 1);
+                pdf.Print();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static string GetDefaultPrinter()

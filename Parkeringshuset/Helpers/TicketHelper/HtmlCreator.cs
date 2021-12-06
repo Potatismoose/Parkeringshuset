@@ -13,9 +13,10 @@ namespace Parkeringshuset.Helpers.TicketHelper
     {
         static string fileName = "ticket.html";
         static string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
-        public static bool CreateHtmlBoilerPlateCode() {
-            
-            var boilerplateCode = 
+        public static bool CreateHtmlBoilerPlateCode()
+        {
+
+            var boilerplateCode =
 $@"<!DOCTYPE html>
 <html lang='en'>
 <head>
@@ -116,19 +117,19 @@ $@"<!DOCTYPE html>
             catch
             {
                 return false;
-            } 
+            }
         }
 
-        public static void InsertTicketInformationInHtmlFile(PTicket ticket) 
+        public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
             var fileRows = File.ReadAllLines(fullPath);
             List<string> newHtmlFile = new();
-            foreach (var line in fileRows)
+            if (ticket is not null)
             {
-                bool hasFoundLine = false;
-                if (ticket is not null)
-                {                    
+                foreach (var line in fileRows)
+                {
+                    bool hasFoundLine = false;
                     for (int i = 0; i < listOfTicketItems.Count(); i++)
                     {
                         if (line.Contains(listOfTicketItems[i]))
@@ -156,19 +157,22 @@ $@"<!DOCTYPE html>
                             newHtmlFile.Add(newLine);
                             hasFoundLine = true;
                         }
-                    } 
+                    }
+                    if (hasFoundLine)
+                    {
+                        continue;
+                    }
+                    newHtmlFile.Add(line);
                 }
-                if (hasFoundLine) {
-                    hasFoundLine = false;
-                    continue;
-                }
-                newHtmlFile.Add(line);
             }
-
             File.WriteAllLines(fullPath, newHtmlFile);
-            
-            
-                //loopa igenom listan med söktaggar och kolla om arrayens rad innehåller söktagg
+            if (fileRows.Count() < newHtmlFile.Count())
+            {
+                return true;
+            }
+            return false;
+
+            //loopa igenom listan med söktaggar och kolla om arrayens rad innehåller söktagg
         }
     }
 }

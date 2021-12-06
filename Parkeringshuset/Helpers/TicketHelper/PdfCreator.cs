@@ -16,7 +16,8 @@ namespace Parkeringshuset.Helpers.TicketHelper
 {
     internal static class PdfCreator
     {
-    public static bool CreatePdfFromHtmlFile() {
+        public static bool CreatePdfFromHtmlFile()
+        {
             try
             {
                 string filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\ticket.html";
@@ -30,9 +31,9 @@ namespace Parkeringshuset.Helpers.TicketHelper
             catch
             {
                 return false;
-            }         
+            }
         }
 
-        
+
     }
 }
