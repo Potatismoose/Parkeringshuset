@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Parkeringshuset.Views
 {
@@ -7,8 +8,18 @@ namespace Parkeringshuset.Views
 
         public static void RunMainMenu()
         {
-            List<string> menuOptions = new() { "Checka in", "Checka ut" };
-            List<string> menuOptionsAdmin = new() { "Adminfunktioner" };
+            Console.WriteLine("Enter your registration number: ");
+            string regNr = Console.ReadLine();
+            if (string.IsNullOrEmpty(regNr.Trim()))
+            {
+                Console.WriteLine("Can not use empty registration number, please try again.");
+            }
+            if (ParkingMeterLogic.CheckIn(regNr))
+            {
+
+            }
+
+
         }
     }
 }
