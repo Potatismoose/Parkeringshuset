@@ -13,91 +13,90 @@
     {
         private ParkingTicketController Pm = new();
         private ParkingTypeController Pt = new();
-        
+
         public bool CheckIn(string regNr, string pType)
         {
             //if (Pm.IsMonthly(regNr))
             //{
-                //The customer has an active Monthleyticket
-                //return true;
-                
+            //The customer has an active Monthleyticket
+            //return true;
+
             //}
 
             if (Pt?.ReadFreeSpots(pType) > 0)
             {
-                //Om vi kopplar på API mot Transportstyrelsen, kör den checken här! 
+                //Om vi kopplar på API mot Transportstyrelsen, kör den checken här!
 
                 //if(Pm?.CreateTicket(regNr))
                 //{
                 DisplayHelper.DisplayGreen("Ticket is activated. Welcome!");
                 return true;
                 //}
-                //else   
+                //else
                 //{
                 //DisplayHelper.DisplayRed("Check in failed, try again or contact our support");
                 //return false;
                 //}
-                
             }
             else
             {
                 DisplayHelper.DisplayRed("There is no available parking spots for this type.");
                 return false;
             }
-        } 
+        }
 
-
-
-        public bool CheckOut (string regNr, string cardInfo, string CSV)
+        public void CheckOut(string regNr, string cardInfo, string CSV)
         {
-            if (IsCardCredentialsValid(cardInfo, CSV))
+            var ticket = Pm.GetActiveTicket(regNr);
+            if (ticket is not null)
             {
-                CalculateCost();
+                DateTime timeOfCheckOut = DateTime.Now;
+                var ticket.Cost = CalculateCost(ticket.CheckedIn, timeOfCheckOut);
 
-
-
-                //if(Pm.CheckOut(regNr))
-                //{
-                //    return true;
-                //}
-
+                if (IsCardCredentialsValid(cardInfo, CSV))
+                {
+                    ticket.IsPaid = true;
+                    DisplayHelper.DisplayGreen($"The transaction was successful!\nThe total fee was: {ticket.Cost} kr");
+                }
+                else
+                {
+                    DisplayHelper.DisplayRed($"The card credentials was invalid! An invoice is sent to the adress of the car with registration number: {regNr}");
+                }
+                if (!Pm.CheckOut(ticket))
+                {
+                    DisplayHelper.DisplayRed("The check out was not successful. Please contact support.");
+                }
             }
-            return false;
-
-
-            //Betalning. om ja =>
-            // checkout mot controller
-            // om nej =>
-            // feedback på betalning ej ok.
-            // 
-
+            else
+            {
+                DisplayHelper.DisplayRed("Ticket was not found!");
+            }
         }
 
         public double CalculateCost()
         {
-
-            DateTime checkOut = new DateTime(2021, 12, 03, 09, 00, 00);   // checkout. 
+            DateTime checkOut = new DateTime(2021, 12, 03, 09, 00, 00);   // checkout.
             DateTime incheck = new DateTime(2021, 12, 02, 19, 00, 00);  // checkin
 
             var totalTime = checkOut - incheck;             // get the parkingtime in hours and minutes.
             var NumberOfDays = (int)totalTime.TotalDays;    // if the parking is less then 24 hours but over the night we need to add a day to make the for loop run correctly
 
-            if (NumberOfDays < 1 && incheck.Date != checkOut.Date)                                                                   
+            if (NumberOfDays < 1 && incheck.Date != checkOut.Date)
             {
                 NumberOfDays = 1;
             }
 
-            int morningMinutes = 0, lunchMinutes = 0 , evningMinutes = 0, nightMinutes = 0;   // declaring variabels I need down below.
-        
+            int morningMinutes = 0, lunchMinutes = 0, evningMinutes = 0, nightMinutes = 0;   // declaring variabels I need down below.
+
             DateTime morningTime, lunchTime, evningTime, nightTime;
             GetTimeSlotsInDateTime(out morningTime, out lunchTime, out evningTime, out nightTime);
 
-            for (int i = 0; i <= NumberOfDays; i++) 
+            for (int i = 0; i <= NumberOfDays; i++)
             {
                 if (incheck.TimeOfDay < morningTime.TimeOfDay)  // 00-05.59
                 {
                     totalTime = checkOut - incheck;
-                    morningMinutes +=(int)MinutesInThisTimeSlot(incheck, totalTime, morningTime);
+                    morningMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, morningTime);
                     incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, morningTime));
                 }
 
@@ -112,14 +111,14 @@
                 {
                     totalTime = checkOut - incheck;
                     evningMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, evningTime);
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, evningTime));            
+                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, evningTime));
                 }
 
                 if (incheck.TimeOfDay >= evningTime.TimeOfDay)   //18-23.59
                 {
                     totalTime = checkOut - incheck;                                                                 // DateTime dosent accept 24:00. there for i set nightime to 23.59.
-                    nightMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, nightTime);                      // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over         
-                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, nightTime) + 1);         // the night.             
+                    nightMinutes += (int)MinutesInThisTimeSlot(incheck, totalTime, nightTime);                      // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
+                    incheck = incheck.AddMinutes(MinutesInThisTimeSlot(incheck, totalTime, nightTime) + 1);         // the night.
                 }
             }
 
@@ -136,7 +135,6 @@
             if (totalTime.TotalMinutes <= 360)
             {
                 totalHoursInThisCategory = totalTime;
-
             }
             else
             {
@@ -167,9 +165,6 @@
             return false;
         }
 
-
-
-
         //public bool IsCarParkedInGarageAlreadyOrMonthly()
         //        {
         // om det finns reg nr i vehicle = bilen har köpt har en biljett en gång i tiden.
@@ -192,9 +187,8 @@
 
         //2. Checkout
 
-
         //3. PrintTicket
 
-        //.4 Payment(int cardnr) sätt så ispayed = true. 
+        //.4 Payment(int cardnr) sätt så ispayed = true.
     }
 }
