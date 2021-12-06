@@ -29,11 +29,16 @@ namespace Parkeringshuset.Helpers.TicketHelper
             return false;
         }
 
+        /// <summary>
+        /// Informs user that a ticket is beeing printed.
+        /// Then prints the PDF document.
+        /// </summary>
+        /// <returns>true if printed false if not.</returns>
         private static bool PrintPdfParkingTicket()
         {
             try
             {
-                Console.WriteLine("Printing PDF file");
+                Console.WriteLine("Printing ticket.");
                 PdfDocument pdf = new PdfDocument();
                 pdf.LoadFromFile("parkingTicket.pdf");
                 //Set the printer
@@ -49,6 +54,10 @@ namespace Parkeringshuset.Helpers.TicketHelper
             }
         }
 
+        /// <summary>
+        /// Gets the computers default printer.
+        /// </summary>
+        /// <returns>Default printer name or an empty string if none is found.</returns>
         private static string GetDefaultPrinter()
         {
             PrinterSettings settings = new PrinterSettings();
