@@ -1,6 +1,8 @@
 ﻿using Parkeringshuset.Helpers;
+using Parkeringshuset.Helpers.TicketHelper;
 using Parkeringshuset.Models;
 using Parkeringshuset.Views;
+using System;
 
 namespace Parkeringshuset
 {
@@ -8,14 +10,21 @@ namespace Parkeringshuset
     { 
         static void Main(string[] args)
         {
-            SeedData.RunMock();
-           
+            PrintingHelper.PhysicalTicketCreationAndPrintout(
+                new PTicket()
+                {
+                    CheckedInTime = new DateTime(2021, 12, 03, 14, 40, 03),
+                    Vehicle = new Vehicle()
+                    {
+                        RegistrationNumber = "NPK144"
+                    },
+                    Type = new PType()
+                    {
+                        Name = "Handicap"
+                    }
+                });
 
-            //ParkingGarage pg = new(12);
-            //Menu menu = new(pg);
-            //menu.PrintMainMenu();
-            //Login.PrintLoginPage();
-            //MainMenu.RunMainMenu();
+            SeedData.RunMock();
         }
     }
 }
