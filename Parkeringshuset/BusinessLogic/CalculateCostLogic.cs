@@ -36,19 +36,20 @@
                     MinutesInThisTimeSlot(MorningTime, ref MorningMinsCounter);
                 }
 
-                if (CheckIn.TimeOfDay >= MorningTime.TimeOfDay && CheckIn.TimeOfDay < LunchTime.TimeOfDay) // 06-12.59
+                if (CheckIn.TimeOfDay >= MorningTime.TimeOfDay && CheckIn.TimeOfDay < LunchTime.TimeOfDay) // 06-11.59
                 {              
                     MinutesInThisTimeSlot(LunchTime, ref  LunchMinsCounter);
                 }
 
-                if (CheckIn.TimeOfDay >= LunchTime.TimeOfDay && CheckIn.TimeOfDay < EvningTime.TimeOfDay) //13-17.59
+                if (CheckIn.TimeOfDay >= LunchTime.TimeOfDay && CheckIn.TimeOfDay < EvningTime.TimeOfDay) //12-17.59
                 {
                     MinutesInThisTimeSlot(EvningTime, ref EvningMinsCounter);
                 }
 
                 if (CheckIn.TimeOfDay >= EvningTime.TimeOfDay)   //18-23.59                              
                 {
-                    MinutesInThisTimeSlot(NightTime, ref NightMinsCounter);                    // DateTime dosent accept 24:00. there for i set nightime to 23.59.   
+                    MinutesInThisTimeSlot(NightTime, ref NightMinsCounter);
+                    NightMinsCounter++;                                                      // DateTime dosent accept 24:00. there for i set nightime to 23.59.   
                     CheckIn = CheckIn.AddMinutes(1);                                         // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
                 }                                                                            // the night.
             }
@@ -70,9 +71,10 @@
             else
             {
                 totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
+                
             }
 
-            counter = (int)totalHoursInThisCategory.TotalMinutes;
+            counter += (int)totalHoursInThisCategory.TotalMinutes;
 
             CheckIn = CheckIn.AddMinutes(totalHoursInThisCategory.TotalMinutes);
         }
