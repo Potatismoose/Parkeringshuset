@@ -23,13 +23,8 @@ namespace Parkeringshuset
                         Name = "Handicap"
                     }
                 });
-            //SeedData.RunMock();
 
-            //ParkingGarage pg = new(12);
-            //Menu menu = new(pg);
-            //menu.PrintMainMenu();
-            //Login.PrintLoginPage();
-            //MainMenu.RunMainMenu();
+            SeedData.RunMock();
         }
     }
 }

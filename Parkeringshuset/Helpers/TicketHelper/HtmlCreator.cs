@@ -175,7 +175,7 @@ $@"<!DOCTYPE html>
                 }
             }
             File.WriteAllLines(fullPath, newHtmlFile);
-            if (fileRows.Count() < newHtmlFile.Count())
+            if (!fileRows.Equals(newHtmlFile))
             {
                 return true;
             }

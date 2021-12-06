@@ -15,7 +15,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
             try
             {
                 string filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\ticket.html";
-                Console.WriteLine("Creating PDF file");
+                Console.WriteLine("Creating ticket");
                 SelectPdf.HtmlToPdf converter = new SelectPdf.HtmlToPdf();
                 SelectPdf.PdfDocument doc = converter.ConvertUrl(filePath);
                 doc.Save("parkingTicket.pdf");
