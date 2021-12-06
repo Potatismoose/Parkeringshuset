@@ -25,12 +25,11 @@
         {
             //this works if using an EN OS. 
 
-            //string format = "M/d/yyyy h:mm:ss tt";
-            //CheckIn = DateTime.ParseExact(checkIn.ToString(), format, CultureInfo.InvariantCulture);
-            //CheckOut = DateTime.ParseExact(checkOut.ToString(), format, CultureInfo.InvariantCulture);
+            string format = "M/d/yyyy h:mm:ss tt";
+            CheckIn = DateTime.ParseExact(checkIn.ToString(), format, CultureInfo.InvariantCulture);
+            CheckOut = DateTime.ParseExact(checkOut.ToString(), format, CultureInfo.InvariantCulture);
 
-            CheckIn = checkIn;
-            CheckOut = checkOut;
+  
 
             var tempDayCheck = CheckOut.Date - CheckIn.Date;
             var NumberOfDays = tempDayCheck.TotalDays;
