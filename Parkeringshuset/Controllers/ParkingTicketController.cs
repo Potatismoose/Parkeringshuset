@@ -28,15 +28,15 @@ namespace Parkeringshuset.Models
                 Vehicle vehicle = new() { RegistrationNumber = regNr };
                 ticket.Vehicle = vehicle;
                 ticket.IsPaid = false;
-                ticket.Type = ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == pType);
-                ticket.CheckedInTime = DateTime.Now;
-                if (type.Name == "Monthly")
+                ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == type);
+                ticket.CheckedOutTime = DateTime.MinValue;
+                if (type == "Monthly")
                 {
                     ticket.CheckedOutTime = DateTime.Now.AddDays(30);
                 }
                 else
                 {
-                    ticket.CheckedOutTime = DateTime.Now;
+                    ticket.CheckedInTime = DateTime.Now;
                 }
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
