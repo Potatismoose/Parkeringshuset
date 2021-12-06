@@ -9,7 +9,7 @@ namespace Parkeringshuset.BusinessLogic.Tests
         [Test()]
         public void CalculateCost()
         {
-            var result = CalculateCostLogic.CalculateCost();
+            var result = CalculateCostLogic.Cost();
            
             Assert.AreEqual(270,result);
         }

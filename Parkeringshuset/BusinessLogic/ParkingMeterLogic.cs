@@ -4,10 +4,6 @@
     using Parkeringshuset.Helper;
     using Parkeringshuset.Models;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class ParkingMeterLogic
     {
@@ -18,14 +14,13 @@
         {
             if (Pm.IsMonthly(regNr))
             {
-               // The customer has an active Monthleyticket
-            return true;
-
+                // The customer has an active Monthleyticket
+                return true;
             }
 
             if (Pt?.ReadFreeSpots(pType) > 0)
             {
-              //  Om vi kopplar på API mot Transportstyrelsen, kör den checken här!
+                //  Om vi kopplar på API mot Transportstyrelsen, kör den checken här!
 
                 if (Pm?.CreateTicket(regNr))
                 {
@@ -51,7 +46,7 @@
             if (ticket is not null)
             {
                 DateTime timeOfCheckOut = DateTime.Now;
-                var ticket.Cost = CalculateCost(ticket.CheckedIn, timeOfCheckOut);
+                ticket.Cost = CalculateCostLogic.Cost(ticket.CheckedIn, timeOfCheckOut);
 
                 if (IsCardCredentialsValid(cardInfo, CSV))
                 {
@@ -85,8 +80,5 @@
             }
             return false;
         }
-
-       
-
-        
     }
+}
