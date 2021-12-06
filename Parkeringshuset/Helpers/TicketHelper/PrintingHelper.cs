@@ -14,7 +14,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
         /// Then converts that html boilerplate code into pdf format before sending it to
         /// the method PrintPdfParkingTicket to print the ticket.
         /// </summary>
-        /// <param name="ticket"></param>
+        /// <param name="ticket">Takes a PTicket as in parameter.</param>
         /// <returns>true if the ticket is created and printed.</returns>
         public static bool PhysicalTicketCreationAndPrintout(PTicket ticket)
         {

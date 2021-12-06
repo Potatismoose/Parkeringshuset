@@ -1,21 +1,22 @@
 ﻿using Parkeringshuset.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
     internal static class HtmlCreator
     {
-        static string fileName = "ticket.html";
-        static string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
+        private static string fileName = "ticket.html";
+        private static string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
+
+        /// <summary>
+        /// The boilerplate html code that creates the html document..
+        /// </summary>
+        /// <returns>True if created. False if it fails.</returns>
         public static bool CreateHtmlBoilerPlateCode()
         {
-
             var boilerplateCode =
 $@"<!DOCTYPE html>
 <html lang='en'>
@@ -26,13 +27,13 @@ $@"<!DOCTYPE html>
     <title>Document</title>
 </head>
 <body>
-    <div 
-        class='ticket' 
+    <div
+        class='ticket'
         style='
             width:300px;
             text-align:center;'>
 
-        <div 
+        <div
             style='
                 display:flex;
                 justify-content:space-between;
@@ -40,23 +41,23 @@ $@"<!DOCTYPE html>
                 background:#add8e6;
                 padding-bottom: 0.2em;'>
 
-            <div 
-                style=' 
+            <div
+                style='
                     display: flex;
                     justify-content: center;
                     align-content: center;
                     flex-direction: column;'>
 
-                <h1 
-                    style='padding-left: 10px; 
+                <h1
+                    style='padding-left: 10px;
                     margin:0px;'>Parking Ticket</h1>
             </div>
             <div>
-                <img 
-                    src='https://potatismoose.com/qr.png' 
+                <img
+                    src='https://potatismoose.com/qr.png'
                     style='
                         height:70px;
-                        width:70px; 
+                        width:70px;
                         padding: 10px 10px 0 0'>
                 </img>
             </div>
@@ -64,7 +65,7 @@ $@"<!DOCTYPE html>
 
         <h3 style='margin:0px;
           font-weight: bold;
-          background:#FFFFE0; 
+          background:#FFFFE0;
           padding-top: 0.8em;'
         >Check in time</h3>
 
@@ -88,7 +89,7 @@ $@"<!DOCTYPE html>
         <p style='margin:0px;
           font-weight: bold;
           background:#FFFFE0;
-          font-size: 1.5rem; 
+          font-size: 1.5rem;
           padding-bottom: 0.8em;'
           id='type'></p>
 
@@ -99,7 +100,7 @@ $@"<!DOCTYPE html>
 
         <h1 style='margin:0px;
           font-weight: bold;
-          background:#add8e6;' 
+          background:#add8e6;'
           id='regNr'></h1>
     </div>
 </body>
@@ -112,7 +113,6 @@ $@"<!DOCTYPE html>
                 tw.WriteLine(boilerplateCode);
                 tw.Close();
                 return true;
-
             }
             catch
             {
@@ -120,6 +120,11 @@ $@"<!DOCTYPE html>
             }
         }
 
+        /// <summary>
+        /// Insert parking ticket info into the html file.
+        /// </summary>
+        /// <param name="ticket">Takes a PTicket as in parameter.</param>
+        /// <returns>True if successful insert. False it faild.</returns>
         public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
@@ -142,15 +147,19 @@ $@"<!DOCTYPE html>
                                 case 0:
                                     newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
                                     break;
+
                                 case 1:
                                     newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
                                     break;
+
                                 case 2:
                                     newLine = line.Insert(indexOfChar + 1, ticket?.Type.Name);
                                     break;
+
                                 case 3:
                                     newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle.RegistrationNumber);
                                     break;
+
                                 default:
                                     break;
                             }
@@ -171,8 +180,6 @@ $@"<!DOCTYPE html>
                 return true;
             }
             return false;
-
-            //loopa igenom listan med söktaggar och kolla om arrayens rad innehåller söktagg
         }
     }
 }
