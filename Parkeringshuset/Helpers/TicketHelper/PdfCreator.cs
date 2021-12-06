@@ -1,21 +1,15 @@
-﻿using Microsoft.Win32;
-using Spire.Pdf;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Globalization;
+﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
     internal static class PdfCreator
     {
+        /// <summary>
+        /// Uses the nugget SelectPdf to create a PDF from html file.
+        /// </summary>
+        /// <returns>True if succeded, false if failed.</returns>
         public static bool CreatePdfFromHtmlFile()
         {
             try
@@ -33,7 +27,5 @@ namespace Parkeringshuset.Helpers.TicketHelper
                 return false;
             }
         }
-
-
     }
 }
