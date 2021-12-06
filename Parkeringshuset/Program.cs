@@ -23,6 +23,7 @@ namespace Parkeringshuset
                         Name = "Handicap"
                     }
                 });
+
             SeedData.RunMock();
         }
     }
