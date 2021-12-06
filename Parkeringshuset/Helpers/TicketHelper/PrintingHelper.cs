@@ -11,7 +11,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
 {
     internal class PrintingHelper
     {
-        public static bool TicketPrintout(PTicket ticket)
+        public static bool PhysicalTicketCreationAndPrintout(PTicket ticket)
         {
             HtmlCreator.CreateHtmlBoilerPlateCode();
             HtmlCreator.InsertTicketInformationInHtmlFile(ticket);

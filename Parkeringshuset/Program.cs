@@ -10,7 +10,7 @@ namespace Parkeringshuset
     { 
         static void Main(string[] args)
         {
-            PrintingHelper.TicketPrintout(
+            PrintingHelper.PhysicalTicketCreationAndPrintout(
                 new PTicket()
                 {
                     CheckedInTime = new DateTime(2021, 12, 03, 14, 40, 03),
