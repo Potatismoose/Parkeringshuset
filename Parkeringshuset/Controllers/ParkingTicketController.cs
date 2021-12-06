@@ -46,21 +46,13 @@ namespace Parkeringshuset.Models
         /// <summary>
         /// Checks out the vehicle and sets the CheckedOutTime.
         /// </summary>
-        /// <param name="regNr">The reqNr of the vehicle.</param>
-        /// <returns>True if checking out is successfull and false if the vehicle is not checked in
-        /// or the regNr is wrong.</returns>
-        public bool CheckOut(string regNr)
+        /// <param name="ticket">The reqNr of the vehicle.</param>
+        /// <returns>True if checking out is successfull, otherwise false.</returns>
+        public bool CheckOut(PTicket ticket)
         {
-            var vehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
+            var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
-            if (vehicle == null)
-            {
-                return false;
-            }
-            var ticket = db.Ptickets.FirstOrDefault(
-                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue);
-
-            ticket.CheckedOutTime = DateTime.Now;
+            t.CheckedOutTime = DateTime.Now;
             db.Ptickets.Update(ticket);
             db.SaveChanges();
 
@@ -97,41 +89,29 @@ namespace Parkeringshuset.Models
             return ticket.CheckedOutTime == t.CheckedOutTime;
         }
 
-        // public bool IsPayed(string regNr){
-        //     var vehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
-
-        //     if (vehicle == null)
-        //     {
-        //         return false;
-        //     }
-
-        //     var ticket = db.Ptickets.FirstOrDefault(x => x.Vehicle.Id == vehicle.Id);
-        //     if (IsTicketActive(ticket)){
-        //         if (!ticket.IsPaid)
-        //         {
-        //             return false;
-        //         }
-        //         return false;
-        //     }
-        //     return true;
-        // }
+        /// <summary>
+        /// Checks if the ticket is payed.
+        /// </summary>
+        /// <param name="ticket">The ticket to check.</param>
+        /// <returns>True if the ticket is payed, otherwise false.</returns>
+        public bool IsPayed(PTicket ticket){
+            var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
+            if (IsTicketActive(ticket) || !t.IsPaid)
+            {
+                return false;
+            }
+            return true;
+        }
 
         /// <summary>
         /// Check if the ticket is monthly.
         /// </summary>
-        /// <param name="regNr">The reqNr of the vehicle.</param>
+        /// <param name="ticket">The ticket to check.</param>
         /// <returns>True if the ticket is monthly otherwise false.</returns>
-        public bool IsMonthly(string regNr){
-            var vehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
+        public bool IsMonthly(PTicket ticket){
+            var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
-            if (vehicle == null)
-            {
-                return false;
-            }
-
-            var ticket = db.Ptickets.FirstOrDefault(x => x.Vehicle.Id == vehicle.Id);
-
-            return ticket.Type.Name == "Monthly";
+            return t.Type.Name == "Monthly";
         }
     }
 }
