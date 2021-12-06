@@ -82,7 +82,7 @@
         }
 
         /// <summary>
-        /// Checks out a c
+        /// Checks out a car by payment and 
         /// </summary>
         /// <param name="regNr"></param>
         /// <param name="cardInfo"></param>
@@ -92,7 +92,7 @@
             var ticket = Pm.GetActiveTicket(regNr);
             if (ticket is not null)
             {
-                Payment(regNr, cardInfo, CSV, ticket);
+                Payment(regNr, cardInfo, CSV, ref ticket);
 
                 if (Pm.CheckOut(ticket))
                 {
@@ -105,17 +105,11 @@
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="regNr"></param>
-        /// <param name="cardInfo"></param>
-        /// <param name="CSV"></param>
-        /// <param name="ticket"></param>
-        private static void Payment(string regNr, string cardInfo, string CSV, PTicket ticket)
+
+        private static void Payment(string regNr, string cardInfo, string CSV, ref PTicket ticket)
         {
-            DateTime timeOfCheckOut = DateTime.Now;
-            ticket.Cost = CalculateCostLogic.Cost(ticket.CheckedInTime, timeOfCheckOut);
+            ticket.CheckedOutTime = DateTime.Now;
+            ticket.Cost = CalculateCostLogic.Cost(ticket.CheckedInTime, ticket.CheckedOutTime);     // TODO: Needs to be able to update ticket to database through controller.
 
             if (IsCardCredentialsValid(cardInfo, CSV))
             {
@@ -128,12 +122,6 @@
             }
         }
 
-        /// <summary>
-        /// Checks the validation of credit card. 
-        /// </summary>
-        /// <param name="cardInfo"></param>
-        /// <param name="CSV"></param>
-        /// <returns></returns>
         private static bool IsCardCredentialsValid(string cardInfo, string CSV)
         {
             if (cardInfo?.Length == 16 && CSV?.Length == 3)
