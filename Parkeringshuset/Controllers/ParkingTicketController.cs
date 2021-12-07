@@ -29,14 +29,14 @@ namespace Parkeringshuset.Models
                 ticket.Vehicle = vehicle;
                 ticket.IsPaid = false;
                 ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == type);
-                ticket.CheckedOutTime = DateTime.MinValue;
+                ticket.CheckedInTime = DateTime.Now;
                 if (type == "Monthly")
                 {
                     ticket.CheckedOutTime = DateTime.Now.AddDays(30);
                 }
                 else
                 {
-                    ticket.CheckedOutTime = DateTime.Now;
+                    ticket.CheckedOutTime = DateTime.MinValue;
                 }
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
@@ -59,7 +59,7 @@ namespace Parkeringshuset.Models
         {
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
-            t.CheckedOutTime = DateTime.Now;
+            t.CheckedOutTime = DateTime.MinValue;
             db.Ptickets.Update(ticket);
             db.SaveChanges();
 
