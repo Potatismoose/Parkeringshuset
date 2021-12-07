@@ -35,7 +35,7 @@ namespace Parkeringshuset.Views
                     Console.WriteLine("1. Regular vehicle");
                     Console.WriteLine("2. Electric vehicle");
                     Console.WriteLine("3. Handicaped");
-                    Console.WriteLine("4. Monthly");
+                    //Console.WriteLine("4. Monthly");
                     Console.WriteLine("5. Motorbike");
                     Console.WriteLine("6. Abort check in");
                     int.TryParse(Console.ReadLine(), out int choice);
@@ -56,11 +56,11 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
-                        case 4:
-                            pType = "Monthly";
-                            pML.CheckIn(regNr, pType);
-                            PressAnyKeyToContinue();
-                            break;
+                        //case 4:
+                        //    pType = "Monthly";
+                        //    pML.CheckIn(regNr, pType);
+                        //    PressAnyKeyToContinue();
+                        //    break;
                         case 5:
                             pType = "Motorbike";
                             pML.CheckIn(regNr, pType);

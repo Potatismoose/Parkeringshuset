@@ -153,11 +153,11 @@ $@"<!DOCTYPE html>
                                     break;
 
                                 case 2:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.Type.Name);
+                                    newLine = line.Insert(indexOfChar + 1, ticket?.Type?.Name);
                                     break;
 
                                 case 3:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle.RegistrationNumber);
+                                    newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
                                     break;
 
                                 default:
