@@ -66,7 +66,7 @@ namespace Parkeringshuset.Views
                             keepGoing = false;
                             break;
                         default:
-                            Console.WriteLine("Wrong input please try again.");
+                            Console.WriteLine("Jerry created a problem, please try again!");
                             break;
                     }
                 }
@@ -79,7 +79,7 @@ namespace Parkeringshuset.Views
                 else
                 {
                     ParkingTicketController.CheckOut(parkingTicket);
-                    Console.WriteLine("Thank you for using our garage, welcome back");
+                    Console.WriteLine("Thank you for using our garage, welcome back!");
                     keepGoing = false;
                     PressAnyKeyToContinue();
                 }
