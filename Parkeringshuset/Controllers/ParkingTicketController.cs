@@ -36,7 +36,7 @@ namespace Parkeringshuset.Models
                 }
                 else
                 {
-                    ticket.CheckedInTime = DateTime.Now;
+                    ticket.CheckedOutTime = DateTime.Now;
                 }
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
@@ -129,7 +129,7 @@ namespace Parkeringshuset.Models
         {
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
-            if (t == null)
+            if (t?.Type == null)
             {
                 return false;
             }
