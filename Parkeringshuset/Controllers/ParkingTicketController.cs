@@ -129,7 +129,7 @@ namespace Parkeringshuset.Models
         {
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
-            if (t == null)
+            if (t?.Type == null)
             {
                 return false;
             }
