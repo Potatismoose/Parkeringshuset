@@ -25,10 +25,6 @@ namespace Parkeringshuset.BusinessLogic.Tests
            //CultureInfo cultureinfo =
            //      CultureInfo.CreateSpecificCulture("en-US");
            // var test = DateTime.ParseExact(checkIn.ToString(),format, cultureinfo);
-
-            var result = CalculateCostLogic.Cost(checkIn, checkOut);
-
-            Assert.AreEqual(expected, result);
         }
 
     }
