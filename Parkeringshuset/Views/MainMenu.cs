@@ -15,8 +15,10 @@ namespace Parkeringshuset.Views
             bool keepGoing = true;
             string pType = "";
             ParkingMeterLogic pML = new ();
+            ParkingTicketController pTC = new ();
             do
             {
+                Console.Clear();
                 Console.Write("Enter your registration number: ");
                 string regNr = Console.ReadLine();
                 if (string.IsNullOrEmpty(regNr.Trim()))
@@ -24,7 +26,8 @@ namespace Parkeringshuset.Views
                     Console.WriteLine("Can not use empty registration number, please try again.");
                     continue;
                 }
-                var parkingTicket = ParkingMeterController.GetActiveTicket(regNr);
+                var parkingTicket = pTC.GetActiveTicket(regNr);
+
                 if (parkingTicket is null)
                 {
                     Console.WriteLine($"Checked In, what zone would you like to park in?: ");
@@ -67,20 +70,19 @@ namespace Parkeringshuset.Views
                             break;
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
+                            PressAnyKeyToContinue();
                             break;
                     }
                 }
-                else if (parkingTicket.Type.Name == "Monthly")
+                else if (pTC.IsMonthly(parkingTicket) && pTC.IsTicketActive(parkingTicket))
                 {
-                    Console.WriteLine("Welcome back!");
-                    keepGoing = false;
+                    Console.WriteLine($"Welcome back! Your ticket expires { parkingTicket.CheckedOutTime}");
                     PressAnyKeyToContinue();
                 }
-                else
+                else if(pTC.IsTicketActive(parkingTicket))
                 {
-                    ParkingTicketController.CheckOut(parkingTicket);
-                    Console.WriteLine("Thank you for using our garage, welcome back!");
-                    keepGoing = false;
+                    pTC.CheckOut(parkingTicket);
+                    Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                     PressAnyKeyToContinue();
                 }
             } while (keepGoing);
