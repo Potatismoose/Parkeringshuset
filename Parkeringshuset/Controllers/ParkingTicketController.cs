@@ -25,11 +25,21 @@ namespace Parkeringshuset.Models
             try
             {
                 PTicket ticket = new();
-                Vehicle vehicle = new() { RegistrationNumber = regNr };
-                ticket.Vehicle = vehicle;
+                var existingVehicle = db.Vehicles.FirstOrDefault(x => x.RegistrationNumber == regNr);
+
+                if (existingVehicle is not null)
+                {
+                    ticket.Vehicle = existingVehicle;
+                }
+                else
+                {
+                    ticket.Vehicle = new Vehicle() { RegistrationNumber = regNr };
+                }
+
                 ticket.IsPaid = false;
                 ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == type);
                 ticket.CheckedInTime = DateTime.Now;
+
                 if (type == "Monthly")
                 {
                     ticket.CheckedOutTime = DateTime.Now.AddDays(30);
@@ -38,6 +48,8 @@ namespace Parkeringshuset.Models
                 {
                     ticket.CheckedOutTime = DateTime.MinValue;
                 }
+
+                ticket.isActice = true;
                 db.Ptickets.Add(ticket);
                 db.SaveChanges();
 
@@ -60,6 +72,7 @@ namespace Parkeringshuset.Models
             var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
             t.CheckedOutTime = DateTime.MinValue;
+            t.isActice = false;
             db.Ptickets.Update(ticket);
             db.SaveChanges();
 
@@ -82,7 +95,7 @@ namespace Parkeringshuset.Models
             }
 
             var ticket = db.Ptickets.FirstOrDefault(
-                x => x.Vehicle.Id == vehicle.Id && x.CheckedOutTime == DateTime.MinValue ||
+                x => x.Vehicle.Id == vehicle.Id && x.isActice ||
                 x.Type.Name == "Monthly");
 
             return ticket;
@@ -95,14 +108,14 @@ namespace Parkeringshuset.Models
         /// <returns>True if the ticket is active, otherwise false.</returns>
         public bool IsTicketActive(PTicket ticket)
         {
-            var t = db.Ptickets.FirstOrDefault(x => x.CheckedOutTime == DateTime.MinValue);
+            var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
 
             if (t == null)
             {
                 return false;
             }
 
-            return ticket.CheckedOutTime == t.CheckedOutTime;
+            return t.isActice;
         }
 
         /// <summary>

@@ -63,6 +63,9 @@ namespace Parkeringshuset.Migrations
                     b.Property<int?>("VehicleId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("isActice")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TypeId");

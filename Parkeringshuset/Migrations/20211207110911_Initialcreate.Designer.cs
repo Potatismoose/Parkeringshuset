@@ -9,8 +9,8 @@ using Parkeringshuset.Data;
 namespace Parkeringshuset.Migrations
 {
     [DbContext(typeof(ParkeringGarageContext))]
-    [Migration("20211201130459_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211207110911_Initialcreate")]
+    partial class Initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,9 @@ namespace Parkeringshuset.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("VehicleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("isActice")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

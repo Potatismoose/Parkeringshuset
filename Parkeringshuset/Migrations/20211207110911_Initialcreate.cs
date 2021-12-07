@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Parkeringshuset.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,6 +60,7 @@ namespace Parkeringshuset.Migrations
                     CheckedOutTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Cost = table.Column<int>(type: "INTEGER", nullable: false),
                     IsPaid = table.Column<bool>(type: "INTEGER", nullable: false),
+                    isActice = table.Column<bool>(type: "INTEGER", nullable: false),
                     VehicleId = table.Column<int>(type: "INTEGER", nullable: true),
                     TypeId = table.Column<int>(type: "INTEGER", nullable: true)
                 },

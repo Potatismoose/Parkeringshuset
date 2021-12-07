@@ -16,8 +16,6 @@
 
         public static void RunMock()
         {
-            var hcp = Db.Ptypes.FirstOrDefault(p => p.Name == "Handicap");
-            DisplayHelper.DisplayGreen(hcp.TotalSpots.ToString());
 
             try
             {
