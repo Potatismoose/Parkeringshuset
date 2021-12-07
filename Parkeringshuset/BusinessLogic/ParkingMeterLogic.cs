@@ -11,40 +11,6 @@
         private ParkingTicketController Pm = new();
         private ParkingTypeController Pt = new();
 
-        /// <summary>
-        /// Checks if the car have a Monthly Ticket. 
-        /// </summary>
-        /// <param name="regNr">Registration number of the car.</param>
-        /// <returns>True if there is a monthly ticket. False if not.</returns>
-        public bool isMonthly(string regNr)
-        {
-            var ticket = Pm.GetActiveTicket(regNr);
-            if (Pm.IsMonthly(ticket))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// Checks if the car is already in parked in the garage.
-        /// </summary>
-        /// <param name="regNr"></param>
-        /// <returns>True if user shall checkout, false if user shall check in.</returns>
-        public bool isCarParked(string regNr)
-        {
-            var ticket = Pm.GetActiveTicket(regNr);
-            if (Pm.IsTicketActive(ticket))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
         /// <summary>
         /// Checks in a car in the system and is creating a ticket if there is spots free. 
@@ -81,58 +47,9 @@
             return false;
         }
 
-        /// <summary>
-        /// Checks out a car by payment and 
-        /// </summary>
-        /// <param name="regNr"></param>
-        /// <param name="cardInfo"></param>
-        /// <param name="CSV"></param>
-        public bool CheckOut(string regNr, string cardInfo, string CSV)
-        {
-            var ticket = Pm.GetActiveTicket(regNr);
-            if (ticket is not null)
-            {
-                Payment(regNr, cardInfo, CSV, ref ticket);
-
-                if (Pm.CheckOut(ticket))
-                {
-                    return true;
-                }
-            }
-
-            DisplayHelper.DisplayRed("The check out was not successful. Please contact support.");
-            return false;
-
-        }
+      
 
 
-        private static void Payment(string regNr, string cardInfo, string CSV, ref PTicket ticket)
-        {
-            ticket.CheckedOutTime = DateTime.Now;
-            ticket.Cost = CalculateCostLogic.Cost(ticket.CheckedInTime, ticket.CheckedOutTime);     // TODO: Needs to be able to update ticket to database through controller.
-
-            if (IsCardCredentialsValid(cardInfo, CSV))
-            {
-                ticket.IsPaid = true;         // TODO: Needs to be able to update ticket to database through controller.
-                DisplayHelper.DisplayGreen($"The transaction was successful!\nThe total fee was: {ticket.Cost} kr");
-            }
-            else
-            {
-                DisplayHelper.DisplayRed($"The card credentials was invalid! An invoice is sent to the adress of the car with registration number: {regNr}");
-            }
-        }
-
-        private static bool IsCardCredentialsValid(string cardInfo, string CSV)
-        {
-            if (cardInfo?.Length == 16 && CSV?.Length == 3)
-            {
-                if (int.TryParse(cardInfo, out int checkedCardInfo))
-                {
-                    DisplayHelper.DisplayGreen("Payment is done");
-                    return true;
-                }
-            }
-            return false;
-        }
+      
     }
 }
