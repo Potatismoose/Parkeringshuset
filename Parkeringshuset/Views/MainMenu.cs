@@ -24,6 +24,7 @@ namespace Parkeringshuset.Views
                 if (string.IsNullOrEmpty(regNr.Trim()))
                 {
                     Console.WriteLine("Can not use empty registration number, please try again.");
+                    PressAnyKeyToContinue();
                     continue;
                 }
                 var parkingTicket = pTC.GetActiveTicket(regNr);
