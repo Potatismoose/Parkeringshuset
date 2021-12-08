@@ -1,6 +1,5 @@
 ﻿namespace Parkeringshuset.Models
 {
-
     public static class ParkingTypesNames
     {
 
@@ -13,6 +12,8 @@
         public static string Regular { get; set; } = "Regular";
 
         public static string Monthly { get; set; } = "Monthly";
+
+  
 
     }
 }
