@@ -32,11 +32,7 @@
         public int CalculateCost(DateTime checkIn, DateTime checkOut)
         {
             Thread.CurrentThread.CurrentCulture = ci;
-            //this works if using an EN OS.
 
-            //string format = "M/d/yyyy h:mm:ss tt";
-            //CheckIn = DateTime.ParseExact(checkIn.ToString(), format, CultureInfo.InvariantCulture);
-            //CheckOut = DateTime.ParseExact(checkOut.ToString(), format, CultureInfo.InvariantCulture);
             CheckIn = checkIn;
             CheckOut = checkOut;
 
@@ -68,16 +64,18 @@
                 }                                                                            // the night.
             }
 
-            return EmptyValues();
+            return GetSumAndResetCounters();
         }
 
-        private int EmptyValues()
+        private int GetSumAndResetCounters()
         {
             var res = Math.Round(
+
                  (MorningMinsCounter * MorningPricePerMinute) +
                 (LunchMinsCounter * LunchPricePerMinute) +
                 (EveningMinsCounter * EveningPricePerMinute) +
                 (NightMinsCounter * NightPricePerMinute));
+
             MorningMinsCounter = 0;
             LunchMinsCounter = 0;
             EveningMinsCounter = 0;
@@ -87,9 +85,11 @@
 
         private void MinutesInThisTimeSlot(DateTime CategoryTime, ref int counter)
         {
-            TimeSpan totalHoursInThisCategory;
-            TotalTime = CheckOut - CheckIn;
-            if (TotalTime.TotalMinutes <= 360)
+
+            TotalTime = CheckOut - CheckIn;   
+            var  totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
+
+            if(totalHoursInThisCategory.TotalMinutes > TotalTime.TotalMinutes)
             {
                 totalHoursInThisCategory = TotalTime;
             }
