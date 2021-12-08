@@ -21,7 +21,10 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
         public void TearDown()
         {
             string fileName = "ticket.html";
-            string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
+            string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+            File.Delete(fullPath);
+            fileName = "parkingTicket.pdf";
+            fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
             File.Delete(fullPath);
         }
 
