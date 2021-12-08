@@ -2,6 +2,7 @@
 using System;
 using Parkeringshuset.Models;
 using Parkeringshuset.BusinessLogic;
+using System.Linq;
 
 namespace Parkeringshuset.Views
 {
@@ -14,13 +15,19 @@ namespace Parkeringshuset.Views
         {
             bool keepGoing = true;
             string pType = "";
-            ParkingMeterLogic pML = new ();
-            ParkingTicketController pTC = new ();
+            char firstChar = '\0';
+
+            ParkingMeterLogic pML = new();
+            ParkingTicketController pTC = new();
             do
             {
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
-                string regNr = Console.ReadLine();
+                UnlockAdminMenu(firstChar);
+
+                string regNr = Console.ReadLine().ToUpper();
+                regNr = firstChar + regNr;
+
                 if (string.IsNullOrEmpty(regNr.Trim()))
                 {
                     Console.WriteLine("Can not use empty registration number, please try again.");
@@ -46,11 +53,13 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 2:
                             pType = "Electric";
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 3:
                             pType = "Handicap";
                             pML.CheckIn(regNr, pType);
@@ -66,9 +75,11 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 6:
                             keepGoing = false;
                             break;
+
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
                             PressAnyKeyToContinue();
@@ -80,13 +91,51 @@ namespace Parkeringshuset.Views
                     Console.WriteLine($"Welcome back! Your ticket expires { parkingTicket.CheckedOutTime}");
                     PressAnyKeyToContinue();
                 }
-                else if(pTC.IsTicketActive(parkingTicket))
+                else if (pTC.IsTicketActive(parkingTicket))
                 {
                     pTC.CheckOut(parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                     PressAnyKeyToContinue();
                 }
             } while (keepGoing);
+        }
+
+        private static char UnlockAdminMenu(char firstChar)
+        {
+            List<ConsoleKey> secretPatternMatch = new List<ConsoleKey>();
+            List<ConsoleKey> secretPattern = new List<ConsoleKey>() {
+                    ConsoleKey.RightArrow,
+                    ConsoleKey.LeftArrow,
+                    ConsoleKey.RightArrow,
+                    ConsoleKey.LeftArrow,
+                    ConsoleKey.UpArrow,
+                    ConsoleKey.LeftArrow,
+                    ConsoleKey.RightArrow};
+
+            ConsoleKeyInfo pressedKey = Console.ReadKey();
+
+            if (pressedKey.Key == ConsoleKey.RightArrow)
+            {
+                secretPatternMatch.Add(pressedKey.Key);
+                secretPatternMatch.Add(Console.ReadKey().Key);
+                while (pressedKey.Key != ConsoleKey.Enter)
+                {
+                    pressedKey = Console.ReadKey();
+                    secretPatternMatch.Add(pressedKey.Key);
+
+                    if (secretPatternMatch.SequenceEqual(secretPattern))
+                    {
+                        Console.WriteLine("You unlocked it!");
+                        Console.ReadLine();
+                    }
+                }
+            }
+            else
+            {
+                firstChar = (char)pressedKey.Key;
+            }
+
+            return firstChar;
         }
 
         private static void PressAnyKeyToContinue()
