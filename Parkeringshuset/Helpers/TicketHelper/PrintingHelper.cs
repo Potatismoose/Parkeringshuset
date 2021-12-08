@@ -5,7 +5,7 @@ using System.Drawing.Printing;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    internal class PrintingHelper
+    public class PrintingHelper
     {
         /// <summary>
         /// Adapter method (calls other methods).

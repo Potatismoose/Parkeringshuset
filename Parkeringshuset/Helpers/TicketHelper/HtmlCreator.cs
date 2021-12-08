@@ -1,4 +1,5 @@
 ﻿using Parkeringshuset.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,10 +7,10 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    internal static class HtmlCreator
+    public static class HtmlCreator
     {
         private static string fileName = "ticket.html";
-        private static string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
+        private static string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
 
         /// <summary>
         /// The boilerplate html code that creates the html document..
@@ -145,19 +146,47 @@ $@"<!DOCTYPE html>
                             switch (i)
                             {
                                 case 0:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
+                                    if (ticket.CheckedInTime != DateTime.MinValue)
+                                    { 
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 case 1:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
+                                    if (ticket.CheckedInTime != DateTime.MinValue)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 case 2:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.Type?.Name);
+                                    if (ticket.Type is not null)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.Type?.Name);
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 case 3:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
+                                    if (ticket.Vehicle is not null)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
+                                    }
+                                    else 
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 default:
@@ -175,7 +204,7 @@ $@"<!DOCTYPE html>
                 }
             }
             File.WriteAllLines(fullPath, newHtmlFile);
-            if (!fileRows.Equals(newHtmlFile))
+            if (!fileRows.SequenceEqual(newHtmlFile))
             {
                 return true;
             }
