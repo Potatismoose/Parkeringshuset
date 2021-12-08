@@ -40,7 +40,7 @@ namespace Parkeringshuset.Models
                 ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == type);
                 ticket.CheckedInTime = DateTime.Now;
 
-                if (type == "Monthly")
+                if (type == ParkingTypesNames.Monthly)
                 {
                     ticket.CheckedOutTime = DateTime.Now.AddDays(30);
                 }
@@ -147,7 +147,7 @@ namespace Parkeringshuset.Models
                 return false;
             }
 
-            return t.Type.Name == "Monthly";
+            return t.Type.Name == "Monthly";  
         }
     }
 }

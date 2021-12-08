@@ -1,28 +1,19 @@
 ﻿namespace Parkeringshuset.Models
 {
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    [Index(nameof(Motorbike),nameof(Electric),nameof(Handicap),nameof(Regular), 
-           nameof(Monthly), IsUnique = true)]
-    public class PSpot
+    public static class ParkingTypesNames
     {
 
-        public int Id { get; set; }
+        public static string Motorbike { get; set; } = "Motorbike";
 
-        public int Motorbike { get; set; }
+        public static string Electric { get; set; } = "Electric";
 
-        public int Electric { get; set; }
+        public static string Handicap { get; set; } = "Handicap";
 
-        public int Handicap { get; set; }
+        public static string Regular { get; set; } = "Regular";
 
-        public int Regular { get; set; } 
+        public static string Monthly { get; set; } = "Monthly";
 
-        public int Monthly { get; set; }
+  
 
     }
 }
