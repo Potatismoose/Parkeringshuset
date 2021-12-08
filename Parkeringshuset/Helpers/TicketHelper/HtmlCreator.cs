@@ -10,7 +10,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
     public static class HtmlCreator
     {
         private static string fileName = "ticket.html";
-        private static string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
+        private static string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
 
         /// <summary>
         /// The boilerplate html code that creates the html document..
