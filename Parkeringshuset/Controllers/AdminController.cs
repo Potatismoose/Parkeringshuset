@@ -1,5 +1,6 @@
 ﻿namespace Parkeringshuset.Controllers
 {
+    using Microsoft.EntityFrameworkCore;
     using Parkeringshuset.Data;
     using Parkeringshuset.Models;
     using System;
@@ -128,5 +129,12 @@
             
         }
 
+        public List<PTicket> GetActiveMonthlyTickets()
+        {
+           
+
+            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == ParkingTypesNames.Monthly).ToList();
+  
+        }
     }
 }
