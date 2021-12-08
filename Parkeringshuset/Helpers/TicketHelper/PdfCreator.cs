@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    internal static class PdfCreator
+    public static class PdfCreator
     {
         /// <summary>
         /// Uses the nugget SelectPdf to create a PDF from html file.

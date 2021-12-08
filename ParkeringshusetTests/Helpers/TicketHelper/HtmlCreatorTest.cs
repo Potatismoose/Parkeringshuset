@@ -9,7 +9,7 @@ using System.Reflection;
 namespace Parkeringshuset.Helpers.TicketHelper.Tests
 {
     [TestFixture()]
-    public class HtmlCreatorTest
+    public class TicketHelperTests
     {
 
         [SetUp]
