@@ -41,8 +41,6 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
             Assert.IsTrue(result);
             result = PdfCreator.CreatePdfFromHtmlFile();
             Assert.IsTrue(result);
-            //result = PrintingHelper.PhysicalTicketCreationAndPrintout(Ticket);
-            //Assert.IsTrue(result);
         }
     }
 }
