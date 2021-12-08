@@ -4,12 +4,15 @@
     using Parkeringshuset.Models;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class PaymentLogic
     {
+        private CultureInfo ci = new CultureInfo("sv-SE");
         private TimeSpan TotalTime;
         private DateTime MorningTime = new DateTime(2021, 01, 01, 06, 00, 00);
         private DateTime LunchTime = new DateTime(2021, 01, 01, 12, 00, 00);
@@ -28,13 +31,14 @@
 
         public int CalculateCost(DateTime checkIn, DateTime checkOut)
         {
+            Thread.CurrentThread.CurrentCulture = ci;
             //this works if using an EN OS.
 
             //string format = "M/d/yyyy h:mm:ss tt";
             //CheckIn = DateTime.ParseExact(checkIn.ToString(), format, CultureInfo.InvariantCulture);
             //CheckOut = DateTime.ParseExact(checkOut.ToString(), format, CultureInfo.InvariantCulture);
-            //CheckIn = checkIn;
-            //CheckOut = checkOut;
+            CheckIn = checkIn;
+            CheckOut = checkOut;
 
             var tempDayCheck = CheckOut.Date - CheckIn.Date;
             var NumberOfDays = tempDayCheck.TotalDays;
@@ -63,11 +67,22 @@
                     CheckIn = CheckIn.AddMinutes(1);                                         // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
                 }                                                                            // the night.
             }
-            return (int)Math.Round(
+
+            return EmptyValues();
+        }
+
+        private int EmptyValues()
+        {
+            var res = Math.Round(
                  (MorningMinsCounter * MorningPricePerMinute) +
                 (LunchMinsCounter * LunchPricePerMinute) +
                 (EveningMinsCounter * EveningPricePerMinute) +
                 (NightMinsCounter * NightPricePerMinute));
+            MorningMinsCounter = 0;
+            LunchMinsCounter = 0;
+            EveningMinsCounter = 0;
+            NightMinsCounter = 0;
+            return (int)res;
         }
 
         private void MinutesInThisTimeSlot(DateTime CategoryTime, ref int counter)
