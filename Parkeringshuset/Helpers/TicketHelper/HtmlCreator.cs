@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
     public static class HtmlCreator
     {
         private static string fileName = "ticket.html";
-        private static string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+        private static string fullPath = Directory.GetParent(
+            AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+
+        private static string fullPathUnix = Directory.GetParent(
+            AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
 
         /// <summary>
         /// The boilerplate html code that creates the html document..
@@ -106,6 +111,7 @@ $@"<!DOCTYPE html>
     </div>
 </body>
 </html>";
+            CheckIfOsIsLinux();
             try
             {
                 var fs = File.Create(fullPath);
@@ -121,6 +127,15 @@ $@"<!DOCTYPE html>
             }
         }
 
+        private static void CheckIfOsIsLinux()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) 
+                || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                fullPath = fullPathUnix;
+            }
+        }
+
         /// <summary>
         /// Insert parking ticket info into the html file.
         /// </summary>
@@ -128,6 +143,7 @@ $@"<!DOCTYPE html>
         /// <returns>True if successful insert. False it faild.</returns>
         public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
+            CheckIfOsIsLinux();
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
             var fileRows = File.ReadAllLines(fullPath);
             List<string> newHtmlFile = new();
@@ -148,7 +164,8 @@ $@"<!DOCTYPE html>
                                 case 0:
                                     if (ticket.CheckedInTime != DateTime.MinValue)
                                     { 
-                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
+                                        newLine = line.Insert(indexOfChar + 1, 
+                                            ticket?.CheckedInTime.ToShortDateString());
                                     }
                                     else
                                     {
@@ -159,7 +176,8 @@ $@"<!DOCTYPE html>
                                 case 1:
                                     if (ticket.CheckedInTime != DateTime.MinValue)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
+                                        newLine = line.Insert(indexOfChar + 1, 
+                                            ticket?.CheckedInTime.ToShortTimeString());
                                     }
                                     else
                                     {
@@ -181,7 +199,8 @@ $@"<!DOCTYPE html>
                                 case 3:
                                     if (ticket.Vehicle is not null)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
+                                        newLine = line.Insert(indexOfChar + 1, 
+                                            ticket?.Vehicle?.RegistrationNumber);
                                     }
                                     else 
                                     {
@@ -208,6 +227,7 @@ $@"<!DOCTYPE html>
             {
                 return true;
             }
+            fileRows.SequenceEqual(newHtmlFile);
             return false;
         }
     }

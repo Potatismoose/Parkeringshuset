@@ -18,15 +18,15 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
             HtmlCreator.CreateHtmlBoilerPlateCode();
         }
         [TearDown]
-        //public void TearDown()
-        //{
-        //    string fileName = "ticket.html";
-        //    string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
-        //    File.Delete(fullPath);
-        //    fileName = "parkingTicket.pdf";
-        //    fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
-        //    File.Delete(fullPath);
-        //}
+        public void TearDown()
+        {
+            //string fileName = "ticket.html";
+            //string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+            //File.Delete(fullPath);
+            //fileName = "parkingTicket.pdf";
+            //fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+            //File.Delete(fullPath);
+        }
 
         [Test()]
         public void InsertTicketInformationInHtmlFile_InsertTicketWithoutValues_ExpectsFalse()
