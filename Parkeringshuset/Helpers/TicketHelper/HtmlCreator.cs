@@ -111,7 +111,7 @@ $@"<!DOCTYPE html>
     </div>
 </body>
 </html>";
-            CheckIfOsIsLinux();
+            CheckIfOsIsLinuxOrOSX();
             try
             {
                 var fs = File.Create(fullPath);
@@ -127,7 +127,7 @@ $@"<!DOCTYPE html>
             }
         }
 
-        private static void CheckIfOsIsLinux()
+        private static void CheckIfOsIsLinuxOrOSX()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) 
                 || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -143,7 +143,7 @@ $@"<!DOCTYPE html>
         /// <returns>True if successful insert. False it faild.</returns>
         public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
-            CheckIfOsIsLinux();
+            CheckIfOsIsLinuxOrOSX();
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
             var fileRows = File.ReadAllLines(fullPath);
             List<string> newHtmlFile = new();
