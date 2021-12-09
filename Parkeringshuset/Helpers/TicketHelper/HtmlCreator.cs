@@ -3,25 +3,32 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    public static class HtmlCreator
+    public class HtmlCreator
     {
-        private static string fileName = "ticket.html";
-        internal static string fullPath = Directory.GetParent(
+        private string fileName = "ticket.html";
+
+        internal string fullPath = String.Empty;
+
+        private string fullPathUnix = String.Empty;
+
+        public HtmlCreator()
+        {
+            fullPath = Directory.GetParent(
             AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
 
-        private static string fullPathUnix = Directory.GetParent(
+            fullPathUnix = Directory.GetParent(
             AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
+        }
 
         /// <summary>
         /// The boilerplate html code that creates the html document..
         /// </summary>
         /// <returns>True if created. False if it fails.</returns>
-        public static bool CreateHtmlBoilerPlateCode()
+        public bool CreateHtmlBoilerPlateCode()
         {
             var boilerplateCode =
 $@"<!DOCTYPE html>
@@ -127,9 +134,9 @@ $@"<!DOCTYPE html>
             }
         }
 
-        internal static void CheckIfOsIsLinuxOrOSX()
+        internal void CheckIfOsIsLinuxOrOSX()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
                 || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 fullPath = fullPathUnix;
@@ -141,7 +148,7 @@ $@"<!DOCTYPE html>
         /// </summary>
         /// <param name="ticket">Takes a PTicket as in parameter.</param>
         /// <returns>True if successful insert. False it faild.</returns>
-        public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
+        public bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
             CheckIfOsIsLinuxOrOSX();
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
@@ -163,8 +170,8 @@ $@"<!DOCTYPE html>
                             {
                                 case 0:
                                     if (ticket.CheckedInTime != DateTime.MinValue)
-                                    { 
-                                        newLine = line.Insert(indexOfChar + 1, 
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1,
                                             ticket?.CheckedInTime.ToShortDateString());
                                     }
                                     else
@@ -176,7 +183,7 @@ $@"<!DOCTYPE html>
                                 case 1:
                                     if (ticket.CheckedInTime != DateTime.MinValue)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, 
+                                        newLine = line.Insert(indexOfChar + 1,
                                             ticket?.CheckedInTime.ToShortTimeString());
                                     }
                                     else
@@ -199,10 +206,10 @@ $@"<!DOCTYPE html>
                                 case 3:
                                     if (ticket.Vehicle is not null)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, 
+                                        newLine = line.Insert(indexOfChar + 1,
                                             ticket?.Vehicle?.RegistrationNumber);
                                     }
-                                    else 
+                                    else
                                     {
                                         newLine = line;
                                     }
