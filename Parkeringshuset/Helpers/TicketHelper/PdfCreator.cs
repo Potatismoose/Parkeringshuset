@@ -12,11 +12,12 @@ namespace Parkeringshuset.Helpers.TicketHelper
         /// <returns>True if succeded, false if failed.</returns>
         public static bool CreatePdfFromHtmlFile()
         {
+            HtmlCreator.CheckIfOsIsLinuxOrOSX();
+            string filePath = HtmlCreator.fullPath;
+            Console.WriteLine("Creating ticket");
+            SelectPdf.HtmlToPdf converter = new SelectPdf.HtmlToPdf();
             try
             {
-                string filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\ticket.html";
-                Console.WriteLine("Creating ticket");
-                SelectPdf.HtmlToPdf converter = new SelectPdf.HtmlToPdf();
                 SelectPdf.PdfDocument doc = converter.ConvertUrl(filePath);
                 doc.Save("parkingTicket.pdf");
                 doc.Close();

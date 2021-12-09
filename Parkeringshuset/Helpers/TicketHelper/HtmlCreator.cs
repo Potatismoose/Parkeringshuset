@@ -11,7 +11,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
     public static class HtmlCreator
     {
         private static string fileName = "ticket.html";
-        private static string fullPath = Directory.GetParent(
+        internal static string fullPath = Directory.GetParent(
             AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
 
         private static string fullPathUnix = Directory.GetParent(
@@ -127,7 +127,7 @@ $@"<!DOCTYPE html>
             }
         }
 
-        private static void CheckIfOsIsLinuxOrOSX()
+        internal static void CheckIfOsIsLinuxOrOSX()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) 
                 || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
