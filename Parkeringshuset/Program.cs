@@ -1,5 +1,8 @@
-﻿using Parkeringshuset.Models;
+﻿using Parkeringshuset.Helpers;
+using Parkeringshuset.Helpers.TicketHelper;
+using Parkeringshuset.Models;
 using Parkeringshuset.Views;
+using System;
 
 namespace Parkeringshuset
 {
@@ -7,10 +10,7 @@ namespace Parkeringshuset
     { 
         static void Main(string[] args)
         {
-            ParkingGarage pg = new(12);
-            Menu menu = new(pg);
-            menu.PrintMainMenu();
-            Login.PrintLoginPage();
+            SeedData.RunMock();
             MainMenu.RunMainMenu();
         }
     }

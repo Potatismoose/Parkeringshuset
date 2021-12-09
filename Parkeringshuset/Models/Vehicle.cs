@@ -1,18 +1,12 @@
 ﻿namespace Parkeringshuset.Models
 {
+    using Microsoft.EntityFrameworkCore;
+
+        [Index(nameof(RegistrationNumber), IsUnique = true)]
     public class Vehicle
     {
-        private string RegistrationNumber = null;
+        public int Id { get; set; }
+        public string RegistrationNumber { get; set; }
 
-        public Vehicle(string registrationNumber)
-        {
-            RegistrationNumber = registrationNumber;
-
-        }
-
-        public override string ToString()
-        {
-            return RegistrationNumber;
-        }
     }
 }
