@@ -13,7 +13,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
         public static bool CreatePdfFromHtmlFile()
         {
             HtmlCreator.CheckIfOsIsLinuxOrOSX();
-            string filePath = HtmlCreator.fullPath;
+            string filePath = Path.GetDirectoryName(HtmlCreator.fullPath);
             Console.WriteLine("Creating ticket");
             SelectPdf.HtmlToPdf converter = new SelectPdf.HtmlToPdf();
             try
