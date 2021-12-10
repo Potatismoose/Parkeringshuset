@@ -12,6 +12,7 @@ namespace Parkeringshuset
         {
             SeedData.RunMock();
             MainMenu.RunMainMenu();
+            //Test
         }
     }
 }
