@@ -16,7 +16,7 @@ jobs:
   build:
     executor:
       name: win/default
-    working_directory: ~\Parkeringshuset\Parkeringshuset.csproj
+    working_directory: ~\Parkeringshuset
     steps:
       - checkout:
           path: ~\Parkeringshuset\
