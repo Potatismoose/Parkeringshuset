@@ -1,15 +1,17 @@
 version: 2.1
-  filters:
-    branches:
-      only:
-       - main
+
 orbs:
   win: circleci/windows@2.4.0
 
 workflows:
+  filters:
+    branches:
+      only:
+       - main
   hello-world:
     jobs:
       - build
+    
 
 jobs:
   build:
