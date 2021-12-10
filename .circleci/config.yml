@@ -4,13 +4,13 @@ orbs:
   win: circleci/windows@2.4.0
 
 workflows:
-  filters:
-    branches:
-      only:
-       - main
   hello-world:
     jobs:
       - build
+      filters:
+        branches:
+          only:
+           - main
     
 
 jobs:
