@@ -17,8 +17,8 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     # Be sure to update the tag on this image to a more stable version, using latest can result in unstable builds.
-    docker:
-      - image: parkeringshuset/dotnet:latest
+    #docker:
+      #- image: parkeringshuset/dotnet:latest
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
@@ -27,7 +27,7 @@ jobs:
       # Then simply use the dotnet container as you'd expect and run your tests
       - run:
           # Update this line with the directory that contains your tests project file
-          working_directory: ~/project/App.Tests
+          working_directory: ~/ParkeringshusetTests/ParkeringshusetTests.csproj
           name: Run tests
           command: |
             dotnet test
