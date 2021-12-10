@@ -7,13 +7,12 @@ workflows:
   hello-world:
     jobs:
       - build
-      filters:
-        branches:
-          only:
-           - main
-    
-
+      
 jobs:
+  filters:
+    branches:
+      only:
+       - main
   build:
     executor:
       name: win/default
