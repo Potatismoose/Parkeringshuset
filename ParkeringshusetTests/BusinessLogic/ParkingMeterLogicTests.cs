@@ -18,17 +18,6 @@ namespace Parkeringshuset.BusinessLogic.Tests
         [Test()]
         public void CalculateCostTest_ShouldBeEqual_WhenGivenCorrectValues(DateTime checkIn, DateTime checkOut, int expected)
         {
-            //string format = "yyyy-MM-dd HH:mm";
-
-            //var con1 = checkIn.ToUniversalTime();
-            //var con2 = checkOut.ToUniversalTime();
-
-            //var test1 = DateTime.Parse(checkIn.ToString(), cultureinfo);
-            //var test2 = DateTime.Parse(checkOut.ToString(), cultureinfo);
-
-            //var test1 = checkIn.ToUniversalTime();
-            //var test2 = checkOut.ToUniversalTime();
-
             var actual = pl.CalculateCost(checkIn, checkOut);
             Assert.AreEqual(expected, actual);
         }
