@@ -11,12 +11,10 @@
 
     public static class SeedData
     {
-
         public static ParkeringGarageContext Db = new();
 
         public static void RunMock()
         {
-
             try
             {
                 Db.Ptypes.Add(new PType { Name = "Handicap", TotalSpots = 10 });
@@ -24,6 +22,7 @@
                 Db.Ptypes.Add(new PType { Name = "Electric", TotalSpots = 30 });
                 Db.Ptypes.Add(new PType { Name = "Monthly", TotalSpots = 30 });
                 Db.Ptypes.Add(new PType { Name = "Motorbike", TotalSpots = 10 });
+                Db.Admins.Add(new Admin { Username = "admin", Password = "admin123" });
 
                 Db.SaveChanges();
             }
@@ -31,7 +30,6 @@
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
     }
 }

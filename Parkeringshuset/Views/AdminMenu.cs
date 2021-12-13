@@ -1,4 +1,5 @@
-﻿using Parkeringshuset.Models;
+﻿using Parkeringshuset.Controllers;
+using Parkeringshuset.Models;
 using System;
 using System.Collections.Generic;
 
@@ -50,6 +51,7 @@ namespace Parkeringshuset.Views
 
         private static bool LoginAdmin(string username, string password)
         {
+            LoginController lc = new();
             return (
                 username == AdminUser
                 && password == AdminPassword
