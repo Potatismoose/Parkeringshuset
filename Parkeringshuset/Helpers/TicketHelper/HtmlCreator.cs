@@ -15,7 +15,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
         public HtmlCreator()
         {
             fileName = "ticket.html";
-            fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+            fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
         }
 
         /// <summary>
