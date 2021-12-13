@@ -9,7 +9,7 @@ namespace Parkeringshuset.Views
     public class AdminMenu
     {
         /// <summary>
-        /// Prints the
+        /// Prints admin menu
         /// </summary>
         public void PrintAdminPage()
         {
@@ -60,6 +60,10 @@ namespace Parkeringshuset.Views
             }
         }
 
+        /// <summary>
+        /// Asks for admin credentials
+        /// </summary>
+        /// <returns>True if admin is found</returns>
         public bool LoginAdmin()
         {
             Console.Clear();
