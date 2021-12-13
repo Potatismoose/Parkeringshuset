@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Parkeringshuset.Views
 {
-    public class Login
+    public class AdminMenu
     {
         private List<string> LoginOptions = new() { "Username", "Password" };
         private const string AdminUser = "Admin";
