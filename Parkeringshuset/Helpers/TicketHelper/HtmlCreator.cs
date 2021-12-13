@@ -7,16 +7,22 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    public static class HtmlCreator
+    public class HtmlCreator
     {
-        private static string fileName = "ticket.html";
-        private static string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+        private string fileName;
+        private string fullPath;
+        
+        public HtmlCreator()
+        {
+            fileName = "ticket.html";
+            fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
+        }
 
         /// <summary>
         /// The boilerplate html code that creates the html document..
         /// </summary>
         /// <returns>True if created. False if it fails.</returns>
-        public static bool CreateHtmlBoilerPlateCode()
+        public bool CreateHtmlBoilerPlateCode()
         {
             var boilerplateCode =
 $@"<!DOCTYPE html>
@@ -129,7 +135,7 @@ $@"<!DOCTYPE html>
         /// </summary>
         /// <param name="ticket">Takes a PTicket as in parameter.</param>
         /// <returns>True if successful insert. False it faild.</returns>
-        public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
+        public bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
             var fileRows = File.ReadAllLines(fullPath);
