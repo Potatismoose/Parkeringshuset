@@ -22,7 +22,7 @@
                 Db.Ptypes.Add(new PType { Name = "Electric", TotalSpots = 30 });
                 Db.Ptypes.Add(new PType { Name = "Monthly", TotalSpots = 30 });
                 Db.Ptypes.Add(new PType { Name = "Motorbike", TotalSpots = 10 });
-                Db.Admins.Add(new Admin { Username = "admin", Password = "admin123" });
+                Db.Admins.Add(new Admin { Username = "admin", Password = "admin123", Email = "parking.garage.boss@gmail.com" });
 
                 Db.SaveChanges();
             }

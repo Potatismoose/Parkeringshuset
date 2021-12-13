@@ -31,6 +31,8 @@ namespace Parkeringshuset.Views
             bool keepGoing = true;
             bool isValidRegNr = false;
             bool isCharOrDigit = false;
+            bool isLoginSuccessful = false;
+            bool haveAdminBeenLoggedIn = false;
             string pType = "";
 
             ParkingMeterLogic pML = new();
@@ -71,9 +73,23 @@ namespace Parkeringshuset.Views
                     else if (secretPatternMatch.SequenceEqual(secretPattern))
                     {
                         AdminMenu login = new();
-                        login.PrintLoginPage();
+                        if (isLoginSuccessful == login.LoginAdmin())
+                        {
+                            login.PrintLoginPage();
+                            haveAdminBeenLoggedIn = true;
+                        }
+                        else
+                        {
+                            Helper.DisplayHelper.DisplayRed("Something went wrong!");
+                        }
                     }
                 } while (!isValidRegNr && !secretPatternMatch.SequenceEqual(secretPattern));
+
+                if (haveAdminBeenLoggedIn)
+                {
+                    haveAdminBeenLoggedIn = false;
+                    continue;
+                }
 
                 if (string.IsNullOrEmpty(regNr.Trim()))
                 {
