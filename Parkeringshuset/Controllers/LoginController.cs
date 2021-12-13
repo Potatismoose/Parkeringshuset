@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Parkeringshuset.Data;
 
 namespace Parkeringshuset.Controllers
@@ -17,6 +20,33 @@ namespace Parkeringshuset.Controllers
             var admin = db.Admins.FirstOrDefault(x => x.Username == username && x.Password == password);
 
             return admin != null;
+        }
+
+        /// <summary>
+        /// Generates a random number of nonzero values.
+        /// </summary>
+        /// <param name="size">The size of the salt.</param>
+        /// <returns>A byte[] with the salt.</returns>
+        public byte[] GenerateSalt(int size){
+            byte[] salt = new byte[size];
+            var rng = RandomNumberGenerator.Create();
+            rng.GetNonZeroBytes(salt);
+
+            return salt;
+        }
+
+        public byte[] GenerateSha256(string password){
+            byte[] pass = Encoding.ASCII.GetBytes(password);
+            List<byte> tmp = new();
+            tmp.AddRange(pass);
+            tmp.AddRange(GenerateSalt(128));
+            byte[] hashedPassword = new byte[tmp.Count];
+
+            using (var sha256 = SHA256.Create()){
+                sha256.ComputeHash(hashedPassword);
+            }
+
+            return hashedPassword;
         }
     }
 }
