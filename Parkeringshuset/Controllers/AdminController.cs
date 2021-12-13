@@ -129,6 +129,10 @@
             
         }
 
+        /// <summary>
+        /// Get all tickets that are registred as monthly tickets. 
+        /// </summary>
+        /// <returns></returns>
         public List<PTicket> GetActiveMonthlyTickets()
         {
            
