@@ -4,12 +4,15 @@
     using Parkeringshuset.Models;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
-    internal class PaymentLogic
+    public class PaymentLogic
     {
+        private CultureInfo ci = new CultureInfo("sv-SE");
         private TimeSpan TotalTime;
         private DateTime MorningTime = new DateTime(2021, 01, 01, 06, 00, 00);
         private DateTime LunchTime = new DateTime(2021, 01, 01, 12, 00, 00);
@@ -26,13 +29,10 @@
         private DateTime CheckIn;
         private DateTime CheckOut;
 
-        private int CalculateCost(DateTime checkIn, DateTime checkOut)
+        public int CalculateCost(DateTime checkIn, DateTime checkOut)
         {
-            //this works if using an EN OS. 
+            Thread.CurrentThread.CurrentCulture = ci;
 
-            //string format = "M/d/yyyy h:mm:ss tt";
-            //CheckIn = DateTime.ParseExact(checkIn.ToString(), format, CultureInfo.InvariantCulture);
-            //CheckOut = DateTime.ParseExact(checkOut.ToString(), format, CultureInfo.InvariantCulture);
             CheckIn = checkIn;
             CheckOut = checkOut;
 
@@ -63,18 +63,33 @@
                     CheckIn = CheckIn.AddMinutes(1);                                         // and then add an extra minute so it goes in to the mornings IF-statement if car is parked over
                 }                                                                            // the night.
             }
-            return (int)Math.Round(
+
+            return GetSumAndResetCounters();
+        }
+
+        private int GetSumAndResetCounters()
+        {
+            var res = Math.Round(
+
                  (MorningMinsCounter * MorningPricePerMinute) +
                 (LunchMinsCounter * LunchPricePerMinute) +
                 (EveningMinsCounter * EveningPricePerMinute) +
                 (NightMinsCounter * NightPricePerMinute));
+
+            MorningMinsCounter = 0;
+            LunchMinsCounter = 0;
+            EveningMinsCounter = 0;
+            NightMinsCounter = 0;
+            return (int)res;
         }
 
         private void MinutesInThisTimeSlot(DateTime CategoryTime, ref int counter)
         {
-            TimeSpan totalHoursInThisCategory;
-            TotalTime = CheckOut - CheckIn;
-            if (TotalTime.TotalMinutes <= 360)
+
+            TotalTime = CheckOut - CheckIn;   
+            var  totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
+
+            if(totalHoursInThisCategory.TotalMinutes > TotalTime.TotalMinutes)
             {
                 totalHoursInThisCategory = TotalTime;
             }
@@ -87,16 +102,17 @@
 
             CheckIn = CheckIn.AddMinutes(totalHoursInThisCategory.TotalMinutes);
         }
+
         /// <summary>
-        /// Handle the payment. Updates the object ticket properties Cost and IsPaid if successfull. 
+        /// Handle the payment. Updates the object ticket properties Cost and IsPaid if successfull.
         /// </summary>
         /// <param name="card">CreditCard object.</param>
         /// <param name="ticket">Ticket object.</param>
         /// <returns>a Tuple of an updated ticket and a bool. True if card is valid and false if not.</returns>
-    public (PTicket, bool) Payment(CreditCard card, PTicket ticket)
+        public (PTicket, bool) Payment(CreditCard card, PTicket ticket)
         {
             ticket.CheckedOutTime = DateTime.Now;
-            ticket.Cost = CalculateCost(ticket.CheckedInTime, ticket.CheckedOutTime);   
+            ticket.Cost = CalculateCost(ticket.CheckedInTime, ticket.CheckedOutTime);
 
             if (IsCardCredentialsValid(card))
             {
@@ -108,11 +124,10 @@
             {
                 return (ticket, false);
             }
-        
-           
         }
+
         /// <summary>
-        /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid. 
+        /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid.
         /// </summary>
         /// <param name="card">Object that have 2 string properties.</param>
         /// <returns></returns>
@@ -129,5 +144,4 @@
             return false;
         }
     }
-
 }

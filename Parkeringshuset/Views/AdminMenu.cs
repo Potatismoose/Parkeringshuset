@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Parkeringshuset.Views
 {
-    class Login
+    public class AdminMenu
     {
-        List<string> LoginOptions = new() { "Username", "Password" };
+        private List<string> LoginOptions = new() { "Username", "Password" };
         private const string AdminUser = "Admin";
         private const string AdminPassword = "Controll";
 
-        public static bool PrintLoginPage()
+        public bool PrintLoginPage()
         {
             //ParkingGarage pg = new(12);
             //Vehicle car = new("NPK144");
@@ -31,10 +31,6 @@ namespace Parkeringshuset.Views
             //Console.WriteLine($"Lediga platser: {pg.CalculateAvailibleSpace()}");
             //Console.ReadKey();
 
-
-
-
-
             //Console.WriteLine("Parkeringsgaraget. Logga in som admin eller lämna blankt för att starta parkeringsappen.");
             //Console.ReadKey();
 
@@ -48,10 +44,10 @@ namespace Parkeringshuset.Views
             //    }
             //}
 
-
             //Console.ReadKey();
             return false;
         }
+
         private static bool LoginAdmin(string username, string password)
         {
             return (
@@ -59,6 +55,5 @@ namespace Parkeringshuset.Views
                 && password == AdminPassword
                 ? true : false);
         }
-
     }
 }

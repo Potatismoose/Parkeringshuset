@@ -1,4 +1,4 @@
-﻿namespace Parkeringshuset.Models
+﻿namespace Parkeringshuset.BusinessLogic
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class CreditCard
+    internal class AdminFunctionsLogic
     {
-        public string Number;
-
-        public string CSV;
     }
 }
