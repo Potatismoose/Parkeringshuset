@@ -70,7 +70,7 @@ namespace Parkeringshuset.Views
                     }
                     else if (secretPatternMatch.SequenceEqual(secretPattern))
                     {
-                        Login login = new();
+                        AdminMenu login = new();
                         login.PrintLoginPage();
                     }
                 } while (!isValidRegNr && !secretPatternMatch.SequenceEqual(secretPattern));
