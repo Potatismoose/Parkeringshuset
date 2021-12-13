@@ -18,8 +18,9 @@ namespace Parkeringshuset.Helpers.TicketHelper
         /// <returns>true if the ticket is created and printed.</returns>
         public static bool PhysicalTicketCreationAndPrintout(PTicket ticket)
         {
-            if (HtmlCreator.CreateHtmlBoilerPlateCode()
-                && HtmlCreator.InsertTicketInformationInHtmlFile(ticket)
+            HtmlCreator Hc = new();
+            if (Hc.CreateHtmlBoilerPlateCode()
+                && Hc.InsertTicketInformationInHtmlFile(ticket)
                 && PdfCreator.CreatePdfFromHtmlFile()
                 && PrintPdfParkingTicket())
             {
