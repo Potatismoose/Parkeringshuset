@@ -21,8 +21,6 @@ namespace Parkeringshuset.Views
                     LeftArrow,
                     RightArrow};
 
-        private static string regNr = "";
-
         /// <summary>
         /// Check in and out menu for users of the parking garage.
         /// </summary>
@@ -32,8 +30,9 @@ namespace Parkeringshuset.Views
             bool isValidRegNr = false;
             bool isCharOrDigit = false;
             bool isLoginSuccessful = false;
-            bool haveAdminBeenLoggedIn = false;
+            bool haveAdminLoggedOut = false;
             string pType = "";
+            string regNr = "";
 
             ParkingMeterLogic pML = new();
             ParkingTicketController pTC = new();
@@ -43,6 +42,7 @@ namespace Parkeringshuset.Views
                 Console.Write("Enter your registration number: ");
                 do
                 {
+                    while (Console.KeyAvailable) { Console.ReadKey(false); }
                     ConsoleKeyInfo pressedKey = Console.ReadKey();
                     secretPatternMatch.Add(pressedKey.Key);
 
@@ -76,18 +76,19 @@ namespace Parkeringshuset.Views
                         if (isLoginSuccessful == login.LoginAdmin())
                         {
                             login.PrintAdminPage();
-                            haveAdminBeenLoggedIn = true;
+                            haveAdminLoggedOut = true;
                         }
                         else
                         {
                             Helper.DisplayHelper.DisplayRed("Something went wrong!");
                         }
+                        secretPatternMatch.Clear();
                     }
                 } while (!isValidRegNr && !secretPatternMatch.SequenceEqual(secretPattern));
 
-                if (haveAdminBeenLoggedIn)
+                if (haveAdminLoggedOut)
                 {
-                    haveAdminBeenLoggedIn = false;
+                    haveAdminLoggedOut = false;
                     continue;
                 }
 
@@ -148,16 +149,22 @@ namespace Parkeringshuset.Views
                             PressAnyKeyToContinue();
                             break;
                     }
+                    secretPatternMatch.Clear();
+                    regNr = "";
                 }
                 else if (pTC.IsMonthly(parkingTicket) && pTC.IsTicketActive(parkingTicket))
                 {
                     Console.WriteLine($"Welcome back! Your ticket expires { parkingTicket.CheckedOutTime}");
+                    regNr = "";
+                    secretPatternMatch.Clear();
                     PressAnyKeyToContinue();
                 }
                 else if (pTC.IsTicketActive(parkingTicket))
                 {
                     pTC.CheckOut(parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
+                    regNr = "";
+                    secretPatternMatch.Clear();
                     PressAnyKeyToContinue();
                 }
             } while (keepGoing);
