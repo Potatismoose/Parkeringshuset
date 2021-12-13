@@ -34,10 +34,10 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
         [Test()]
         public void IntegrationTest_TestWorkingFlow_ExpectTrue()
         {
-            
-            var result = HtmlCreator.CreateHtmlBoilerPlateCode();
+            HtmlCreator Hc = new();
+            var result = Hc.CreateHtmlBoilerPlateCode();
             Assert.IsTrue(result);
-            result = HtmlCreator.InsertTicketInformationInHtmlFile(Ticket);
+            result = Hc.InsertTicketInformationInHtmlFile(Ticket);
             Assert.IsTrue(result);
             result = PdfCreator.CreatePdfFromHtmlFile();
             Assert.IsTrue(result);
