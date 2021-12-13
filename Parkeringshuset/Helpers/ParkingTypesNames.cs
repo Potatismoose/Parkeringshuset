@@ -1,9 +1,5 @@
 ﻿namespace Parkeringshuset.Models
 {
-<<<<<<< HEAD
-
-=======
->>>>>>> cdf8fd4a0c0856188e4c4f66fc6f2b306397840c
     public static class ParkingTypesNames
     {
 
