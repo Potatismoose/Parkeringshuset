@@ -3,19 +3,35 @@ using System;
 using Parkeringshuset.Models;
 using Parkeringshuset.BusinessLogic;
 using System.Linq;
+using static System.ConsoleKey;
+using System.Text.RegularExpressions;
 
 namespace Parkeringshuset.Views
 {
     public static class MainMenu
     {
+        private static List<ConsoleKey> secretPatternMatch = new List<ConsoleKey>();
+
+        private static List<ConsoleKey> secretPattern = new List<ConsoleKey>(){
+                    RightArrow,
+                    LeftArrow,
+                    RightArrow,
+                    LeftArrow,
+                    UpArrow,
+                    LeftArrow,
+                    RightArrow};
+
+        private static string regNr = "";
+
         /// <summary>
         /// Check in and out menu for users of the parking garage.
         /// </summary>
         public static void RunMainMenu()
         {
             bool keepGoing = true;
+            bool isValidRegNr = false;
+            bool isCharOrDigit = false;
             string pType = "";
-            char firstChar = '\0';
 
             ParkingMeterLogic pML = new();
             ParkingTicketController pTC = new();
@@ -23,10 +39,41 @@ namespace Parkeringshuset.Views
             {
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
-                UnlockAdminMenu(firstChar);
+                do
+                {
+                    ConsoleKeyInfo pressedKey = Console.ReadKey();
+                    secretPatternMatch.Add(pressedKey.Key);
 
-                string regNr = Console.ReadLine().ToUpper();
-                regNr = firstChar + regNr;
+                    foreach (var item in secretPatternMatch)
+                    {
+                        if (item != RightArrow &&
+                            item != LeftArrow &&
+                            item != UpArrow &&
+                            item != DownArrow
+                        )
+                        {
+                            isCharOrDigit = true;
+                            regNr += (char)pressedKey.Key;
+                            if (regNr.Length >= 2 && regNr.Length <= 7 && pressedKey.Key == Enter)
+                            {
+                                isValidRegNr = true;
+                            }
+                        }
+                        else
+                        {
+                            isCharOrDigit = false;
+                        }
+                    }
+                    if (isCharOrDigit)
+                    {
+                        secretPatternMatch.Clear();
+                    }
+                    else if (secretPatternMatch.SequenceEqual(secretPattern))
+                    {
+                        Login login = new();
+                        login.PrintLoginPage();
+                    }
+                } while (!isValidRegNr && !secretPatternMatch.SequenceEqual(secretPattern));
 
                 if (string.IsNullOrEmpty(regNr.Trim()))
                 {
@@ -98,44 +145,6 @@ namespace Parkeringshuset.Views
                     PressAnyKeyToContinue();
                 }
             } while (keepGoing);
-        }
-
-        private static char UnlockAdminMenu(char firstChar)
-        {
-            List<ConsoleKey> secretPatternMatch = new List<ConsoleKey>();
-            List<ConsoleKey> secretPattern = new List<ConsoleKey>() {
-                    ConsoleKey.RightArrow,
-                    ConsoleKey.LeftArrow,
-                    ConsoleKey.RightArrow,
-                    ConsoleKey.LeftArrow,
-                    ConsoleKey.UpArrow,
-                    ConsoleKey.LeftArrow,
-                    ConsoleKey.RightArrow};
-
-            ConsoleKeyInfo pressedKey = Console.ReadKey();
-
-            if (pressedKey.Key == ConsoleKey.RightArrow)
-            {
-                secretPatternMatch.Add(pressedKey.Key);
-                secretPatternMatch.Add(Console.ReadKey().Key);
-                while (pressedKey.Key != ConsoleKey.Enter)
-                {
-                    pressedKey = Console.ReadKey();
-                    secretPatternMatch.Add(pressedKey.Key);
-
-                    if (secretPatternMatch.SequenceEqual(secretPattern))
-                    {
-                        Console.WriteLine("You unlocked it!");
-                        Console.ReadLine();
-                    }
-                }
-            }
-            else
-            {
-                firstChar = (char)pressedKey.Key;
-            }
-
-            return firstChar;
         }
 
         private static void PressAnyKeyToContinue()
