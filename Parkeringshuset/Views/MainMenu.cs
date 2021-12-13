@@ -2,25 +2,79 @@
 using System;
 using Parkeringshuset.Models;
 using Parkeringshuset.BusinessLogic;
+using System.Linq;
+using static System.ConsoleKey;
+using System.Text.RegularExpressions;
 
 namespace Parkeringshuset.Views
 {
     public static class MainMenu
     {
+        private static List<ConsoleKey> secretPatternMatch = new List<ConsoleKey>();
+
+        private static List<ConsoleKey> secretPattern = new List<ConsoleKey>(){
+                    RightArrow,
+                    LeftArrow,
+                    RightArrow,
+                    LeftArrow,
+                    UpArrow,
+                    LeftArrow,
+                    RightArrow};
+
+        private static string regNr = "";
+
         /// <summary>
         /// Check in and out menu for users of the parking garage.
         /// </summary>
         public static void RunMainMenu()
         {
             bool keepGoing = true;
+            bool isValidRegNr = false;
+            bool isCharOrDigit = false;
             string pType = "";
-            ParkingMeterLogic pML = new ();
-            ParkingTicketController pTC = new ();
+
+            ParkingMeterLogic pML = new();
+            ParkingTicketController pTC = new();
             do
             {
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
-                string regNr = Console.ReadLine();
+                do
+                {
+                    ConsoleKeyInfo pressedKey = Console.ReadKey();
+                    secretPatternMatch.Add(pressedKey.Key);
+
+                    foreach (var item in secretPatternMatch)
+                    {
+                        if (item != RightArrow &&
+                            item != LeftArrow &&
+                            item != UpArrow &&
+                            item != DownArrow
+                        )
+                        {
+                            isCharOrDigit = true;
+                            regNr += (char)pressedKey.Key;
+                            if (regNr.Length >= 2 && regNr.Length <= 7 && pressedKey.Key == Enter)
+                            {
+                                isValidRegNr = true;
+                            }
+                        }
+                        else
+                        {
+                            isCharOrDigit = false;
+                        }
+                    }
+                    if (isCharOrDigit)
+                    {
+                        secretPatternMatch.Clear();
+                    }
+                    else if (secretPatternMatch.SequenceEqual(secretPattern))
+                    {
+                        Login login = new();
+                        login.PrintLoginPage();
+                    }
+                } while (!isValidRegNr && !secretPatternMatch.SequenceEqual(secretPattern));
+
                 if (string.IsNullOrEmpty(regNr.Trim()))
                 {
                     Console.WriteLine("Can not use empty registration number, please try again.");
@@ -46,11 +100,13 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 2:
                             pType = "Electric";
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 3:
                             pType = "Handicap";
                             pML.CheckIn(regNr, pType);
@@ -66,9 +122,11 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 6:
                             keepGoing = false;
                             break;
+
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
                             PressAnyKeyToContinue();
@@ -80,7 +138,7 @@ namespace Parkeringshuset.Views
                     Console.WriteLine($"Welcome back! Your ticket expires { parkingTicket.CheckedOutTime}");
                     PressAnyKeyToContinue();
                 }
-                else if(pTC.IsTicketActive(parkingTicket))
+                else if (pTC.IsTicketActive(parkingTicket))
                 {
                     pTC.CheckOut(parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
