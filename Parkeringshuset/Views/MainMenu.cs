@@ -75,7 +75,7 @@ namespace Parkeringshuset.Views
                         AdminMenu login = new();
                         if (isLoginSuccessful == login.LoginAdmin())
                         {
-                            login.PrintLoginPage();
+                            login.PrintAdminPage();
                             haveAdminBeenLoggedIn = true;
                         }
                         else

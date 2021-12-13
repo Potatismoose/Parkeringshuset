@@ -8,7 +8,10 @@ namespace Parkeringshuset.Views
 {
     public class AdminMenu
     {
-        public void PrintLoginPage()
+        /// <summary>
+        /// Prints the
+        /// </summary>
+        public void PrintAdminPage()
         {
             AdminFunctionsLogic afl = new();
             bool isRunning = true;
