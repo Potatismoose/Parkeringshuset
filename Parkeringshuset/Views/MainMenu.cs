@@ -77,9 +77,10 @@ namespace Parkeringshuset.Views
                     {
                         secretPatternMatch.Clear();
                         AdminMenu login = new();
-                        if (login.LoginAdmin())
+                        var admin = login.LoginAdmin();
+                        if (admin is not null)
                         {
-                            login.PrintAdminPage();
+                            login.PrintAdminPage(admin);
                             hasAdminLoggedOut = true;
                         }
                         else

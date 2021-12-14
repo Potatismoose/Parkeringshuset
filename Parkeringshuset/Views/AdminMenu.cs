@@ -11,7 +11,7 @@ namespace Parkeringshuset.Views
         /// <summary>
         /// Prints admin menu
         /// </summary>
-        public void PrintAdminPage()
+        public void PrintAdminPage(Admin admin)
         {
             AdminFunctionsLogic afl = new();
             bool isRunning = true;
@@ -30,11 +30,11 @@ namespace Parkeringshuset.Views
                 switch (choice)
                 {
                     case 1:
-                        afl.ParkingSportsPopularity();
+                        afl.ParkingSportsPopularity(admin);
                         break;
 
                     case 2:
-                        afl.SoldTicketsBetweenSpecificDates();
+                        afl.SoldTicketsBetweenSpecificDates(admin);
                         break;
 
                     case 3:
@@ -64,7 +64,7 @@ namespace Parkeringshuset.Views
         /// Asks for admin credentials
         /// </summary>
         /// <returns>True if admin is found</returns>
-        public bool LoginAdmin()
+        public Admin LoginAdmin()
         {
             Console.Clear();
             Console.Write("Username: ");
@@ -73,8 +73,7 @@ namespace Parkeringshuset.Views
             var password = Console.ReadLine();
 
             LoginController lc = new();
-            var admin = lc.LoginReturnAdmin(username, password);
-            return admin != null;
+            return lc.LoginReturnAdmin(username, password);
         }
     }
 }
