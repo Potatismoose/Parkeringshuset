@@ -9,8 +9,8 @@ using Parkeringshuset.Data;
 namespace Parkeringshuset.Migrations
 {
     [DbContext(typeof(ParkeringGarageContext))]
-    [Migration("20211214102622_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211214121224_InitialCreat")]
+    partial class InitialCreat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,9 +25,6 @@ namespace Parkeringshuset.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Hash")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")

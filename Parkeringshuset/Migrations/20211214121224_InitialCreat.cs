@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Parkeringshuset.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,6 @@ namespace Parkeringshuset.Migrations
                     Username = table.Column<string>(type: "TEXT", nullable: true),
                     Password = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
-                    Hash = table.Column<string>(type: "TEXT", nullable: true),
                     Salt = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

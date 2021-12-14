@@ -25,9 +25,6 @@ namespace Parkeringshuset.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Hash")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Password")
                         .HasColumnType("TEXT");
 
