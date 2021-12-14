@@ -18,7 +18,6 @@ namespace Parkeringshuset.Controllers.Tests
         {
             var result = AC.GetAllTickets(); 
             Assert.IsTrue(result.Count > 1);
-
         }
 
         [Test()]
@@ -28,16 +27,13 @@ namespace Parkeringshuset.Controllers.Tests
             DateTime to = new DateTime(2021, 12, 07);
             var result = AC.GetTicketForDate(from, to);
             Assert.AreEqual(5, result.Count);
-
         }
+
         [Test()]
         public void GetAllActivatedMonthlyTickets()
         {
-
-        
             var result = AC.GetActiveMonthlyTickets();
-            Assert.AreEqual(2, result.Count);
-
+            Assert.That(result.Count, Is.AtLeast(2));
         }
     }
 }

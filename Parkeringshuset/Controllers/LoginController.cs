@@ -1,5 +1,6 @@
 using System.Linq;
 using Parkeringshuset.Data;
+using Parkeringshuset.Models;
 
 namespace Parkeringshuset.Controllers
 {
@@ -13,10 +14,10 @@ namespace Parkeringshuset.Controllers
         /// <param name="username">The username for the user.</param>
         /// <param name="password">The password for the user.</param>
         /// <returns>True if the login was successful, otherwise false.</returns>
-        public bool IsLoginSuccessful(string username, string password){
+        public Admin LoginReturnAdmin(string username, string password){
             var admin = db.Admins.FirstOrDefault(x => x.Username == username && x.Password == password);
 
-            return admin != null;
+            return admin;
         }
     }
 }
