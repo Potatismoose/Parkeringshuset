@@ -140,5 +140,9 @@
             return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == ParkingTypesNames.Monthly).ToList();
   
         }
+        public List<PType> GetAllParkingTypes()
+        {
+            return db.Ptypes.Select(x => x).ToList();
+        }
     }
 }
