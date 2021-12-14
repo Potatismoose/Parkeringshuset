@@ -30,10 +30,10 @@ namespace Parkeringshuset.Controllers.Tests
         public void TicketsInARange()
         {
 
-            DateTime from = new DateTime(2021,12,14);
-            DateTime to = new DateTime(2021, 12, 14);
+            DateTime from = new DateTime(2021,12,10);
+            DateTime to = new DateTime(2021, 12, 11);
             var result = AC.GetTicketForDate(from, to);
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(4, result.Count);
         }
 
         [Test()]
@@ -42,5 +42,6 @@ namespace Parkeringshuset.Controllers.Tests
             var result = AC.GetActiveMonthlyTickets();
             Assert.That(result.Count, Is.AtLeast(1));
         }
+
     }
 }
