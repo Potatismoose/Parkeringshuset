@@ -73,7 +73,8 @@ namespace Parkeringshuset.Views
             var password = Console.ReadLine();
 
             LoginController lc = new();
-            return lc.IsLoginSuccessful(username, password);
+            var admin = lc.LoginReturnAdmin(username, password);
+            return admin != null;
         }
     }
 }
