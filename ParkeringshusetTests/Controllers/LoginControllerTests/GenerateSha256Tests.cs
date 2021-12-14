@@ -21,9 +21,11 @@ namespace ParkeringshusetTests.Controllers.LoginControllerTests
         [Test]
         public void GenerateSha256_GeneratesACorrectHash_ReturnTrue(){
             string password = "qwerty123";
-            var salt = _lc.GenerateSalt(16);
-            
-            Assert.AreEqual(_lc.GenerateSha256(password), salt);
+            byte[] salt = new byte[] {
+                91, 236, 167, 121, 200, 250, 95, 180, 218, 91, 232, 213, 163, 95, 92, 27};
+
+            Assert.AreEqual(_lc.GenerateSha256(password, salt), 
+                "YRJt4beVuXbzrIePSOiPp3qH1zCLpXx2QrnhBoQDpJY=W+ynecj6X7TaW+jVo19cGw==");
         }
     }
 }

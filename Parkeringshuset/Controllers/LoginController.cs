@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -35,18 +36,16 @@ namespace Parkeringshuset.Controllers
             return salt;
         }
 
-        public byte[] GenerateSha256(string password){
+        public string GenerateSha256(string password, byte[] salt){
             byte[] pass = Encoding.ASCII.GetBytes(password);
             List<byte> tmp = new();
             tmp.AddRange(pass);
-            tmp.AddRange(GenerateSalt(128));
+            tmp.AddRange(salt);
             byte[] hashedPassword = new byte[tmp.Count];
 
-            using (var sha256 = SHA256.Create()){
-                sha256.ComputeHash(hashedPassword);
-            }
-
-            return hashedPassword;
+            var sha256 = SHA256.Create();
+            sha256.ComputeHash(hashedPassword);
+            return Convert.ToBase64String(sha256.Hash) + Convert.ToBase64String(salt);
         }
     }
 }
