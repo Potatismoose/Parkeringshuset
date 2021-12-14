@@ -32,7 +32,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
                 PageSetup pageSetup = section.PageSetup;
 
                 PageMargins pageMargins = pageSetup.PageMargins;
-                pageMargins.Top = pageMargins.Bottom = pageMargins.Left = pageMargins.Right = 150;
+                pageMargins.Top = pageMargins.Bottom = pageMargins.Left = pageMargins.Right = 190;
 
                 // Save output PDF file.
                 document.Save("parkingTicket.pdf");
