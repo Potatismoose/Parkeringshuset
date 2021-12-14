@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using Parkeringshuset.BusinessLogic;
 using Parkeringshuset.Models;
-using Parkeringshuset.BusinessLogic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using static System.ConsoleKey;
-using System.Text.RegularExpressions;
-using Parkeringshuset.Helpers;
 
 namespace Parkeringshuset.Views
 {
@@ -177,6 +175,9 @@ namespace Parkeringshuset.Views
             } while (keepGoing);
         }
 
+        /// <summary>
+        /// Pauses the program until the user hits any key.
+        /// </summary>
         private static void PressAnyKeyToContinue()
         {
             Console.WriteLine("Press any key to continue. . .");
