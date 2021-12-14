@@ -2,18 +2,16 @@
 {
     using Parkeringshuset.Controllers;
     using Parkeringshuset.Data;
-    using Parkeringshuset.Helper;
     using Parkeringshuset.Models;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public static class SeedData
     {
         public static ParkeringGarageContext Db = new();
-
+           
+        /// <summary>
+        /// Add mock data into database.
+        /// </summary>
         public static void RunMock()
         {
             try
@@ -23,7 +21,6 @@
                 Db.Ptypes.Add(new PType { Name = "Electric", TotalSpots = 30 });
                 Db.Ptypes.Add(new PType { Name = "Monthly", TotalSpots = 30 });
                 Db.Ptypes.Add(new PType { Name = "Motorbike", TotalSpots = 10 });
-                Db.Admins.Add(new Admin { Username = "admin", Password = "admin123", Email = "parking.garage.boss@gmail.com" });
 
                 Db.SaveChanges();
             }
@@ -33,6 +30,9 @@
             }
         }
 
+        /// <summary>
+        /// Creates an admin.
+        /// </summary>
         public static void CreateAdmin()
         {
             AdminController ac = new();

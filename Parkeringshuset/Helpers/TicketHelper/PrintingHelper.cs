@@ -26,7 +26,7 @@ namespace Parkeringshuset.Helpers.TicketHelper
             {
                 return true;
             }
-
+            
             return false;
         }
 
