@@ -21,34 +21,46 @@ namespace ParkeringshusetTests.Controllers.LoginControllerTests
 
         [Test]
         public void IsLoginSuccessful_WrongUsernameAndPassword_ReturnFalse(){
+            //Arrange
             string username = "user123";
             string password = "qwerty123";
-
-            Assert.IsFalse(_lc.IsLoginSuccessful(username, password));
+            //Act
+            var result = _lc.LoginReturnAdmin(username, password);
+            //Assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
         public void IsLoginSuccessful_CorrectUsernameWrongPassword_ReturnFalse(){
+            //Arrange
             string username = "admin";
             string password = "qwerty123";
-
-            Assert.IsFalse(_lc.IsLoginSuccessful(username, password));
+            //Act
+            var result = _lc.LoginReturnAdmin(username, password);
+            //Assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
         public void IsLoginSuccessful_WrongUsernameCorrectPassword_ReturnFalse(){
+            //Arrange
             string username = "user123";
             string password = "admin123";
-
-            Assert.IsFalse(_lc.IsLoginSuccessful(username, password));
+            //Act
+            var result = _lc.LoginReturnAdmin(username, password);
+            //Assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
         public void IsLoginSuccessful_CorrectUsernameAndPassword_ReturnTrue(){
+            //Arrange
             string username = "admin";
             string password = "admin123";
-
-            Assert.IsTrue(_lc.IsLoginSuccessful(username, password));
+            //Act
+            var result = _lc.LoginReturnAdmin(username, password);
+            //Assert
+            Assert.That(result, Is.Not.Null);
         }
     }
 }
