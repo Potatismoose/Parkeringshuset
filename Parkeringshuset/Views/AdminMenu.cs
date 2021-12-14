@@ -40,7 +40,7 @@ namespace Parkeringshuset.Views
                         break;
 
                     case 3:
-                        
+
                         startDate = AskForStartOrEndDate("Start");
                         endDate = AskForStartOrEndDate("End");
                         Console.WriteLine(startDate);
@@ -94,7 +94,6 @@ namespace Parkeringshuset.Views
                 isNumber = int.TryParse(Console.ReadLine(), out int day);
                 Day = day;
             } while (!isNumber);
-
 
             return new DateTime(Year, Month, Day);
         }
