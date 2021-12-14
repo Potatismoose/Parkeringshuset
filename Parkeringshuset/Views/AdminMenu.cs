@@ -30,11 +30,11 @@ namespace Parkeringshuset.Views
                 switch (choice)
                 {
                     case 1:
-                        afl.ParkingSportsPopularity(admin);
+                        afl.ParkingSportsPopularity();
                         break;
 
                     case 2:
-                        afl.SoldTicketsBetweenSpecificDates(admin);
+                        afl.SoldTicketsBetweenSpecificDates();
                         break;
 
                     case 3:
