@@ -42,6 +42,17 @@ namespace Parkeringshuset.Controllers.Tests
             var result = AC.GetActiveMonthlyTickets();
             Assert.That(result.Count, Is.AtLeast(1));
         }
+        [Test()]
+        public void CreateTicket()
+        {
+            // Act
+            var result = PC.CreateTicket("AJA167", ParkingTypesNames.Regular);
+            var ticket = PC.GetActiveTicket("AJA167");
+            var next = PC.CheckOut(ticket);
+
+
+            Assert.That(next is true);
+        }
 
     }
 }

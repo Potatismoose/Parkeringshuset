@@ -4,6 +4,7 @@
     using FluentEmail.Razor;
     using FluentEmail.Smtp;
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Mail;
     using System.Text;
@@ -12,7 +13,7 @@
     public static class SendEmail
     {
 
-        public static void SendWithBlazor(int totalIncome, int nrOfUnPaidBills, string subject, DateTime from, DateTime to)
+        public static void SendWithBlazor(int totalIncome, int nrOfUnPaidBills, string subject, DateTime from, DateTime to, string toEmailAdress)
         {
 
             var sender = new SmtpSender(() => new SmtpClient("smtp.gmail.com")
@@ -43,12 +44,17 @@
 
             var email = Email
                 .From("parkinggarage2021@gmail.com", "Parking Business")
-                .To("parking.garage.boss@gmail.com", "Admin")
+                .To(toEmailAdress, "Admin")
                 .Subject(subject)
                 .UsingTemplate(template.ToString(), new { TotalIncome = totalIncome, NrOfUnPaidBills = nrOfUnPaidBills, From = from.ToString("yyyy,mm,dd"), To = to.ToString("yyyy,mm,dd") })
                 .Send();
 
 
+        }
+
+        internal static void ParkingSpots(List<(string, int)> occupationLastMonth, string v, string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }
