@@ -14,6 +14,11 @@
             Console.WriteLine(text);
             Console.ResetColor();
         }
+
+        /// <summary>
+        /// Changes console color to green in case of correct input.
+        /// </summary>
+        /// <param name="text"></param>
         public static void DisplayGreen(string text)
         {
             Console.ForegroundColor = ConsoleColor.Green;
