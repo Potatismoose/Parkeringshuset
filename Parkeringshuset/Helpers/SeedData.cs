@@ -1,5 +1,6 @@
 ﻿namespace Parkeringshuset.Helpers
 {
+    using Parkeringshuset.Controllers;
     using Parkeringshuset.Data;
     using Parkeringshuset.Helper;
     using Parkeringshuset.Models;
@@ -30,6 +31,12 @@
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public static void CreateAdmin()
+        {
+            AdminController ac = new();
+            ac.Create("admin", "admin123", "parking.garage.boss@gmail.com");
         }
     }
 }
