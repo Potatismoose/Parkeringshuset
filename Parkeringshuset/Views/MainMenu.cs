@@ -1,7 +1,6 @@
 ﻿using Parkeringshuset.BusinessLogic;
 using Parkeringshuset.Models;
 using System;
-using System.Linq;
 
 namespace Parkeringshuset.Views
 {
@@ -22,29 +21,22 @@ namespace Parkeringshuset.Views
             ParkingTicketController pTC = new();
             do
             {
-                AdminSecret.hasAdminLoggedOut = false;
-                AdminSecret.isValidRegNr = false;
                 regNr = "";
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
 
-                AdminSecret.UserInput();
+                MenuHandler.UserInput();
 
-                if (AdminSecret.hasAdminLoggedOut)
+                if (string.IsNullOrEmpty(regNr))
                 {
                     continue;
                 }
 
-                //if (string.IsNullOrEmpty(regNr))
-                //{
-                //    Console.WriteLine("Can not use empty registration number, please try again.");
-                //    PressAnyKeyToContinue();
-                //    continue;
-                //}
                 var parkingTicket = pTC.GetActiveTicket(regNr);
 
                 if (parkingTicket is null)
                 {
+                    Console.WriteLine(regNr);
                     Console.WriteLine($"Checked In, what zone would you like to park in?: ");
                     Console.WriteLine("1. Regular vehicle");
                     Console.WriteLine("2. Electric vehicle");
@@ -107,6 +99,9 @@ namespace Parkeringshuset.Views
             } while (keepGoing);
         }
 
+        /// <summary>
+        /// Gives user opportunity to read message and change between two views.
+        /// </summary>
         public static void PressAnyKeyToContinue()
         {
             Console.WriteLine("Press any key to continue. . .");
