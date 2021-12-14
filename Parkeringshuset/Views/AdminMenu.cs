@@ -58,7 +58,7 @@ namespace Parkeringshuset.Views
                         break;
 
                     case 6:
-                        afl.comprehensiveReport();
+                        //afl.comprehensiveReport();
                         break;
 
                     case 7:
