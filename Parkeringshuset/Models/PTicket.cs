@@ -1,11 +1,7 @@
 ﻿namespace Parkeringshuset.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class PTicket
     {
@@ -25,10 +21,5 @@
         public Vehicle Vehicle  { get; set; }
 
         public PType Type  { get; set; }
-
-        
-
-
     }
-
 }
