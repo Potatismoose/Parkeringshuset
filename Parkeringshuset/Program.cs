@@ -1,8 +1,5 @@
 ﻿using Parkeringshuset.Helpers;
-using Parkeringshuset.Helpers.TicketHelper;
-using Parkeringshuset.Models;
 using Parkeringshuset.Views;
-using System;
 
 namespace Parkeringshuset
 {
