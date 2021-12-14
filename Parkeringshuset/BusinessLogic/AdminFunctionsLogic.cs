@@ -18,7 +18,6 @@
 
         public PType ParkingSportsPopularity(Admin admin)
         {
-
             return new PType();
         }
         public int SoldTicketsBetweenSpecificDates(Admin admin, DateTime from, DateTime to)
@@ -56,7 +55,7 @@
 
         public void comprehensiveReport(Admin admin)
         {
-            // En månads rapport, 
+
         }
 
     }
