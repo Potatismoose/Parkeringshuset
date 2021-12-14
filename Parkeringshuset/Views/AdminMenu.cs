@@ -1,4 +1,6 @@
-﻿using Parkeringshuset.Models;
+﻿using Parkeringshuset.BusinessLogic;
+using Parkeringshuset.Controllers;
+using Parkeringshuset.Models;
 using System;
 using System.Collections.Generic;
 
@@ -6,54 +8,72 @@ namespace Parkeringshuset.Views
 {
     public class AdminMenu
     {
-        private List<string> LoginOptions = new() { "Username", "Password" };
-        private const string AdminUser = "Admin";
-        private const string AdminPassword = "Controll";
-
-        public bool PrintLoginPage()
+        /// <summary>
+        /// Prints admin menu
+        /// </summary>
+        public void PrintAdminPage(Admin admin)
         {
-            //ParkingGarage pg = new(12);
-            //Vehicle car = new("NPK144");
-            //Vehicle car2 = new("OSS432");
-            //Console.WriteLine($"Lediga platser: {pg.CalculateAvailibleSpace()}");
-            //Console.WriteLine("\tCheckar in två bilar...");
-            //Console.WriteLine($"Is car parked already? {pg.IsCarParkedInGarageAlready(car)}");
-            //pg.ParkingMeters[0].CreateTicket(car);
-            //pg.ParkingMeters[0].CreateTicket(car2);
+            AdminFunctionsLogic afl = new();
+            bool isRunning = true;
 
-            //Vehicle car3 = new("NPK144");
-            //Console.WriteLine($"Is car parked already? {pg.IsCarParkedInGarageAlready(car3)}");
-            //Console.WriteLine($"\t{car}\n\t{car2}");
-            //Console.WriteLine($"Lediga platser: {pg.CalculateAvailibleSpace()}");
-            //Console.WriteLine("\tCheckar ut en av bilarna");
-            //Console.WriteLine($"\tSuccessful? {pg.ParkingMeters[0].CheckoutVehicle(new Vehicle("OSS432"))}");
-            //Console.WriteLine($"\t{car2}");
-            //Console.WriteLine($"Lediga platser: {pg.CalculateAvailibleSpace()}");
-            //Console.ReadKey();
+            while (isRunning)
+            {
+                Console.Clear();
+                Console.WriteLine("1. Get parking type popularity");
+                Console.WriteLine("1. Get sold tickets between specific dates");
+                Console.WriteLine("3. Get total revenue between specific dates");
+                Console.WriteLine("4. Get total revenue by fiscal year");
+                Console.WriteLine("5. Get best costumer");
+                Console.WriteLine("6. Get comprehensive report");
+                Console.WriteLine("7. Logout");
+                int.TryParse(Console.ReadLine(), out int choice);
+                switch (choice)
+                {
+                    case 1:
+                        afl.ParkingSportsPopularity();
+                        break;
 
-            //Console.WriteLine("Parkeringsgaraget. Logga in som admin eller lämna blankt för att starta parkeringsappen.");
-            //Console.ReadKey();
+                    case 2:
+                        afl.SoldTicketsBetweenSpecificDates();
+                        break;
 
-            //foreach (var parkingmeter in pg.ParkingMeters)
-            //{
-            //    foreach (var ticket in parkingmeter.GetAllSoldTickets(new DateTime(2021, 09, 14), new DateTime(2021, 09, 16)))
-            //    {
-            //        Console.WriteLine(ticket.ToString());
-            //        Console.WriteLine(ticket.CalculateCost());
+                    case 3:
+                        //afl.Revenue();
+                        break;
 
-            //    }
-            //}
+                    case 4:
+                        //afl.Revenue();
+                        break;
 
-            //Console.ReadKey();
-            return false;
+                    case 5:
+                        afl.BestCustomer();
+                        break;
+
+                    case 6:
+                        afl.comprehensiveReport();
+                        break;
+
+                    case 7:
+                        isRunning = false;
+                        break;
+                }
+            }
         }
 
-        private static bool LoginAdmin(string username, string password)
+        /// <summary>
+        /// Asks for admin credentials
+        /// </summary>
+        /// <returns>True if admin is found</returns>
+        public Admin LoginAdmin()
         {
-            return (
-                username == AdminUser
-                && password == AdminPassword
-                ? true : false);
+            Console.Clear();
+            Console.Write("Username: ");
+            var username = Console.ReadLine();
+            Console.Write("Password: ");
+            var password = Console.ReadLine();
+
+            LoginController lc = new();
+            return lc.LoginReturnAdmin(username, password);
         }
     }
 }

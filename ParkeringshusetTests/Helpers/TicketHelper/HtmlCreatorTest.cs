@@ -15,18 +15,19 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
         [SetUp]
         public void SetUp()
         {
-            HtmlCreator.CreateHtmlBoilerPlateCode();
+            HtmlCreator Hc = new();
+            Hc.CreateHtmlBoilerPlateCode();
         }
         [TearDown]
-        //public void TearDown()
-        //{
-        //    string fileName = "ticket.html";
-        //    string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
-        //    File.Delete(fullPath);
-        //    fileName = "parkingTicket.pdf";
-        //    fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"\" + fileName;
-        //    File.Delete(fullPath);
-        //}
+        public void TearDown()
+        {
+            string fileName = "ticket.html";
+            string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
+            File.Delete(fullPath);
+            fileName = "parkingTicket.pdf";
+            fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
+            File.Delete(fullPath);
+        }
 
         [Test()]
         public void InsertTicketInformationInHtmlFile_InsertTicketWithoutValues_ExpectsFalse()
@@ -34,8 +35,8 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
             //Arrange
             PTicket ticket = new() { Type = null, Vehicle = null };
             //Act
-            
-            var result = HtmlCreator.InsertTicketInformationInHtmlFile(ticket);
+            HtmlCreator Hc = new();
+            var result = Hc.InsertTicketInformationInHtmlFile(ticket);
             //Assert
             Assert.That(result, Is.False);
         }
@@ -50,8 +51,8 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
                 Vehicle = new Vehicle { RegistrationNumber = "OLL069"} 
             };
             //Act
-            
-            var result = HtmlCreator.InsertTicketInformationInHtmlFile(ticket);
+            HtmlCreator Hc = new();
+            var result = Hc.InsertTicketInformationInHtmlFile(ticket);
             //Assert
             Assert.That(result, Is.True);
         }

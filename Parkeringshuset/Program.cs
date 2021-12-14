@@ -6,11 +6,12 @@ using System;
 
 namespace Parkeringshuset
 {
-    static class Program
-    { 
-        static void Main(string[] args)
+    internal static class Program
+    {
+        private static void Main(string[] args)
         {
             SeedData.RunMock();
+            SeedData.CreateAdmin();
             MainMenu.RunMainMenu();
         }
     }
