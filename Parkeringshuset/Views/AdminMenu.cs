@@ -104,7 +104,7 @@ namespace Parkeringshuset.Views
         }
 
         /// <summary>
-        /// Asks for admin credentials
+        /// Asks for admin credentials.
         /// </summary>
         /// <returns>True if admin is found</returns>
         public Admin LoginAdmin()
