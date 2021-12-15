@@ -79,6 +79,7 @@ jobs:
      # name: Production
       #url: https://github.com/Potatismoose/Parkeringshuset/tree/main
     steps:
+    - uses: actions/checkout@v2
     - name: build
       run: make build
     - name: version
