@@ -107,7 +107,8 @@
         /// </summary>
         /// <param name="from">Start date for your search.</param>
         /// <param name="to">End date for your search.</param>
-        /// <returns>A list with Parking Tickets from those dates. Car that is still parked are included. The List can be null</returns>
+        /// <returns>A list with Parking Tickets from those dates. Car that is still parked are 
+        /// included. The List can be null</returns>
         public List<PTicket> GetTicketForDate(DateTime from, DateTime to)
         {
             // RIGHT: this will include the last day
@@ -137,7 +138,8 @@
         {
            
 
-            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == ParkingTypesNames.Monthly).ToList();
+            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == ParkingTypesNames
+            .Monthly).ToList();
   
         }
         public List<PType> GetAllParkingTypes()
