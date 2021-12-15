@@ -33,6 +33,9 @@
         {
             Thread.CurrentThread.CurrentCulture = ci;
 
+            //string format = "M/d/yyyy h:mm:ss tt";
+            //CheckIn = DateTime.ParseExact(checkIn.ToString(), format, CultureInfo.InvariantCulture);
+            //CheckOut = DateTime.ParseExact(checkOut.ToString(), format, CultureInfo.InvariantCulture);
             CheckIn = checkIn;
             CheckOut = checkOut;
 
@@ -86,10 +89,10 @@
         private void MinutesInThisTimeSlot(DateTime CategoryTime, ref int counter)
         {
 
-            TotalTime = CheckOut - CheckIn;   
-            var  totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
+            TotalTime = CheckOut - CheckIn;
+            var totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
 
-            if(totalHoursInThisCategory.TotalMinutes > TotalTime.TotalMinutes)
+            if (totalHoursInThisCategory.TotalMinutes > TotalTime.TotalMinutes)
             {
                 totalHoursInThisCategory = TotalTime;
             }
@@ -104,7 +107,7 @@
         }
 
         /// <summary>
-        /// Handle the payment. Updates the object ticket properties Cost and IsPaid if successfull.
+        /// Handle the payment. Updates the object ticket properties Cost and IsPaid if successfull. 
         /// </summary>
         /// <param name="card">CreditCard object.</param>
         /// <param name="ticket">Ticket object.</param>
@@ -126,8 +129,9 @@
             }
         }
 
+
         /// <summary>
-        /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid.
+        /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid. 
         /// </summary>
         /// <param name="card">Object that have 2 string properties.</param>
         /// <returns></returns>
@@ -143,5 +147,6 @@
             }
             return false;
         }
+
     }
 }
