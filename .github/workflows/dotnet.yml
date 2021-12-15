@@ -52,8 +52,8 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-      - name: Test
-        run: dotnet test --verbosity normal
+      - name: UnitTests
+        run: dotnet test --verbosity normal --filter TestCategory='UnitTests'
         
   testStaging:
       needs: buildMatrixStaging
