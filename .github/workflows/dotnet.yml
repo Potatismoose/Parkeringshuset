@@ -90,9 +90,10 @@ jobs:
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_NAME: name=VERSION::${GITHUB_REF/refs/tags//}
         with:
           tag_name: ${{ steps.date.outputs.date }}
-          release_name: ${{ steps.date.outputs.date }}
+          release_name: ${{ env.RELEASE_NAME }}
           draft: false
           prerelease: false
 
