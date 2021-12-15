@@ -3,6 +3,8 @@ name: .NET
 on:
   pull_request:
     branches: [ main, development, staging ]
+    tags:
+      - '*'
 
 jobs:
 
@@ -72,7 +74,7 @@ jobs:
         
   production:  
     runs-on: ubuntu-latest
-    if: github.base_ref == 'main'
+    if: github.base_ref == 'development'
     environment: 
       name: Production
       url: https://github.com/Potatismoose/Parkeringshuset/tree/main
