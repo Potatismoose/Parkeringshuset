@@ -1,8 +1,5 @@
 ﻿using Parkeringshuset.Helpers;
-using Parkeringshuset.Helpers.TicketHelper;
-using Parkeringshuset.Models;
 using Parkeringshuset.Views;
-using System;
 
 namespace Parkeringshuset
 {
@@ -13,6 +10,7 @@ namespace Parkeringshuset
             SeedData.RunMock();
             SeedData.CreateAdmin();
             MainMenu.RunMainMenu();
+            //Test
         }
     }
 }

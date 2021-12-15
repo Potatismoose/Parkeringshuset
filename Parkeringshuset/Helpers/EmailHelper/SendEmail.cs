@@ -8,14 +8,12 @@
     using System.Net;
     using System.Net.Mail;
     using System.Text;
-    using System.Threading.Tasks;
 
     public static class SendEmail
     {
 
         public static void SendWithBlazor(int totalIncome, int nrOfUnPaidBills, string subject, DateTime from, DateTime to, string toEmailAdress)
         {
-
             var sender = new SmtpSender(() => new SmtpClient("smtp.gmail.com")
             {
                 EnableSsl = true,
@@ -26,7 +24,6 @@
                 {
                     UserName = "parkinggarage2021@gmail.com",
                     Password = "Vinter2021"
-
                 }
             });
 
@@ -48,8 +45,6 @@
                 .Subject(subject)
                 .UsingTemplate(template.ToString(), new { TotalIncome = totalIncome, NrOfUnPaidBills = nrOfUnPaidBills, From = from.ToString("yyyy,mm,dd"), To = to.ToString("yyyy,mm,dd") })
                 .Send();
-
-
         }
 
         internal static void ParkingSpots(List<(string, int)> occupationLastMonth, string v, string email)

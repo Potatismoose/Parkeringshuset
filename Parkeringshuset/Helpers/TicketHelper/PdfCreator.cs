@@ -18,8 +18,6 @@ namespace Parkeringshuset.Helpers.TicketHelper
             string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
             try
             {
-
-
                 // If using Professional version, put your serial key below.
                 ComponentInfo.SetLicense("FREE-LIMITED-KEY");
 
@@ -36,10 +34,6 @@ namespace Parkeringshuset.Helpers.TicketHelper
 
                 // Save output PDF file.
                 document.Save("parkingTicket.pdf");
-
-
-
-
 
                 //string filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\ticket.html";
                 //Console.WriteLine("Creating ticket");
