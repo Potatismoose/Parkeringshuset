@@ -1,15 +1,21 @@
 version: 2.1
-build:
-  jobs:
-    - test
-      filters:
-        branches:
-          only:
-            - main
+general:
+  filters:
+    branches:
+      only:
+       - main
+      ignore:
+       - development
+       - staging
 orbs:
   win: circleci/windows@2.4.0
 
+workflows:
+  hello-world:
+    jobs:
+      - build
 
+jobs:
   build:
     executor:
       name: win/default
