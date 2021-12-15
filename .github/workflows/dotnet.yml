@@ -94,12 +94,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ format('{0}:{1}', steps.date.outputs.version, steps.date.outputs.date) }}
-          release_name:  ${{ format('{0}:{1}', steps.date.outputs.version, steps.date.outputs.date) }}
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: Version ${{ steps.date.outputs.date }}
  
        
           draft: false
           prerelease: false
-          
-          # ${{ steps.date.outputs.version }}
-            #${{ steps.date.outputs.date }}
+
