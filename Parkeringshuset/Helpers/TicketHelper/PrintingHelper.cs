@@ -5,7 +5,7 @@ using System.Drawing.Printing;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    internal class PrintingHelper
+    public class PrintingHelper
     {
         /// <summary>
         /// Adapter method (calls other methods).
@@ -18,14 +18,15 @@ namespace Parkeringshuset.Helpers.TicketHelper
         /// <returns>true if the ticket is created and printed.</returns>
         public static bool PhysicalTicketCreationAndPrintout(PTicket ticket)
         {
-            if (HtmlCreator.CreateHtmlBoilerPlateCode()
-                && HtmlCreator.InsertTicketInformationInHtmlFile(ticket)
+            HtmlCreator Hc = new();
+            if (Hc.CreateHtmlBoilerPlateCode()
+                && Hc.InsertTicketInformationInHtmlFile(ticket)
                 && PdfCreator.CreatePdfFromHtmlFile()
                 && PrintPdfParkingTicket())
             {
                 return true;
             }
-
+            
             return false;
         }
 

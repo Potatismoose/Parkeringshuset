@@ -6,12 +6,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class CreditCard
+    public class CreditCard
     {
-
         public string Number;
 
         public string CSV;
-
     }
 }

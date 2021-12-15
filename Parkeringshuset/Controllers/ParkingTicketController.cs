@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Parkeringshuset.Data;
 using Parkeringshuset.Helper;
 using System;
@@ -38,9 +39,10 @@ namespace Parkeringshuset.Models
 
                 ticket.IsPaid = false;
                 ticket.Type = db.Ptypes.FirstOrDefault(x => x.Name == type);
+                ticket.Type.Used += 1;
                 ticket.CheckedInTime = DateTime.Now;
 
-                if (type == "Monthly")
+                if (type == ParkingTypesNames.Monthly)
                 {
                     ticket.CheckedOutTime = DateTime.Now.AddDays(30);
                 }
@@ -69,11 +71,14 @@ namespace Parkeringshuset.Models
         /// <returns>True if checking out is successfull, otherwise false.</returns>
         public bool CheckOut(PTicket ticket)
         {
-            var t = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
+            var t = db.Ptickets.Include(x => x.Type).FirstOrDefault(x => x.Id == ticket.Id);
+            var pt = db.Ptypes.FirstOrDefault(x=> t.Type.Name == x.Name);
 
-            t.CheckedOutTime = DateTime.MinValue;
+            t.CheckedOutTime = DateTime.Now;
             t.isActice = false;
-            db.Ptickets.Update(ticket);
+            pt.Used -= 1;
+            db.Ptickets.Update(t);
+            db.Ptypes.Update(pt);
             db.SaveChanges();
 
             return true;
@@ -94,9 +99,8 @@ namespace Parkeringshuset.Models
                 return null;
             }
 
-            var ticket = db.Ptickets.FirstOrDefault(
-                x => x.Vehicle.Id == vehicle.Id && x.isActice ||
-                x.Type.Name == "Monthly");
+            var ticket = db.Ptickets.Include(x => x.Type).Include(y => y.Vehicle).FirstOrDefault(
+                x => x.Vehicle.Id == vehicle.Id && x.isActice); 
 
             return ticket;
         }
@@ -147,7 +151,7 @@ namespace Parkeringshuset.Models
                 return false;
             }
 
-            return t.Type.Name == "Monthly";
+            return t.Type.Name == ParkingTypesNames.Monthly;  
         }
     }
 }

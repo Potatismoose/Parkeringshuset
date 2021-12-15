@@ -1,36 +1,42 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using Parkeringshuset.BusinessLogic;
 using Parkeringshuset.Models;
-using Parkeringshuset.BusinessLogic;
+using System;
 
 namespace Parkeringshuset.Views
 {
     public static class MainMenu
     {
+        public static string regNr;
+
         /// <summary>
         /// Check in and out menu for users of the parking garage.
         /// </summary>
         public static void RunMainMenu()
         {
             bool keepGoing = true;
+
             string pType = "";
-            ParkingMeterLogic pML = new ();
-            ParkingTicketController pTC = new ();
+
+            ParkingMeterLogic pML = new();
+            ParkingTicketController pTC = new();
             do
             {
+                regNr = "";
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
-                string regNr = Console.ReadLine();
-                if (string.IsNullOrEmpty(regNr.Trim()))
+
+                MenuHandler.UserInput();
+
+                if (string.IsNullOrEmpty(regNr))
                 {
-                    Console.WriteLine("Can not use empty registration number, please try again.");
-                    PressAnyKeyToContinue();
                     continue;
                 }
+
                 var parkingTicket = pTC.GetActiveTicket(regNr);
 
                 if (parkingTicket is null)
                 {
+                    Console.WriteLine(regNr);
                     Console.WriteLine($"Checked In, what zone would you like to park in?: ");
                     Console.WriteLine("1. Regular vehicle");
                     Console.WriteLine("2. Electric vehicle");
@@ -46,11 +52,13 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 2:
                             pType = "Electric";
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 3:
                             pType = "Handicap";
                             pML.CheckIn(regNr, pType);
@@ -66,9 +74,11 @@ namespace Parkeringshuset.Views
                             pML.CheckIn(regNr, pType);
                             PressAnyKeyToContinue();
                             break;
+
                         case 6:
                             keepGoing = false;
                             break;
+
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
                             PressAnyKeyToContinue();
@@ -80,7 +90,7 @@ namespace Parkeringshuset.Views
                     Console.WriteLine($"Welcome back! Your ticket expires { parkingTicket.CheckedOutTime}");
                     PressAnyKeyToContinue();
                 }
-                else if(pTC.IsTicketActive(parkingTicket))
+                else if (pTC.IsTicketActive(parkingTicket))
                 {
                     pTC.CheckOut(parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
@@ -89,7 +99,10 @@ namespace Parkeringshuset.Views
             } while (keepGoing);
         }
 
-        private static void PressAnyKeyToContinue()
+        /// <summary>
+        /// Gives user opportunity to read message and change between two views.
+        /// </summary>
+        public static void PressAnyKeyToContinue()
         {
             Console.WriteLine("Press any key to continue. . .");
             Console.ReadKey();
