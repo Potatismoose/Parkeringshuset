@@ -75,9 +75,9 @@ jobs:
   production:  
     runs-on: ubuntu-latest
     if: github.base_ref == 'development'
-    environment: 
-      name: Production
-      url: https://github.com/Potatismoose/Parkeringshuset/tree/main
+    #environment: 
+     # name: Production
+      #url: https://github.com/Potatismoose/Parkeringshuset/tree/main
     steps:
     - name: build
       run: make build
@@ -93,5 +93,3 @@ jobs:
         release_name: ${{ steps.version.outputs.version }}
         tag_name: ${{ github.ref }}
         body_path: CHANGELOG.md
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
