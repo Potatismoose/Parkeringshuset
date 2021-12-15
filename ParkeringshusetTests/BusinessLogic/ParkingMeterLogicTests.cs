@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace Parkeringshuset.BusinessLogic.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class ParkingMeterLogicTests
     {

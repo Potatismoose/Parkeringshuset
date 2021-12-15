@@ -2,6 +2,7 @@
 
 namespace Parkeringshuset.Models.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class ParkingTicketControllerTests
     {
