@@ -3,6 +3,7 @@ using Parkeringshuset.Controllers;
 
 namespace ParkeringshusetTests.Controllers.LoginControllerTests
 {
+    [Category("UnitTests")]
     [TestFixture]
     public class GenerateSha256Tests
     {

@@ -8,6 +8,7 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class TicketHelperTests
     {

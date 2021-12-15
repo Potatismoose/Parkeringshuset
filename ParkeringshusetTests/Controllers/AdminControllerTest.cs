@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Parkeringshuset.Controllers.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class AdminControllerTest
     {
