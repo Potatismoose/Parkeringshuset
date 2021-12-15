@@ -90,9 +90,9 @@
         {
 
             TotalTime = CheckOut - CheckIn;
-            var  totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
+            var totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
 
-            if(totalHoursInThisCategory.TotalMinutes > TotalTime.TotalMinutes)
+            if (totalHoursInThisCategory.TotalMinutes > TotalTime.TotalMinutes)
             {
                 totalHoursInThisCategory = TotalTime;
             }
@@ -112,10 +112,10 @@
         /// <param name="card">CreditCard object.</param>
         /// <param name="ticket">Ticket object.</param>
         /// <returns>a Tuple of an updated ticket and a bool. True if card is valid and false if not.</returns>
-    public (PTicket, bool) Payment(CreditCard card, PTicket ticket)
+        public (PTicket, bool) Payment(CreditCard card, PTicket ticket)
         {
             ticket.CheckedOutTime = DateTime.Now;
-            ticket.Cost = CalculateCost(ticket.CheckedInTime, ticket.CheckedOutTime);   
+            ticket.Cost = CalculateCost(ticket.CheckedInTime, ticket.CheckedOutTime);
 
             if (IsCardCredentialsValid(card))
             {
@@ -128,9 +128,8 @@
                 return (ticket, false);
             }
         }
-        
-           
-        }
+
+
         /// <summary>
         /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid. 
         /// </summary>
@@ -148,6 +147,6 @@
             }
             return false;
         }
-    }
 
+    }
 }
