@@ -10,7 +10,7 @@ namespace Parkeringshuset
             SeedData.RunMock();
             SeedData.CreateAdmin();
             MainMenu.RunMainMenu();
-            //Test
+            //Rövhat
         }
     }
 }

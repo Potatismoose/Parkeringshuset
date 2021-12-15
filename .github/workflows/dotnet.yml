@@ -3,6 +3,8 @@ name: .NET
 on:
   pull_request:
     branches: [ main, development, staging ]
+    tags:
+      - '*'
 
 jobs:
 
@@ -70,12 +72,27 @@ jobs:
       - name: Test
         run: dotnet test --verbosity normal
         
-  production:  
+
+
+  release:
+    name: Release
     runs-on: ubuntu-latest
-    if: github.base_ref == 'main'
-    environment: 
-      name: Production
-      url: https://github.com/Potatismoose/Parkeringshuset/tree/main
     steps:
-    - name: Production
-      run: echo "Production started"
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Checkout branch "development"
+        uses: actions/checkout@v2
+        with:
+          ref: 'development'
+      - name: Release snapshot
+        id: release-snapshot
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: ${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
+
