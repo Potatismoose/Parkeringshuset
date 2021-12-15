@@ -24,6 +24,10 @@ jobs:
       - run:
           name: "Run Build step"
           command: dotnet.exe publish -c Release -r win10-x64
+      - run:
+          name: "Run tests"
+          command: dotnet test
+          working_directory: ParkeringshusetTests
       #- run:
        #   name: "Test the executable"
         #  command: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe 
@@ -32,11 +36,10 @@ jobs:
        
 workflows:
   version: 2
-  build-and-deploy:
+  Run-All-Tests:
     jobs:
       - build:
          filters:
            branches:
              only:
-               - staging
-
+               - development
