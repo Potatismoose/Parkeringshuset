@@ -73,7 +73,7 @@ jobs:
         run: dotnet test --verbosity normal
         
 
-
+# solution for release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
   release:
     name: Release
     runs-on: ubuntu-latest
@@ -90,9 +90,8 @@ jobs:
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_NAME: name=VERSION::${GITHUB_REF/refs\/tags\//}
         with:
-          release_name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
-
