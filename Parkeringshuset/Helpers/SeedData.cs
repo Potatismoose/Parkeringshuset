@@ -1,22 +1,19 @@
 ﻿namespace Parkeringshuset.Helpers
 {
+    using Parkeringshuset.Controllers;
     using Parkeringshuset.Data;
-    using Parkeringshuset.Helper;
     using Parkeringshuset.Models;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public static class SeedData
     {
-
         public static ParkeringGarageContext Db = new();
-
+           
+        /// <summary>
+        /// Add mock data into database.
+        /// </summary>
         public static void RunMock()
         {
-
             try
             {
                 Db.Ptypes.Add(new PType { Name = "Handicap", TotalSpots = 10 });
@@ -31,7 +28,15 @@
             {
                 Console.WriteLine(ex.Message);
             }
+        }
 
+        /// <summary>
+        /// Creates an admin.
+        /// </summary>
+        public static void CreateAdmin()
+        {
+            AdminController ac = new();
+            ac.Create("admin", "admin123", "parking.garage.boss@gmail.com");
         }
     }
 }
