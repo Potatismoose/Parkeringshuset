@@ -39,3 +39,4 @@ workflows:
            branches:
              only:
                - staging
+
