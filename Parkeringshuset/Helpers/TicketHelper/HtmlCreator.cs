@@ -1,4 +1,5 @@
 ﻿using Parkeringshuset.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,16 +7,22 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper
 {
-    internal static class HtmlCreator
+    public class HtmlCreator
     {
-        private static string fileName = "ticket.html";
-        private static string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\" + fileName;
+        private string fileName;
+        private string fullPath;
+        
+        public HtmlCreator()
+        {
+            fileName = "ticket.html";
+            fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
+        }
 
         /// <summary>
         /// The boilerplate html code that creates the html document..
         /// </summary>
         /// <returns>True if created. False if it fails.</returns>
-        public static bool CreateHtmlBoilerPlateCode()
+        public bool CreateHtmlBoilerPlateCode()
         {
             var boilerplateCode =
 $@"<!DOCTYPE html>
@@ -27,11 +34,13 @@ $@"<!DOCTYPE html>
     <title>Document</title>
 </head>
 <body>
+
     <div
         class='ticket'
         style='
             width:300px;
             text-align:center;'>
+            
 
         <div
             style='
@@ -103,6 +112,7 @@ $@"<!DOCTYPE html>
           background:#add8e6;'
           id='regNr'></h1>
     </div>
+
 </body>
 </html>";
             try
@@ -125,7 +135,7 @@ $@"<!DOCTYPE html>
         /// </summary>
         /// <param name="ticket">Takes a PTicket as in parameter.</param>
         /// <returns>True if successful insert. False it faild.</returns>
-        public static bool InsertTicketInformationInHtmlFile(PTicket ticket)
+        public bool InsertTicketInformationInHtmlFile(PTicket ticket)
         {
             List<string> listOfTicketItems = new() { "date", "timeOfParking", "type", "regNr" };
             var fileRows = File.ReadAllLines(fullPath);
@@ -145,19 +155,47 @@ $@"<!DOCTYPE html>
                             switch (i)
                             {
                                 case 0:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
+                                    if (ticket.CheckedInTime != DateTime.MinValue)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 case 1:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
+                                    if (ticket.CheckedInTime != DateTime.MinValue)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 case 2:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.Type?.Name);
+                                    if (ticket.Type is not null)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.Type?.Name);
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 case 3:
-                                    newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
+                                    if (ticket.Vehicle is not null)
+                                    {
+                                        newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
+                                    }
+                                    else
+                                    {
+                                        newLine = line;
+                                    }
                                     break;
 
                                 default:
@@ -175,7 +213,7 @@ $@"<!DOCTYPE html>
                 }
             }
             File.WriteAllLines(fullPath, newHtmlFile);
-            if (!fileRows.Equals(newHtmlFile))
+            if (!fileRows.SequenceEqual(newHtmlFile))
             {
                 return true;
             }
