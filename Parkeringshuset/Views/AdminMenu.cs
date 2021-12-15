@@ -68,6 +68,11 @@ namespace Parkeringshuset.Views
             }
         }
 
+        /// <summary>
+        /// Return correct date for a ticket.
+        /// </summary>
+        /// <param name="startOrEnd"></param>
+        /// <returns></returns>
         private static DateTime AskForStartOrEndDate(string startOrEnd)
         {
             int Year;
