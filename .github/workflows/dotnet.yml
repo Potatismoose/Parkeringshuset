@@ -75,12 +75,13 @@ jobs:
 
 # solution for release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
   release:
+    if: github.base_ref == 'development'
     name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "::set-output name=date::$(date +'Version:'+'%Y-%m-%d')"
       - name: Checkout branch "development"
         uses: actions/checkout@v2
         with:
