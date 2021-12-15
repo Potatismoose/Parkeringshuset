@@ -78,14 +78,16 @@
             bool isRegNrValid = true;
             if (regNr.Length > 7)
             {
-                Helper.DisplayHelper.DisplayRed("Registration number must be 7 characters or less!");
+                Helper.DisplayHelper.DisplayRed("Registration number must be 7 characters or " +
+                    "less!");
                 MainMenu.PressAnyKeyToContinue();
                 isRegNrValid = false;
                 regNr = "";
             }
             else if (regNr.Length < 2)
             {
-                Helper.DisplayHelper.DisplayRed("Registration number must be 2 characters or more!");
+                Helper.DisplayHelper.DisplayRed("Registration number must be 2 characters or " +
+                    "more!");
                 MainMenu.PressAnyKeyToContinue();
                 isRegNrValid = false;
                 regNr = "";

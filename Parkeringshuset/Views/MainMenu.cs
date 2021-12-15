@@ -14,7 +14,6 @@ namespace Parkeringshuset.Views
         public static void RunMainMenu()
         {
             bool keepGoing = true;
-
             string pType = "";
 
             ParkingMeterLogic pML = new();
@@ -87,7 +86,8 @@ namespace Parkeringshuset.Views
                 }
                 else if (pTC.IsMonthly(parkingTicket) && pTC.IsTicketActive(parkingTicket))
                 {
-                    Console.WriteLine($"Welcome back! Your ticket expires { parkingTicket.CheckedOutTime}");
+                    Console.WriteLine($"Welcome back! Your ticket expires " +
+                        $"{ parkingTicket.CheckedOutTime}");
                     PressAnyKeyToContinue();
                 }
                 else if (pTC.IsTicketActive(parkingTicket))

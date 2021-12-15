@@ -15,7 +15,8 @@ namespace Parkeringshuset.Helpers.TicketHelper
         public static bool CreatePdfFromHtmlFile()
         {
             string fileName = "ticket.html";
-            string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
+            string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + 
+                @"/" + fileName;
             try
             {
                 // If using Professional version, put your serial key below.
@@ -35,7 +36,8 @@ namespace Parkeringshuset.Helpers.TicketHelper
                 // Save output PDF file.
                 document.Save("parkingTicket.pdf");
 
-                //string filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\ticket.html";
+                //string filePath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) +
+                //@"\ticket.html";
                 //Console.WriteLine("Creating ticket");
                 //SelectPdf.HtmlToPdf converter = new SelectPdf.HtmlToPdf();
                 //SelectPdf.PdfDocument doc = converter.ConvertUrl(filePath);

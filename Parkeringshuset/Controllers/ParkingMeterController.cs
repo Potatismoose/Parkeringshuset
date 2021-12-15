@@ -36,7 +36,8 @@
 //            return null;
 //        }
 
-//        public IEnumerable<ParkingTicketController> GetAllSoldTickets(DateTime startDate, DateTime endDate)
+//        public IEnumerable<ParkingTicketController> GetAllSoldTickets(DateTime startDate,
+//        DateTime endDate)
 //        {
 //            return ParkingTickets.ToList()
 //                .Where(x =>
@@ -45,7 +46,8 @@
 //                && x.ReturnCheckoutTime() < endDate.AddDays(1));
 //        }
 
-//        public (bool checkOutSuccessful, ParkingTicketController ticket) CheckoutVehicle(Vehicle vehicle)
+//        public (bool checkOutSuccessful, ParkingTicketController ticket)
+//        CheckoutVehicle(Vehicle vehicle)
 //        {
 //            ParkingTicketController checkedOutVechicle = null;
 //            var ticket = ParkingTickets.FirstOrDefault(x =>

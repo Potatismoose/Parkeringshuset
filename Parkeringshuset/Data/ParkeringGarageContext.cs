@@ -30,7 +30,8 @@
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var myfolder = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.ToString();
+            var myfolder = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
+                .Parent.Parent.Parent.ToString();
             var path = Path.Combine(myfolder, "Databases");
             Directory.CreateDirectory(path);
             path = Path.Combine(path, DatabaseName);

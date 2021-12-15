@@ -9,7 +9,7 @@ namespace Parkeringshuset.Views
     public class AdminMenu
     {
         /// <summary>
-        /// Prints admin menu
+        /// Prints admin menu.
         /// </summary>
         public void PrintAdminPage(Admin admin)
         {
@@ -114,7 +114,6 @@ namespace Parkeringshuset.Views
             var username = Console.ReadLine();
             Console.Write("Password: ");
             var password = Console.ReadLine();
-
             LoginController lc = new();
             return lc.LoginReturnAdmin(username, password);
         }
