@@ -81,7 +81,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date + '%Y-%m-%d')"
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Checkout branch "development"
         uses: actions/checkout@v2
         with:
@@ -94,7 +94,6 @@ jobs:
         with:
           tag_name: ${{ steps.date.outputs.date }}
           release_name: ${{ steps.date.outputs.date }}
-       
           draft: false
           prerelease: false
 
