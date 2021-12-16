@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace Parkeringshuset.BusinessLogic.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class ParkingMeterLogicTests
     {
@@ -16,7 +17,8 @@ namespace Parkeringshuset.BusinessLogic.Tests
         [TestCase("2021/12/01 12:00", "2021/12/02 12:00", 270)]
         [TestCase("2021/12/01 12:00", "2021/12/02 13:00", 290)]
         [Test()]
-        public void CalculateCostTest_ShouldBeEqual_WhenGivenCorrectValues(DateTime checkIn, DateTime checkOut, int expected)
+        public void CalculateCostTest_ShouldBeEqual_WhenGivenCorrectValues(DateTime checkIn, 
+            DateTime checkOut, int expected)
         {
             var actual = pl.CalculateCost(checkIn, checkOut);
             Assert.AreEqual(expected, actual);

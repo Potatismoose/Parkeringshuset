@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Parkeringshuset.Controllers.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class AdminControllerTest
     {
@@ -16,7 +17,6 @@ namespace Parkeringshuset.Controllers.Tests
         [Test()]
         public void GetAllTickets()
         {
-           
             var result = AC.GetAllTickets(); 
 
             if(result.Count == 0)

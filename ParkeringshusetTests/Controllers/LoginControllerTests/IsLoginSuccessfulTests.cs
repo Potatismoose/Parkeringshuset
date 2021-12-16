@@ -4,6 +4,7 @@ using Parkeringshuset.Data;
 
 namespace ParkeringshusetTests.Controllers.LoginControllerTests
 {
+    [Category("UnitTests")]
     [TestFixture]
     public class IsLoginSuccessfulTests
     {

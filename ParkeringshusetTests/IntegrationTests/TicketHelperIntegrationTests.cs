@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper.Tests
 {
-    //Implement tagzzzz
+    [Category("IntegrationTests")]
     [TestFixture()]
     public class TicketHelperIntegrationTests
     {
