@@ -17,7 +17,6 @@ namespace Parkeringshuset.Controllers.Tests
         [Test()]
         public void GetAllTickets()
         {
-           
             var result = AC.GetAllTickets(); 
 
             if(result.Count == 0)

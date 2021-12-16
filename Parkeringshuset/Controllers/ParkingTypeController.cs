@@ -1,16 +1,11 @@
 ﻿namespace Parkeringshuset.Controllers
 {
     using Parkeringshuset.Data;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class ParkingTypeController
     {
         public ParkeringGarageContext db = new();
-
         #region Read
         /// <summary>
         /// Get how many free spots there is for a specific parking type. 
