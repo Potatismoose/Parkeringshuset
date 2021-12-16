@@ -57,18 +57,19 @@ jobs:
       - name: UnitTests
         run: dotnet test --verbosity normal --filter TestCategory='UnitTests'
         
-  create-pull-request:
-    needs: buildMatrixStaging
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        with:
-          destination_branch: "main"
-          pr_label: "feature, automated pr"
-          pr_title: "[Example] Simple demo"
+  create_pull_request:
+      needs: buildMatrixStaging
+      runs-on: ubuntu-latest
+      steps: 
+        - name: Create Pull Request
+          uses: peter-evans/create-pull-request@v3.10.1
+          with:
+            token: ${{ secrets.GH_TOKEN }}
+            commit-message: Auto Pull Request
+            title: Your desired title
+            body: Auto-created Pull Request
+            branch: ${{ github.ref }} # The branch where you commit
+            base: main # Don't forget to specify the right base branch here        
 
 # solution for the release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
   release:
@@ -93,4 +94,3 @@ jobs:
           release_name: Version ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
-
