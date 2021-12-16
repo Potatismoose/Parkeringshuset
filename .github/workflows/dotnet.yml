@@ -61,6 +61,7 @@ jobs:
       needs: buildMatrixStaging
       runs-on: ubuntu-latest
       steps: 
+        - uses: actions/checkout@v2
         - name: Create Pull Request
           uses: peter-evans/create-pull-request@v3.10.1
           with:
