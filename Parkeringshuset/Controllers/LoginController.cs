@@ -18,8 +18,9 @@ namespace Parkeringshuset.Controllers
         /// <param name="username">The username for the user.</param>
         /// <param name="password">The password for the user.</param>
         /// <returns>True if the login was successful, otherwise false.</returns>
-        public Admin LoginReturnAdmin(string username, string password){
-            var admin = db.Admins.FirstOrDefault(x => x.Username == username && 
+        public Admin LoginReturnAdmin(string username, string password)
+        {
+            var admin = db.Admins.FirstOrDefault(x => x.Username == username &&
             x.Password == password);
 
             return admin;
@@ -30,23 +31,28 @@ namespace Parkeringshuset.Controllers
         /// </summary>
         /// <param name="size">The size of the salt.</param>
         /// <returns>A byte[] with the salt.</returns>
-        public byte[] GenerateSalt(int size){
+        public string GenerateSalt(int size)
+        {
             byte[] salt = new byte[size];
             var rng = RandomNumberGenerator.Create();
             rng.GetNonZeroBytes(salt);
 
-            return salt;
+            return Convert.ToBase64String(salt);
         }
 
-        public string GenerateSha256(string password, byte[] salt){
-            byte[] pass = Encoding.ASCII.GetBytes(password);
-            List<byte> tmp = new();
-            tmp.AddRange(pass);
-            tmp.AddRange(salt);
-            byte[] hashedPassword = new byte[tmp.Count];
+        public string GenerateSha256(string password, string salt)
+        {
+            string passwordAndHash = string.Concat(password, salt);
             var sha256 = SHA256.Create();
-            sha256.ComputeHash(hashedPassword);
-            return Convert.ToBase64String(sha256.Hash) + Convert.ToBase64String(salt);
+            byte[] data = sha256.ComputeHash(Encoding.UTF8.GetBytes(passwordAndHash));
+
+            StringBuilder sb = new();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sb.Append(data[i].ToString("x2"));
+            }
+
+            return sb.ToString();
         }
     }
 }
