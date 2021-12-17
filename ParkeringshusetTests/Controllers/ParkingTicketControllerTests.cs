@@ -2,6 +2,7 @@
 
 namespace Parkeringshuset.Models.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class ParkingTicketControllerTests
     {
@@ -27,7 +28,5 @@ namespace Parkeringshuset.Models.Tests
             // Assert
             Assert.That(result is true);
         }
-
-
     }
 }

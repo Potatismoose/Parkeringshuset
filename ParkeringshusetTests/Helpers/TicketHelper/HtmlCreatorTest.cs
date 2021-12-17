@@ -8,10 +8,10 @@ using System.Reflection;
 
 namespace Parkeringshuset.Helpers.TicketHelper.Tests
 {
+    [Category("UnitTests")]
     [TestFixture()]
     public class TicketHelperTests
     {
-
         [SetUp]
         public void SetUp()
         {
@@ -22,7 +22,8 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
         public void TearDown()
         {
             string fileName = "ticket.html";
-            string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
+            string fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + 
+                fileName;
             File.Delete(fullPath);
             fileName = "parkingTicket.pdf";
             fullPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory) + @"/" + fileName;
@@ -56,6 +57,5 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
             //Assert
             Assert.That(result, Is.True);
         }
-
     }
 }
