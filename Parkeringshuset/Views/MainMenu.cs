@@ -21,6 +21,7 @@ namespace Parkeringshuset.Views
             bool keepGoing = true;
             string Ptype = "";
 
+
             do
             {
                 regNr = "";
