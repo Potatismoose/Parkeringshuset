@@ -1,4 +1,7 @@
 ﻿using Parkeringshuset.BusinessLogic;
+using Parkeringshuset.Controllers;
+using Parkeringshuset.Helper;
+using Parkeringshuset.Helpers.TicketHelper;
 using Parkeringshuset.Models;
 using System;
 
@@ -7,6 +10,8 @@ namespace Parkeringshuset.Views
     public static class MainMenu
     {
         public static string regNr;
+        private static ParkingTypeController TypeController = new();
+        private static ParkingTicketController TicketController = new();
 
         /// <summary>
         /// Check in and out menu for users of the parking garage.
@@ -14,24 +19,22 @@ namespace Parkeringshuset.Views
         public static void RunMainMenu()
         {
             bool keepGoing = true;
-            string pType = "";
+            string Ptype = "";
 
-            ParkingMeterLogic pML = new();
-            ParkingTicketController pTC = new();
             do
             {
                 regNr = "";
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
 
-                MenuHandler.UserInput();
+                MenuHelper.UserInput();
 
                 if (string.IsNullOrEmpty(regNr))
                 {
                     continue;
                 }
 
-                var parkingTicket = pTC.GetActiveTicket(regNr);
+                var parkingTicket = TicketController.GetActiveTicket(regNr);
 
                 if (parkingTicket is null)
                 {
@@ -47,30 +50,30 @@ namespace Parkeringshuset.Views
                     switch (choice)
                     {
                         case 1:
-                            pType = "Regular";
-                            pML.CheckIn(regNr, pType);
+                            Ptype = "Regular";
+                            CheckIn(regNr, Ptype);
                             PressAnyKeyToContinue();
                             break;
 
                         case 2:
-                            pType = "Electric";
-                            pML.CheckIn(regNr, pType);
+                            Ptype = "Electric";
+                            CheckIn(regNr, Ptype);
                             PressAnyKeyToContinue();
                             break;
 
                         case 3:
-                            pType = "Handicap";
-                            pML.CheckIn(regNr, pType);
+                            Ptype = "Handicap";
+                            CheckIn(regNr, Ptype);
                             PressAnyKeyToContinue();
                             break;
                         //case 4:
-                        //    pType = "Monthly";
-                        //    pML.CheckIn(regNr, pType);
+                        //    TicketControllerype = "Monthly";
+                        //    TicketControllerL.CheckIn(regNr, TicketControllerype);
                         //    PressAnyKeyToContinue();
                         //    break;
                         case 5:
-                            pType = "Motorbike";
-                            pML.CheckIn(regNr, pType);
+                            Ptype = "Motorbike";
+                            CheckIn(regNr, Ptype);
                             PressAnyKeyToContinue();
                             break;
 
@@ -84,21 +87,50 @@ namespace Parkeringshuset.Views
                             break;
                     }
                 }
-                else if (pTC.IsMonthly(parkingTicket) && pTC.IsTicketActive(parkingTicket))
+                else if (TicketController.IsMonthly(parkingTicket) && TicketController.IsTicketActive(parkingTicket))
                 {
                     Console.WriteLine($"Welcome back! Your ticket expires " +
                         $"{ parkingTicket.CheckedOutTime}");
                     PressAnyKeyToContinue();
                 }
-                else if (pTC.IsTicketActive(parkingTicket))
+                else if (TicketController.IsTicketActive(parkingTicket))
                 {
-                    pTC.CheckOut(parkingTicket);
+                    TicketController.CheckOut(parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                     PressAnyKeyToContinue();
                 }
             } while (keepGoing);
         }
 
+
+        private static bool CheckIn(string regNr, string TicketControllerype)
+        {
+
+            if (TypeController.ReadFreeSpots(TicketControllerype) > 0)
+            {
+
+                if (TicketController.CreateTicket(regNr, TicketControllerype))
+                {
+                    var ticket = TicketController.GetActiveTicket(regNr);
+
+                    if (ticket is not null)
+                    {
+                        DisplayHelper.DisplayGreen("Ticket is activated. Welcome!");
+                        PrintingHelper.PhysicalTicketCreationAndPrintout(ticket);       // TODO: Need to add +1 to UsedSpots i TicketControllerypes table.       
+                        return true;
+                    }
+                }
+            }
+
+            else
+            {
+                DisplayHelper.DisplayRed("There is no available parking spots for this type.");
+                return false;
+            }
+
+            DisplayHelper.DisplayRed("Check in failed, try again or contact our support");
+            return false;
+        }
         /// <summary>
         /// Gives user opportunity to read message and change between two views.
         /// </summary>
