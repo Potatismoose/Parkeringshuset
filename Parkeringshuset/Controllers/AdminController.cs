@@ -142,7 +142,7 @@
         {
            
 
-            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == ParkingTypesNames
+            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == PTypesNamesHelper
             .Monthly).ToList();
   
         }
