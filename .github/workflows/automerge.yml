@@ -1,24 +1,33 @@
-create_pull_request:
-      needs: build
-      runs-on: ubuntu-latest
-      steps: 
-        - uses: actions/checkout@v2
-        - name: Create Pull Request
-          uses: peter-evans/create-pull-request@v3.10.1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: Auto Pull Request
-            title: Your desired title
-            body: Auto-created Pull Request
-            branch: ${{ github.ref }}
-            base: main
-            labels: automerge
+#Solution URL (Thank you Kragada :)): https://github.com/Kragada/TestPRAuto/blob/main/.github/workflows/automerge.yml
 
+name: automerge
+on:
+  workflow_run:
+    workflows: .NET
+    types:
+      - completed
+  pull_request:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
+jobs:
   automerge:
-    needs: create_pull_request
     runs-on: ubuntu-latest
     steps:
       - name: automerge
-        uses: pascalgn/automerge-action@v0.14.3
+        uses: "pascalgn/automerge-action@v0.14.3"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
