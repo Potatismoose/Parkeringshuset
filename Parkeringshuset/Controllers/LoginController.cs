@@ -40,6 +40,12 @@ namespace Parkeringshuset.Controllers
             return Convert.ToBase64String(salt);
         }
 
+        /// <summary>
+        /// Generates a SHA256 hash with the password and the salt.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="salt">The salt.</param>
+        /// <returns>The generated hash.</returns>
         public string GenerateSha256(string password, string salt)
         {
             string passwordAndHash = string.Concat(password, salt);
