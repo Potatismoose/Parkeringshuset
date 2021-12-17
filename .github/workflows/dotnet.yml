@@ -67,10 +67,12 @@ jobs:
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
             commit-message: Auto Pull Request
-            title: Your desired title
+            title: Continous deployment
             body: Auto-created Pull Request
-            branch: ${{ github.ref }} # The branch where you commit
-            base: main # Don't forget to specify the right base branch here        
+            branch: ${{ github.ref }}
+            base: main
+            labels: automerge        
+        
 
 # solution for the release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
   release:
@@ -95,3 +97,4 @@ jobs:
           release_name: Version ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
+        
