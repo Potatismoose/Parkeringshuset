@@ -18,6 +18,7 @@ namespace Parkeringshuset.Views
 
             ParkingMeterLogic pML = new();
             ParkingTicketController pTC = new();
+            PaymentLogic pL = new();
             do
             {
                 regNr = "";
@@ -35,7 +36,6 @@ namespace Parkeringshuset.Views
 
                 if (parkingTicket is null)
                 {
-                    Console.WriteLine(regNr);
                     Console.WriteLine($"Checked In, what zone would you like to park in?: ");
                     Console.WriteLine("1. Regular vehicle");
                     Console.WriteLine("2. Electric vehicle");
@@ -92,11 +92,22 @@ namespace Parkeringshuset.Views
                 }
                 else if (pTC.IsTicketActive(parkingTicket))
                 {
+                    Console.Clear();
+                    CreditCard cC = new CreditCard();
+                    Console.Write("Please provide creditcard number: ");
+                    cC.Number = Console.ReadLine();
+                    Console.Write("Please provide csv number: ");
+                    cC.CSV = Console.ReadLine();
                     pTC.CheckOut(parkingTicket);
+                    pL.Payment(cC, parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                     PressAnyKeyToContinue();
                 }
             } while (keepGoing);
+        }
+
+        private static void PaymentProcessing()
+        {
         }
 
         /// <summary>
