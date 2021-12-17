@@ -1,4 +1,5 @@
 ﻿using Parkeringshuset.BusinessLogic;
+using Parkeringshuset.Helper;
 using Parkeringshuset.Models;
 using System;
 
@@ -99,15 +100,22 @@ namespace Parkeringshuset.Views
                     Console.Write("Please provide csv number: ");
                     cC.CSV = Console.ReadLine();
                     pTC.CheckOut(parkingTicket);
-                    pL.Payment(cC, parkingTicket);
-                    Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
-                    PressAnyKeyToContinue();
+
+                    var ticket = pL.Payment(cC, parkingTicket);
+                    if (ticket.IsPaid)
+                    {
+                        DisplayHelper.DisplayGreen("Payment is done");
+                        Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
+                        PressAnyKeyToContinue();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Invoice sent to registred address of car {ticket.Vehicle.RegistrationNumber}" +
+                            $" with cost of {ticket.Cost} SEK");
+                        PressAnyKeyToContinue();
+                    }
                 }
             } while (keepGoing);
-        }
-
-        private static void PaymentProcessing()
-        {
         }
 
         /// <summary>
