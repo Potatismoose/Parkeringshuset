@@ -20,8 +20,18 @@ namespace Parkeringshuset.Controllers
         /// <returns>True if the login was successful, otherwise false.</returns>
         public Admin LoginReturnAdmin(string username, string password)
         {
-            var admin = db.Admins.FirstOrDefault(x => x.Username == username &&
-            x.Password == password);
+            var admin = db.Admins.FirstOrDefault(x => x.Username == username);
+            if(admin == null)
+            {
+                return null;
+            }
+            var salt = admin.Salt;
+            string pass = GenerateSha256(password, salt);
+
+            if (admin.Password != pass)
+            {
+                return null;
+            }
 
             return admin;
         }
