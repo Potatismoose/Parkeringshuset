@@ -24,7 +24,7 @@ namespace Parkeringshuset.Views
                 Console.Clear();
                 Console.Write("Enter your registration number: ");
 
-                MenuHandler.UserInput();
+                MenuHelper.UserInput();
 
                 if (string.IsNullOrEmpty(regNr))
                 {

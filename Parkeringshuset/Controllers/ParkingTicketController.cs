@@ -42,7 +42,7 @@ namespace Parkeringshuset.Models
                 ticket.Type.Used += 1;
                 ticket.CheckedInTime = DateTime.Now;
 
-                if (type == ParkingTypesNames.Monthly)
+                if (type == PTypesNamesHelper.Monthly)
                 {
                     ticket.CheckedOutTime = DateTime.Now.AddDays(30);
                 }
@@ -151,7 +151,7 @@ namespace Parkeringshuset.Models
                 return false;
             }
 
-            return t.Type.Name == ParkingTypesNames.Monthly;  
+            return t.Type.Name == PTypesNamesHelper.Monthly;  
         }
     }
 }

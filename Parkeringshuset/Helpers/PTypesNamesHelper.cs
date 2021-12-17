@@ -1,6 +1,6 @@
 ﻿namespace Parkeringshuset.Models
 {
-    public static class ParkingTypesNames
+    public static class PTypesNamesHelper
     {
         public static string Motorbike { get; set; } = "Motorbike";
 

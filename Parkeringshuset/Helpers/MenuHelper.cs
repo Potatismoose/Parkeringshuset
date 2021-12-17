@@ -5,7 +5,7 @@
     using System.Linq;
     using static System.ConsoleKey;
 
-    public static class MenuHandler
+    public static class MenuHelper
     {
         private static string regNr = "";
         private static List<ConsoleKey> secretPatternMatch = new List<ConsoleKey>();
