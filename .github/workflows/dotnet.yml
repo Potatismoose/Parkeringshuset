@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ main, development, staging ]
     tags:
+      - '*'    
+  push:
+    branches: main
+    tags:
       - '*'
 
 jobs:
@@ -84,7 +88,7 @@ jobs:
       
       # solution for the release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
   release:
-    if: github.base_ref == 'main'
+    if: github.base_ref == 'staging'
     name: Release
     runs-on: ubuntu-latest
     steps:

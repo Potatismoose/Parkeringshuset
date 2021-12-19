@@ -10,6 +10,7 @@ namespace Parkeringshuset
             SeedDataHelper.RunMock();
             SeedDataHelper.CreateAdmin();
             MainMenu.RunMainMenu();
+            //Test
         }
     }
 }
