@@ -79,8 +79,8 @@ namespace Parkeringshuset.Views
                             break;
 
                         case 6:
-                            keepGoing = false;
-                            break;
+                            
+                            continue;
 
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");

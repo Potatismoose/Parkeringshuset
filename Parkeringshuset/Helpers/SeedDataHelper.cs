@@ -24,9 +24,9 @@
 
                 Db.SaveChanges();
             }
-            catch (Exception ex)
+            catch 
             {
-                Console.WriteLine(ex.Message);
+                
             }
         }
 

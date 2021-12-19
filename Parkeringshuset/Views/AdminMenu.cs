@@ -36,8 +36,8 @@ namespace Parkeringshuset.Views
                         var listOfParkingspotPopularity = afl.ParkingSpotsPopularity(admin);
                         foreach (var item in listOfParkingspotPopularity)
                         {
-                            Console.WriteLine($"Parkingtype: {item.Item1}");
-                            Console.WriteLine($"Sold ticket: {item.Item2}");
+                            Console.WriteLine($"Parkingtype: {item.Item2}");
+                            Console.WriteLine($"Sold ticket: {item.Item1}");
                             Console.WriteLine("-----------------------------");
                         }
                         MenuHelper.PressAnyKeyToContinue();
