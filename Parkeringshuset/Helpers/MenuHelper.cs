@@ -80,7 +80,7 @@
             {
                 Helper.DisplayHelper.DisplayRed("Registration number must be 7 characters or " +
                     "less!");
-                MainMenu.PressAnyKeyToContinue();
+                PressAnyKeyToContinue();
                 isRegNrValid = false;
                 regNr = "";
             }
@@ -88,7 +88,7 @@
             {
                 Helper.DisplayHelper.DisplayRed("Registration number must be 2 characters or " +
                     "more!");
-                MainMenu.PressAnyKeyToContinue();
+                PressAnyKeyToContinue();
                 isRegNrValid = false;
                 regNr = "";
             }
@@ -119,8 +119,17 @@
             else
             {
                 Helper.DisplayHelper.DisplayRed("Something went wrong!");
-                MainMenu.PressAnyKeyToContinue();
+                PressAnyKeyToContinue();
             }
+        }
+
+        /// <summary>
+        /// Gives user opportunity to read message and change between two views.
+        /// </summary>
+        public static void PressAnyKeyToContinue()
+        {
+            Console.WriteLine("Press any key to continue. . .");
+            Console.ReadKey();
         }
     }
 }
