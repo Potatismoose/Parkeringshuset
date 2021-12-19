@@ -5,6 +5,10 @@ on:
     branches: [ main, development, staging ]
     tags:
       - '*'
+  push:
+    branches: main
+    tags:
+      - '*'
 
 jobs:
 
