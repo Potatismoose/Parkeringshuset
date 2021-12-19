@@ -53,19 +53,19 @@ namespace Parkeringshuset.Views
                         case 1:
                             Ptype = "Regular";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 2:
                             Ptype = "Electric";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 3:
                             Ptype = "Handicap";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
                         //case 4:
                         //    TicketControllerype = "Monthly";
@@ -75,7 +75,7 @@ namespace Parkeringshuset.Views
                         case 5:
                             Ptype = "Motorbike";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 6:
@@ -84,7 +84,7 @@ namespace Parkeringshuset.Views
 
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
                     }
                 }
@@ -92,7 +92,7 @@ namespace Parkeringshuset.Views
                 {
                     Console.WriteLine($"Welcome back! Your ticket expires " +
                         $"{ parkingTicket.CheckedOutTime}");
-                    PressAnyKeyToContinue();
+                    MenuHelper.PressAnyKeyToContinue();
                 }
                 else if (TicketController.IsTicketActive(parkingTicket))
                 {
