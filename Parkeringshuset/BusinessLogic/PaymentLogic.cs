@@ -2,6 +2,7 @@
 {
     using Parkeringshuset.Helper;
     using Parkeringshuset.Models;
+    using Parkeringshuset.Views;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -88,7 +89,6 @@
 
         private void MinutesInThisTimeSlot(DateTime CategoryTime, ref int counter)
         {
-
             TotalTime = CheckOut - CheckIn;
             var totalHoursInThisCategory = CategoryTime.TimeOfDay - CheckIn.TimeOfDay;
 
@@ -107,12 +107,12 @@
         }
 
         /// <summary>
-        /// Handle the payment. Updates the object ticket properties Cost and IsPaid if successfull. 
+        /// Handle the payment. Updates the object ticket properties Cost and IsPaid if successfull.
         /// </summary>
         /// <param name="card">CreditCard object.</param>
         /// <param name="ticket">Ticket object.</param>
         /// <returns>a Tuple of an updated ticket and a bool. True if card is valid and false if not.</returns>
-        public (PTicket, bool) Payment(CreditCard card, PTicket ticket)
+        public PTicket Payment(CreditCard card, PTicket ticket)
         {
             ticket.CheckedOutTime = DateTime.Now;
             ticket.Cost = CalculateCost(ticket.CheckedInTime, ticket.CheckedOutTime);
@@ -120,18 +120,19 @@
             if (IsCardCredentialsValid(card))
             {
                 ticket.IsPaid = true;
-
-                return (ticket, true);
+                return ticket;
             }
             else
             {
-                return (ticket, false);
+                ticket.IsPaid = false;
+                DisplayHelper.DisplayRed("Invalid credentials");
+                MainMenu.PressAnyKeyToContinue();
+                return ticket;
             }
         }
 
-
         /// <summary>
-        /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid. 
+        /// Takes an object of a Card. The properties of the card are strings and if number contains 16 symbols and possible to convert to int the card is valid.
         /// </summary>
         /// <param name="card">Object that have 2 string properties.</param>
         /// <returns></returns>
@@ -139,14 +140,12 @@
         {
             if (card?.Number.Length == 16 && card.CSV?.Length == 3)
             {
-                if (int.TryParse(card.Number, out int CardValidation) && int.TryParse(card.CSV, out int CSVValidation))
+                if (long.TryParse(card.Number, out long CardValidation) && int.TryParse(card.CSV, out int CSVValidation))
                 {
-                    DisplayHelper.DisplayGreen("Payment is done");
                     return true;
                 }
             }
             return false;
         }
-
     }
 }
