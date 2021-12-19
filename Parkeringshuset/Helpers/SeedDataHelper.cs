@@ -5,7 +5,7 @@
     using Parkeringshuset.Models;
     using System;
 
-    public static class SeedData
+    public static class SeedDataHelper
     {
         public static ParkeringGarageContext Db = new();
            

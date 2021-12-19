@@ -7,9 +7,10 @@ namespace Parkeringshuset
     {
         private static void Main(string[] args)
         {
-            SeedData.RunMock();
-            SeedData.CreateAdmin();
+            SeedDataHelper.RunMock();
+            SeedDataHelper.CreateAdmin();
             MainMenu.RunMainMenu();
+            //Test
         }
     }
 }
