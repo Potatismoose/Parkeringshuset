@@ -41,10 +41,14 @@
 
             if (isUserNameAlreadyUsed is null)
             {
+                LoginController lc = new();
+                var salt = lc.GenerateSalt(128);
+                var hash = lc.GenerateSha256(password, salt);
                 Admin admin = new();
                 admin.Username = username;
-                admin.Password = password;
+                admin.Password = hash;
                 admin.Email = email;
+                admin.Salt = salt;
                 db.Admins.Add(admin);
                 db.SaveChanges();
                 return true;
@@ -138,7 +142,7 @@
         {
            
 
-            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == ParkingTypesNames
+            return db.Ptickets.Include(x => x.Type).Where(x => x.Type.Name == PTypesNamesHelper
             .Monthly).ToList();
   
         }

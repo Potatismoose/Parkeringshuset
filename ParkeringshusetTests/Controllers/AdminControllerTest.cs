@@ -21,7 +21,7 @@ namespace Parkeringshuset.Controllers.Tests
 
             if(result.Count == 0)
             {
-                PC.CreateTicket("YPW123", ParkingTypesNames.Regular);
+                PC.CreateTicket("YPW123", PTypesNamesHelper.Regular);
             }
             Assert.That(result.Count, Is.AtLeast(2));
         }

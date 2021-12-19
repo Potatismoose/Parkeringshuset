@@ -71,8 +71,9 @@ namespace Parkeringshuset.Views
         /// <summary>
         /// Return correct date for a ticket.
         /// </summary>
-        /// <param name="startOrEnd"></param>
-        /// <returns></returns>
+        /// <param name="startOrEnd">Takes "Start" or "End" as a string for defining 
+        /// if the input is for startdate or enddate</param>
+        /// <returns>Returns datetime</returns>
         private static DateTime AskForStartOrEndDate(string startOrEnd)
         {
             int Year;
@@ -84,21 +85,23 @@ namespace Parkeringshuset.Views
                 Console.Write($"{startOrEnd}date - Year (YYYY): ");
                 isNumber = int.TryParse(Console.ReadLine(), out int year);
                 Year = year;
-            } while (!isNumber);
+                
+            } while (!isNumber || Year < 1950 || Year > DateTime.Now.Year);
+            Console.WriteLine(DateTime.Now.Year);
 
             do
             {
                 Console.Write($"{startOrEnd}date - Month (MM): ");
                 isNumber = int.TryParse(Console.ReadLine(), out int month);
                 Month = month;
-            } while (!isNumber);
+            } while (!isNumber || Month > 12 || Month < 1);
 
             do
             {
                 Console.Write($"{startOrEnd}date - Day (DD): ");
                 isNumber = int.TryParse(Console.ReadLine(), out int day);
                 Day = day;
-            } while (!isNumber);
+            } while (!isNumber || Day > DateTime.DaysInMonth(Year,Month));
 
             return new DateTime(Year, Month, Day);
         }

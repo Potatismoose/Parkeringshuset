@@ -22,11 +22,11 @@ namespace ParkeringshusetTests.Controllers.LoginControllerTests
         [Test]
         public void GenerateSha256_GeneratesACorrectHash_ReturnTrue(){
             string password = "qwerty123";
-            byte[] salt = new byte[] {
-                91, 236, 167, 121, 200, 250, 95, 180, 218, 91, 232, 213, 163, 95, 92, 27};
+            string salt = "W+ynecj6X7TaW+jVo19cGw==";
+            string s = _lc.GenerateSalt(128);
 
-            Assert.AreEqual(_lc.GenerateSha256(password, salt), 
-                "YRJt4beVuXbzrIePSOiPp3qH1zCLpXx2QrnhBoQDpJY=W+ynecj6X7TaW+jVo19cGw==");
+            Assert.AreEqual("faaf82c81a19035218eabcf879c9c07073cc2db0cde7b3a624a0a2e5a18ebb94",
+                _lc.GenerateSha256(password, salt));
         }
     }
 }
