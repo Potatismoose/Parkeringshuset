@@ -12,7 +12,7 @@
     public static class SendEmail
     {
 
-        public static void SendWithBlazor(int totalIncome, int nrOfUnPaidBills, string subject, DateTime from, DateTime to, string toEmailAdress)
+        public static bool SendWithBlazor(int totalIncome, int nrOfUnPaidBills, string subject, DateTime from, DateTime to, string toEmailAdress)
         {
             var sender = new SmtpSender(() => new SmtpClient("smtp.gmail.com")
             {
@@ -41,6 +41,9 @@
             Email.DefaultSender = sender;
             Email.DefaultRenderer = new RazorRenderer();
 
+            try
+            {
+
             var email = Email
                 .From("parkinggarage2021@gmail.com", "Parking Business")
                 .To(toEmailAdress, "Admin")
@@ -49,6 +52,12 @@
                     NrOfUnPaidBills = nrOfUnPaidBills, From = from.ToString("yyyy,mm,dd"), 
                     To = to.ToString("yyyy,mm,dd") })
                 .Send();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         internal static void ParkingSpots(List<(string, int)> occupationLastMonth, string v, string email)

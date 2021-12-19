@@ -69,17 +69,16 @@
           
             SumOfIncome(Tickets);
 
-            try
+         
+          if(SendEmail.SendWithBlazor(TotalIncome, CounterForNotPaidBills,
+                "Revenue", startDate, endDate, admin.Email))
             {
-                SendEmail.SendWithBlazor(TotalIncome, CounterForNotPaidBills,
-                "Revenue", startDate, endDate, admin.Email);
                 return true;
             }
-            catch
+          else
             {
                 return false;
             }
-
         }
 
         /// <summary>
