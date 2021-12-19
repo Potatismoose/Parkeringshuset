@@ -1,11 +1,12 @@
-  # solution for the release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
+ 
 name: release
+
 on:
-workflow_run:
-  workflows: automerge
-  types:
+  workflow_run:
+    workflows: automerge
+    types:
     - completed
-      
+ # solution for the release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
 jobs:
   release:
     if: github.base_ref == 'main'
