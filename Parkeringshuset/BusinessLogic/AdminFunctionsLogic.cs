@@ -37,8 +37,8 @@
                 {
                     occupationLastMonth.Add((ticket.Key.Name, ticket.Count()));
                 }
-                SendEmail.ParkingSpots(occupationLastMonth,
-                "Popularity of Parking Spots", admin.Email);
+                //SendEmail.ParkingSpots(occupationLastMonth,
+                //"Popularity of Parking Spots", admin.Email);
                 return occupationLastMonth;
             }
             else return null;      
@@ -63,14 +63,22 @@
         /// </summary>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
-        public void Revenue(Admin admin, DateTime startDate, DateTime endDate)
+        public bool Revenue(Admin admin, DateTime startDate, DateTime endDate)
         {
             Tickets = Controller.GetTicketForDate(startDate, endDate);
           
             SumOfIncome(Tickets);
 
-            SendEmail.SendWithBlazor(TotalIncome, CounterForNotPaidBills,
+            try
+            {
+                SendEmail.SendWithBlazor(TotalIncome, CounterForNotPaidBills,
                 "Revenue", startDate, endDate, admin.Email);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
 
         }
 

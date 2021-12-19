@@ -52,19 +52,19 @@ namespace Parkeringshuset.Views
                         case 1:
                             Ptype = "Regular";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 2:
                             Ptype = "Electric";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 3:
                             Ptype = "Handicap";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
                         //case 4:
                         //    TicketControllerype = "Monthly";
@@ -74,7 +74,7 @@ namespace Parkeringshuset.Views
                         case 5:
                             Ptype = "Motorbike";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 6:
@@ -83,7 +83,7 @@ namespace Parkeringshuset.Views
 
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
                     }
                 }
@@ -91,13 +91,13 @@ namespace Parkeringshuset.Views
                 {
                     Console.WriteLine($"Welcome back! Your ticket expires " +
                         $"{ parkingTicket.CheckedOutTime}");
-                    PressAnyKeyToContinue();
+                    MenuHelper.PressAnyKeyToContinue();
                 }
                 else if (TicketController.IsTicketActive(parkingTicket))
                 {
                     TicketController.CheckOut(parkingTicket);
                     Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
-                    PressAnyKeyToContinue();
+                    MenuHelper.PressAnyKeyToContinue();
                 }
             } while (keepGoing);
         }
@@ -131,13 +131,6 @@ namespace Parkeringshuset.Views
             DisplayHelper.DisplayRed("Check in failed, try again or contact our support");
             return false;
         }
-        /// <summary>
-        /// Gives user opportunity to read message and change between two views.
-        /// </summary>
-        public static void PressAnyKeyToContinue()
-        {
-            Console.WriteLine("Press any key to continue. . .");
-            Console.ReadKey();
-        }
+        
     }
 }
