@@ -31,27 +31,3 @@ jobs:
         uses: "pascalgn/automerge-action@v0.14.3"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-  
-  # solution for the release job: https://stackoverflow.com/questions/60963759/use-github-actions-to-create-a-tag-but-not-a-release
-  release:
-    if: github.base_ref == 'main'
-    name: Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-      - name: Checkout branch "main"
-        uses: actions/checkout@v2
-        with:
-          ref: 'main'
-      - name: Release snapshot
-        id: release-snapshot
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.date.outputs.date }}
-          release_name: Version ${{ steps.date.outputs.date }}
-          draft: false
-          prerelease: false
