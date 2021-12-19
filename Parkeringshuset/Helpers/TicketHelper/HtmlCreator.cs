@@ -157,7 +157,8 @@ $@"<!DOCTYPE html>
                                 case 0:
                                     if (ticket.CheckedInTime != DateTime.MinValue)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortDateString());
+                                        newLine = line.Insert(indexOfChar + 1, 
+                                            ticket?.CheckedInTime.ToShortDateString());
                                     }
                                     else
                                     {
@@ -168,7 +169,8 @@ $@"<!DOCTYPE html>
                                 case 1:
                                     if (ticket.CheckedInTime != DateTime.MinValue)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, ticket?.CheckedInTime.ToShortTimeString());
+                                        newLine = line.Insert(indexOfChar + 1, 
+                                            ticket?.CheckedInTime.ToShortTimeString());
                                     }
                                     else
                                     {
@@ -190,7 +192,8 @@ $@"<!DOCTYPE html>
                                 case 3:
                                     if (ticket.Vehicle is not null)
                                     {
-                                        newLine = line.Insert(indexOfChar + 1, ticket?.Vehicle?.RegistrationNumber);
+                                        newLine = line.Insert(indexOfChar + 1, 
+                                            ticket?.Vehicle?.RegistrationNumber);
                                     }
                                     else
                                     {

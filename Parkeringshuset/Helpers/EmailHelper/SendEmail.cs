@@ -29,10 +29,12 @@
 
             StringBuilder template = new();
             template.AppendLine("<h3>Dear Admin</h3>");
-            template.AppendLine("<p>During the period @Model.From - @Model.To the garage have earned @Model.TotalIncome SEK.</p>");
+            template.AppendLine("<p>During the period @Model.From - @Model.To the garage have " +
+                "earned @Model.TotalIncome SEK.</p>");
             if (nrOfUnPaidBills > 1)
             {
-                template.AppendLine("<p> However, there is still @Model.NrOfUnPaidBills unpaid bills.</p>");
+                template.AppendLine("<p> However, there is still @Model.NrOfUnPaidBills " +
+                    "unpaid bills.</p>");
             }
             template.AppendLine("- Garage System");
 
@@ -43,7 +45,9 @@
                 .From("parkinggarage2021@gmail.com", "Parking Business")
                 .To(toEmailAdress, "Admin")
                 .Subject(subject)
-                .UsingTemplate(template.ToString(), new { TotalIncome = totalIncome, NrOfUnPaidBills = nrOfUnPaidBills, From = from.ToString("yyyy,mm,dd"), To = to.ToString("yyyy,mm,dd") })
+                .UsingTemplate(template.ToString(), new { TotalIncome = totalIncome, 
+                    NrOfUnPaidBills = nrOfUnPaidBills, From = from.ToString("yyyy,mm,dd"), 
+                    To = to.ToString("yyyy,mm,dd") })
                 .Send();
         }
 
