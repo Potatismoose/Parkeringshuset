@@ -21,7 +21,6 @@ namespace Parkeringshuset.Views
             bool keepGoing = true;
             string Ptype = "";
 
-            ParkingMeterLogic pML = new();
             ParkingTicketController pTC = new();
             PaymentLogic pL = new();
             do
@@ -122,13 +121,10 @@ namespace Parkeringshuset.Views
             } while (keepGoing);
         }
 
-
         private static bool CheckIn(string regNr, string TicketControllerype)
         {
-
             if (TypeController.ReadFreeSpots(TicketControllerype) > 0)
             {
-
                 if (TicketController.CreateTicket(regNr, TicketControllerype))
                 {
                     var ticket = TicketController.GetActiveTicket(regNr);
@@ -136,12 +132,11 @@ namespace Parkeringshuset.Views
                     if (ticket is not null)
                     {
                         DisplayHelper.DisplayGreen("Ticket is activated. Welcome!");
-                        PrintingHelper.PhysicalTicketCreationAndPrintout(ticket);       // TODO: Need to add +1 to UsedSpots i TicketControllerypes table.       
+                        PrintingHelper.PhysicalTicketCreationAndPrintout(ticket);       // TODO: Need to add +1 to UsedSpots i TicketControllerypes table.
                         return true;
                     }
                 }
             }
-
             else
             {
                 DisplayHelper.DisplayRed("There is no available parking spots for this type.");
@@ -151,6 +146,7 @@ namespace Parkeringshuset.Views
             DisplayHelper.DisplayRed("Check in failed, try again or contact our support");
             return false;
         }
+
         /// <summary>
         /// Gives user opportunity to read message and change between two views.
         /// </summary>
