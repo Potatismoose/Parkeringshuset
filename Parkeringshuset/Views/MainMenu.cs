@@ -79,8 +79,8 @@ namespace Parkeringshuset.Views
                             break;
 
                         case 6:
-                            keepGoing = false;
-                            break;
+                            
+                            continue;
 
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
@@ -103,11 +103,15 @@ namespace Parkeringshuset.Views
                     Console.Write("Please provide csv number: ");
                     cC.CSV = Console.ReadLine();
                     pTC.CheckOut(parkingTicket);
-
                     var ticket = pL.Payment(cC, parkingTicket);
+                    ticket.isActice = false;
+
+                    pTC.Update(ticket);
+                    
                     if (ticket.IsPaid)
                     {
-                        DisplayHelper.DisplayGreen("Payment is done");
+                        DisplayHelper.DisplayGreen("Payment is done Total cost of {ticket.Cost} SEK");
+                       Console.WriteLine($"Total cost of {ticket.Cost} SEK");
                         Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                         PressAnyKeyToContinue();
                     }

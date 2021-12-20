@@ -24,19 +24,21 @@
         /// </summary>
         /// <param name="admin">To verify that you are admin.</param>
         /// <returns>A list of tupes, the string is the name of the parking type and the int the number of cars that used it last 30 days.</returns>
-        public List<(String, int)> ParkingSpotsPopularity(Admin admin)
+        public List<(int, String)> ParkingSpotsPopularity(Admin admin)
         {
             if (admin is not null)
             {
-                List<(String, int)> occupationLastMonth = new();
+                List<(int, String)> occupationLastMonth = new();
                 var daysAgo30 = DateTime.Now.AddDays(-30);
                 var today = DateTime.Now;
                 var tickets = Controller.GetTicketForDate(daysAgo30, today).GroupBy(u => u.Type).ToList();
 
                 foreach (var ticket in tickets)
                 {
-                    occupationLastMonth.Add((ticket.Key.Name, ticket.Count()));
+                    occupationLastMonth.Add((ticket.Count(), ticket.Key.Name));
                 }
+                occupationLastMonth.Sort();
+                occupationLastMonth.Reverse();
                 //SendEmail.ParkingSpots(occupationLastMonth,
                 //"Popularity of Parking Spots", admin.Email);
                 return occupationLastMonth;
@@ -69,17 +71,18 @@
           
             SumOfIncome(Tickets);
 
-            try
-            {
-                SendEmail.SendWithBlazor(TotalIncome, CounterForNotPaidBills,
+         
+          try{
+
+                SendEmail.Revenue(TotalIncome, CounterForNotPaidBills,
                 "Revenue", startDate, endDate, admin.Email);
+            
                 return true;
             }
-            catch
+          catch
             {
                 return false;
             }
-
         }
 
         /// <summary>
@@ -93,7 +96,7 @@
             DateTime endDate = new DateTime((year.Year + 1),12,31);
             Tickets = Controller.GetTicketForDate(startDate, endDate);
             SumOfIncome(Tickets);
-            SendEmail.SendWithBlazor(TotalIncome, CounterForNotPaidBills,
+            SendEmail.Revenue(TotalIncome, CounterForNotPaidBills,
                 $"Years Revenue {year.Year}", startDate, endDate, admin.Email);
 
         }
