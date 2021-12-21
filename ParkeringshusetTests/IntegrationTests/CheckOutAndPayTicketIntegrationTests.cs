@@ -38,6 +38,7 @@
             _ticket = null;
         }
 
+        //MÅSTE RENSA DATABASEN FRÅN SISTA TICKET MELLAN VARJE RUN
         [Test]
         public void IntegrationTest_AssertCheckout_AssertPayment()
         {

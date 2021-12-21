@@ -40,7 +40,8 @@
             _admin = _lC.LoginReturnAdmin(_username, _password);
             Assert.IsNotNull(_admin);
 
-            //_aFL.SoldTicketsBetweenSpecificDates(_admin,)
+            //TVÅ DATETIMES SKA IN HÄR
+            _aFL.SoldTicketsBetweenSpecificDates(_admin,)
         }
     }
 }
