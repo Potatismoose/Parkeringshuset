@@ -110,8 +110,8 @@ namespace Parkeringshuset.Views
                     
                     if (ticket.IsPaid)
                     {
-                        DisplayHelper.DisplayGreen("Payment is done Total cost of {ticket.Cost} SEK");
-                       Console.WriteLine($"Total cost of {ticket.Cost} SEK");
+                        DisplayHelper.DisplayGreen("Payment is done.");
+                       Console.WriteLine($"Total cost of ticket was {ticket.Cost} SEK");
                         Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                         PressAnyKeyToContinue();
                     }

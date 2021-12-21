@@ -35,15 +35,23 @@
                     break;
                 }
 
-                if (pressedKey.Key != RightArrow &&
+                else if (pressedKey.Key != RightArrow &&
                     pressedKey.Key != LeftArrow &&
                     pressedKey.Key != UpArrow &&
-                    pressedKey.Key != DownArrow
+                    pressedKey.Key != DownArrow &&
+                    pressedKey.Key != Backspace
                 )
                 {
                     secretPatternMatch.Clear();
 
                     regNr += (char)pressedKey.Key;
+                }
+                else if (pressedKey.Key == Backspace)
+                {
+                    regNr = "";
+                    Console.Clear();
+                    Console.Write("Enter your registration number: ");
+                    continue;
                 }
                 else
                 {
