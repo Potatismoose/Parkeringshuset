@@ -24,9 +24,9 @@
 
                 Db.SaveChanges();
             }
-            catch (Exception ex)
+            catch 
             {
-                Console.WriteLine(ex.Message);
+                
             }
         }
 
@@ -36,7 +36,7 @@
         public static void CreateAdmin()
         {
             AdminController ac = new();
-            ac.Create("admin", "admin123", "parking.garage.boss@gmail.com");
+            ac.Create("admin", "admin123", "Parking.System.Owner@gmail.com");
         }
     }
 }
