@@ -2,6 +2,7 @@
 {
     using NUnit.Framework;
     using Parkeringshuset.BusinessLogic;
+    using Parkeringshuset.Data;
     using Parkeringshuset.Models;
 
     [Category("IntegrationTests")]
@@ -14,6 +15,7 @@
         private PaymentLogic _pL;
         private string _regNr;
         private string _pType;
+        private ParkeringGarageContext db = new();
 
         [SetUp]
         public void Setup()
@@ -55,6 +57,13 @@
             //Check if ticket is paid after _ticket is passed to Payment()
             _ticket = _pL.Payment(_creditCard, _ticket);
             Assert.IsTrue(_ticket.IsPaid);
+        }
+
+        //TODO:GÖRA KLART DEN HÄR METODEN
+        private void RemoveLastEntry()
+        {
+            //db.Remove();
+            db.SaveChanges();
         }
     }
 }

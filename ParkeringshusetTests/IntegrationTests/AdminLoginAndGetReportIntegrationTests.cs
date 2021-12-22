@@ -19,6 +19,8 @@
         private Admin _admin;
         private string _username;
         private string _password;
+        private DateTime _from;
+        private DateTime _to;
 
         [SetUp]
         public void Setup()
@@ -28,6 +30,9 @@
 
             _username = "admin";
             _password = "admin123";
+
+            _from = new(2021, 12, 14);
+            _to = new(2021, 12, 17);
         }
 
         [Test]
@@ -40,8 +45,12 @@
             _admin = _lC.LoginReturnAdmin(_username, _password);
             Assert.IsNotNull(_admin);
 
-            //TVÅ DATETIMES SKA IN HÄR
-            _aFL.SoldTicketsBetweenSpecificDates(_admin,)
+            //Check in database how many tickets exist between _from and _to
+            int expected = 26;
+            int actual;
+            actual = _aFL.SoldTicketsBetweenSpecificDates(_admin, _from, _to);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

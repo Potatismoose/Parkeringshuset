@@ -7,14 +7,14 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace Parkeringshuset.Helpers.TicketHelper.Tests
+namespace ParkeringshusetTests.IntegrationTests
 {
     [Category("IntegrationTests")]
-    [TestFixture()]
+    [TestFixture]
     public class TicketHelperIntegrationTests
     {
-        PTicket Ticket = null;
-        
+        private PTicket Ticket = null;
+
         [SetUp]
         public void Setup()
         {
@@ -32,7 +32,7 @@ namespace Parkeringshuset.Helpers.TicketHelper.Tests
             };
         }
 
-        [Test()]
+        [Test]
         public void IntegrationTest_TestWorkingFlow_ExpectTrue()
         {
             HtmlCreator Hc = new();
