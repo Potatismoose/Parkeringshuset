@@ -79,7 +79,7 @@ namespace Parkeringshuset.Views
                             break;
 
                         case 6:
-                            
+
                             continue;
 
                         default:
@@ -107,11 +107,11 @@ namespace Parkeringshuset.Views
                     ticket.isActice = false;
 
                     pTC.Update(ticket);
-                    
+
                     if (ticket.IsPaid)
                     {
-                        DisplayHelper.DisplayGreen("Payment is done Total cost of {ticket.Cost} SEK");
-                       Console.WriteLine($"Total cost of {ticket.Cost} SEK");
+                        DisplayHelper.DisplayGreen("Payment is done.");
+                        Console.WriteLine($"Total cost of ticket was {ticket.Cost} SEK");
                         Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
                         PressAnyKeyToContinue();
                     }
@@ -125,7 +125,7 @@ namespace Parkeringshuset.Views
             } while (keepGoing);
         }
 
-        private static bool CheckIn(string regNr, string TicketControllerype)
+        public static bool CheckIn(string regNr, string TicketControllerype)
         {
             if (TypeController.ReadFreeSpots(TicketControllerype) > 0)
             {
