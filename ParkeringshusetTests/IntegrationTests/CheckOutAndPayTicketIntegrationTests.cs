@@ -1,9 +1,11 @@
 ﻿namespace ParkeringshusetTests.IntegrationTests
 {
+    using Microsoft.EntityFrameworkCore;
     using NUnit.Framework;
     using Parkeringshuset.BusinessLogic;
     using Parkeringshuset.Data;
     using Parkeringshuset.Models;
+    using System.Linq;
 
     [Category("IntegrationTests")]
     [TestFixture]
@@ -22,7 +24,7 @@
         {
             _tC = new();
             _pL = new();
-            _regNr = "qwe123";
+            _regNr = "gha238";
             _pType = "Electric";
             _creditCard = new();
             _creditCard.Number = "1234123412341234";
@@ -38,6 +40,7 @@
             _pType = "";
             _tC = null;
             _ticket = null;
+            RemoveLastEntry();
         }
 
         //MÅSTE RENSA DATABASEN FRÅN SISTA TICKET MELLAN VARJE RUN
@@ -62,7 +65,8 @@
         //TODO:GÖRA KLART DEN HÄR METODEN
         private void RemoveLastEntry()
         {
-            //db.Remove();
+            var ticketToRemove = db.Ptickets.Include(y => y.Vehicle).FirstOrDefault(x => x.Vehicle.RegistrationNumber == "gha238");
+            db.Ptickets.Remove(ticketToRemove);
             db.SaveChanges();
         }
     }
