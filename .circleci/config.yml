@@ -1,4 +1,4 @@
-version: 2.1
+version: '2.1'
 
 orbs:
   win: circleci/windows@2.4.0
@@ -43,14 +43,11 @@ jobs:
 
 
 - gh/release:
+          notes-file: changelog.md
           tag: 2.0.0
           title: Parkeringshuset
           context:
             - Github
-          filters:
-            branches:
-              only:
-                - main
 
 
   #release:
