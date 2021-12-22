@@ -21,6 +21,8 @@ namespace Parkeringshuset.Views
             bool keepGoing = true;
             string Ptype = "";
 
+            ParkingTicketController pTC = new();
+            PaymentLogic pL = new();
             do
             {
                 regNr = "";
@@ -38,7 +40,6 @@ namespace Parkeringshuset.Views
 
                 if (parkingTicket is null)
                 {
-                    Console.WriteLine(regNr);
                     Console.WriteLine($"Checked In, what zone would you like to park in?: ");
                     Console.WriteLine("1. Regular vehicle");
                     Console.WriteLine("2. Electric vehicle");
@@ -52,19 +53,19 @@ namespace Parkeringshuset.Views
                         case 1:
                             Ptype = "Regular";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 2:
                             Ptype = "Electric";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 3:
                             Ptype = "Handicap";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
                         //case 4:
                         //    TicketControllerype = "Monthly";
@@ -74,16 +75,16 @@ namespace Parkeringshuset.Views
                         case 5:
                             Ptype = "Motorbike";
                             CheckIn(regNr, Ptype);
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
 
                         case 6:
-                            keepGoing = false;
-                            break;
+
+                            continue;
 
                         default:
                             Console.WriteLine("Jerry created a problem, please try again!");
-                            PressAnyKeyToContinue();
+                            MenuHelper.PressAnyKeyToContinue();
                             break;
                     }
                 }
@@ -91,24 +92,43 @@ namespace Parkeringshuset.Views
                 {
                     Console.WriteLine($"Welcome back! Your ticket expires " +
                         $"{ parkingTicket.CheckedOutTime}");
-                    PressAnyKeyToContinue();
+                    MenuHelper.PressAnyKeyToContinue();
                 }
                 else if (TicketController.IsTicketActive(parkingTicket))
                 {
-                    TicketController.CheckOut(parkingTicket);
-                    Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
-                    PressAnyKeyToContinue();
+                    Console.Clear();
+                    CreditCard cC = new CreditCard();
+                    Console.Write("Please provide creditcard number: ");
+                    cC.Number = Console.ReadLine();
+                    Console.Write("Please provide csv number: ");
+                    cC.CSV = Console.ReadLine();
+                    pTC.CheckOut(parkingTicket);
+                    var ticket = pL.Payment(cC, parkingTicket);
+                    ticket.isActice = false;
+
+                    pTC.Update(ticket);
+
+                    if (ticket.IsPaid)
+                    {
+                        DisplayHelper.DisplayGreen("Payment is done.");
+                        Console.WriteLine($"Total cost of ticket was {ticket.Cost} SEK");
+                        Console.WriteLine("Checked out. Thank you for using our garage, welcome back!");
+                        PressAnyKeyToContinue();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Invoice sent to registred address of car {ticket.Vehicle.RegistrationNumber}" +
+                            $" with cost of {ticket.Cost} SEK");
+                        PressAnyKeyToContinue();
+                    }
                 }
             } while (keepGoing);
         }
 
-
-        private static bool CheckIn(string regNr, string TicketControllerype)
+        public static bool CheckIn(string regNr, string TicketControllerype)
         {
-
             if (TypeController.ReadFreeSpots(TicketControllerype) > 0)
             {
-
                 if (TicketController.CreateTicket(regNr, TicketControllerype))
                 {
                     var ticket = TicketController.GetActiveTicket(regNr);
@@ -116,12 +136,11 @@ namespace Parkeringshuset.Views
                     if (ticket is not null)
                     {
                         DisplayHelper.DisplayGreen("Ticket is activated. Welcome!");
-                        PrintingHelper.PhysicalTicketCreationAndPrintout(ticket);       // TODO: Need to add +1 to UsedSpots i TicketControllerypes table.       
+                        PrintingHelper.PhysicalTicketCreationAndPrintout(ticket);       // TODO: Need to add +1 to UsedSpots i TicketControllerypes table.
                         return true;
                     }
                 }
             }
-
             else
             {
                 DisplayHelper.DisplayRed("There is no available parking spots for this type.");
@@ -131,6 +150,7 @@ namespace Parkeringshuset.Views
             DisplayHelper.DisplayRed("Check in failed, try again or contact our support");
             return false;
         }
+
         /// <summary>
         /// Gives user opportunity to read message and change between two views.
         /// </summary>
