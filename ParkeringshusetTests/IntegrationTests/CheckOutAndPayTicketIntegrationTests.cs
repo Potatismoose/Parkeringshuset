@@ -24,7 +24,7 @@
         {
             _tC = new();
             _pL = new();
-            _regNr = "gha238";
+            _regNr = "goj654";
             _pType = "Electric";
             _creditCard = new();
             _creditCard.Number = "1234123412341234";
@@ -40,7 +40,6 @@
             _pType = "";
             _tC = null;
             _ticket = null;
-            RemoveLastEntry();
         }
 
         //MÅSTE RENSA DATABASEN FRÅN SISTA TICKET MELLAN VARJE RUN
@@ -60,14 +59,13 @@
             //Check if ticket is paid after _ticket is passed to Payment()
             _ticket = _pL.Payment(_creditCard, _ticket);
             Assert.IsTrue(_ticket.IsPaid);
+
+            //Check if ticket is deleted.
+            Assert.IsTrue(_tC.Delete(_ticket));
+            Assert.IsNull(_tC.GetActiveTicket("goj654"));
         }
 
-        //TODO:GÖRA KLART DEN HÄR METODEN
-        private void RemoveLastEntry()
-        {
-            var ticketToRemove = db.Ptickets.Include(y => y.Vehicle).FirstOrDefault(x => x.Vehicle.RegistrationNumber == "gha238");
-            db.Ptickets.Remove(ticketToRemove);
-            db.SaveChanges();
-        }
+
+
     }
 }
