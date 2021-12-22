@@ -42,12 +42,12 @@ jobs:
 
 
 
-- gh/release:
-          notes-file: changelog.md
-          tag: 2.0.0
-          title: Parkeringshuset
-          context:
-            - Github
+ gh/release:
+    notes-file: changelog.md
+    tag: 2.0.0
+    title: Parkeringshuset
+    context:
+      - Github
 
 
   #release:
