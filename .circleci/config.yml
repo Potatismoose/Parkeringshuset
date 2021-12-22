@@ -11,16 +11,9 @@ jobs:
     steps:
       - checkout:
           path: ~\Parkeringshuset\
-      #- restore_cache:
-       #   keys:
-        #    - dotnet-packages-v1-{{ checksum "circleci-demo-windows.csproj" }}
       - run:
           name: "Install project dependencies"
           command: dotnet.exe restore
-      #- save_cache:
-        #  paths:
-         #   - C:\Users\circleci\project\HelloWorld\.nuget\packages
-          #key: dotnet-packages-v1-{{ checksum "circleci-demo-windows.csproj" }}
       - run:
           name: "Run Build step"
           command: dotnet.exe publish -c Release -r win10-x64
@@ -28,11 +21,6 @@ jobs:
           name: "Run tests"
           command: dotnet test
           working_directory: ParkeringshusetTests
-      #- run:
-       #   name: "Test the executable"
-        #  command: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe 
-      #- store_artifacts:
-       #   path: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe
        
 workflows:
   version: 2
