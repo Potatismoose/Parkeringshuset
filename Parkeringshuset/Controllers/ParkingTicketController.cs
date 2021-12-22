@@ -100,7 +100,7 @@ namespace Parkeringshuset.Models
             }
 
             var ticket = db.Ptickets.Include(x => x.Type).Include(y => y.Vehicle).FirstOrDefault(
-                x => x.Vehicle.Id == vehicle.Id && x.isActice); 
+                x => x.Vehicle.Id == vehicle.Id && x.isActice == true); 
 
             return ticket;
         }
@@ -152,6 +152,42 @@ namespace Parkeringshuset.Models
             }
 
             return t.Type.Name == PTypesNamesHelper.Monthly;  
+        }
+
+        /// <summary>
+        /// Update Admin object in database.
+        /// </summary>
+        /// <param name="admin"></param>
+        /// <returns>true if successfull, false if database issues.</returns>
+        public bool Update(PTicket ticket)
+        {
+            try
+            {
+                db.Update(ticket);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public bool Delete(PTicket ticket)
+        {
+            try
+            {
+                ticket = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
+                db.Ptickets.Remove(ticket);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
     }
 }

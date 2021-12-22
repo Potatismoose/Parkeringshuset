@@ -118,7 +118,7 @@
             // RIGHT: this will include the last day
             var toDateExclusive = to.AddDays(1);
 
-            return db.Ptickets.Where(
+            return db.Ptickets.Include(x => x.Type).Include(y => y.Vehicle).Where(
                 t => t.CheckedInTime.Date >= from.Date && t.CheckedInTime <= toDateExclusive.Date 
                 ||
                 t.CheckedOutTime >= from.Date && t.CheckedOutTime <= toDateExclusive.Date)
@@ -130,7 +130,7 @@
         /// <returns>A list of tickets. The List can be null.</returns>
         public List<PTicket> GetAllTickets()
         {
-            return db.Ptickets.Select(x=>x).ToList();
+            return db.Ptickets.Include(x => x.Type).Include(x => x.Vehicle).Select(x=>x).ToList();
             
         }
 

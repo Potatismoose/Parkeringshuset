@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>.NETCoreApp,Version=v5.0</TargetFramework>
+	  <PreserveCompilationContext>true</PreserveCompilationContext>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
