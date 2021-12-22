@@ -30,7 +30,7 @@
 ## Two more types of testing.
 In this project we used two types of tests other then Unit tests and Integration tests.
 
-The first test we used was beta/acceptance testing. Benny asked his grandmother to use the program
+The first test we used was beta/acceptance testing. Benny asked his mother to use the program
  and try to check vehicles in and out of the system and use different types of parking spots and also try the simulated payment.
  She found the bugg not beeing able to erase a input using backspace by misstake when she typed the wrong registration number.
 
