@@ -173,5 +173,21 @@ namespace Parkeringshuset.Models
             }
 
         }
+
+        public bool Delete(PTicket ticket)
+        {
+            try
+            {
+                ticket = db.Ptickets.FirstOrDefault(x => x.Id == ticket.Id);
+                db.Ptickets.Remove(ticket);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
     }
 }
