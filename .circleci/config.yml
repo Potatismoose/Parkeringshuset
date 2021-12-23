@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   win: circleci/windows@2.4.0
-  github-release: h-matsuo/github-release@0.1.3
 
 jobs:
   build:
@@ -12,16 +11,9 @@ jobs:
     steps:
       - checkout:
           path: ~\Parkeringshuset\
-      #- restore_cache:
-       #   keys:
-        #    - dotnet-packages-v1-{{ checksum "circleci-demo-windows.csproj" }}
       - run:
           name: "Install project dependencies"
           command: dotnet.exe restore
-      #- save_cache:
-        #  paths:
-         #   - C:\Users\circleci\project\HelloWorld\.nuget\packages
-          #key: dotnet-packages-v1-{{ checksum "circleci-demo-windows.csproj" }}
       - run:
           name: "Run Build step"
           command: dotnet.exe publish -c Release -r win10-x64
@@ -29,34 +21,6 @@ jobs:
           name: "Run tests"
           command: dotnet test
           working_directory: ParkeringshusetTests
-      #- run:
-       #   name: "Test the executable"
-        #  command: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe 
-      #- store_artifacts:
-       #   path: .\bin\Release\netcoreapp2.1\win10-x64\publish\circleci-demo-windows.exe
-
-
-
-
-
-
-
-
-
-
-  release:
-      docker:
-      # replace with your preferred image
-      - image: cimg/base:stable
-      steps:
-      - github-release/create:
-          github-token-variable: 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 
-          user: Potatismoose 
-          repository: Parkeringshuset 
-          tag: v2.0 
-          target: main 
-          title: Parkeringshuset 
-          description: Release 
        
 workflows:
   version: 2
@@ -67,10 +31,3 @@ workflows:
            branches:
              only:
                - staging
-  Release:
-    jobs:
-      - release:
-         filters:
-           branches:
-             only:
-               - main
