@@ -34,7 +34,7 @@ jobs:
     if: github.base_ref == 'staging'
     strategy: 
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     environment: 
       name: Staging
       url: https://github.com/Potatismoose/Parkeringshuset/tree/staging
@@ -66,7 +66,7 @@ jobs:
       runs-on: ${{matrix.os}}
       strategy:
         matrix:
-          os: [ubuntu-latest]
+          os: [windows-latest, ubuntu-latest]
       steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
@@ -79,7 +79,7 @@ jobs:
   production: 
     needs: testStaging
     runs-on: ubuntu-latest
-    if: github.base_ref == 'staging'
+    if: github.base_ref == 'main'
     environment: 
       name: Production
       url: https://github.com/Potatismoose/Parkeringshuset/tree/main
