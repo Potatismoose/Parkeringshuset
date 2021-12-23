@@ -79,7 +79,7 @@ jobs:
   production: 
     needs: testStaging
     runs-on: ubuntu-latest
-    if: github.base_ref == 'staging'
+    if: github.base_ref == 'main'
     environment: 
       name: Production
       url: https://github.com/Potatismoose/Parkeringshuset/tree/main
